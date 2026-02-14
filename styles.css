@@ -392,4 +392,17 @@ footer{
   background:#2563eb;
   color:white;
 }
+.section-title{
+  font-size:36px;   /* más grande */
+  text-align:center;
+  margin-bottom:60px;
+}
+
+.product-title{
+  text-align:left;
+  font-size:18px;
+  font-weight:700;
+  margin-bottom:30px;
+}
+
 
