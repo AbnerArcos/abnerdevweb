@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Menú Digital Profesional | Abner Dev</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<header class="hero">
+  <nav class="nav">
+    <div class="logo">Abner<span>Dev</span></div>
+    <a href="index.html" class="nav-btn">Volver</a>
+  </nav>
+
+  <div class="hero-content">
+    <h1>Menú Digital Profesional</h1>
+    <p>La solución ideal para restaurantes que quieren modernizar su servicio.</p>
+  </div>
+</header>
+
+<section>
+
+  <div class="service-highlight">
+
+    <div class="service-image">
+		<video autoplay muted loop playsinline class="demo-video">
+		<source src="img/menu-demo.mp4" type="video/mp4">
+		Tu navegador no soporta video.
+		</video>
+	</div>
+	
+	<h2>¿Qué incluye?</h2>
+
+    <div class="service-content">
+      <ul>
+        <li>✔ Diseño personalizado</li>
+        <li>✔ Código QR listo para imprimir</li>
+        <li>✔ Carrito de pedidos</li>
+        <li>✔ Envío automático a WhatsApp</li>
+        <li>✔ Adaptable a celular, tablet y PC</li>
+		<li>✔ Base de datos en google sheets</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<section>
+  <h2>Galería</h2>
+
+  <div class="portfolio-grid">
+    <div class="project">
+      <img src="img/menu-digital.jpg" alt="Vista menú 1">
+    </div>
+
+    <div class="project">
+      <img src="img/menu-carrito.jpg" alt="Vista menú 2">
+    </div>
+
+    <div class="project">
+      <img src="img/menu-excel.jpg" alt="Vista menú 3">
+    </div>
+  </div>
+</section>
+
+<section class="demo-section">
+  <h2>🚀 Toca la imagen y prueba la demo en vivo</h2>
+
+  <a href="demo-menu/index.html" class="demo-link">
+    <img src="img/menu-digital.jpg" alt="Probar demo del menú digital">
+   
+  </a>
+</section>
+
+
+<section class="contact">
+  <h2>Plan Profesional</h2>
+
+  <div class="card" style="max-width:400px;margin:auto;">
+    <h3 style="font-size:28px;">$99 / mes</h3>
+    <p style="margin:20px 0;">
+      Soporte, actualizaciones y mantenimiento incluidos.
+    </p>
+    <button class="primary-btn" id="whatsappBtn">
+      Contratar Ahora
+    </button>
+  </div>
+</section>
+
+<footer>
+  © 2026 Abner Dev | Soluciones Digitales
+</footer>
+
+<script>
+document.getElementById("whatsappBtn").addEventListener("click", function(){
+  const numero = "529811064643";
+  const mensaje = "Hola, quiero contratar el Menú Digital Profesional de $99/mes.";
+  const url = `https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`;
+  window.open(url, "_blank");
+});
+</script>
+
+</body>
+</html>

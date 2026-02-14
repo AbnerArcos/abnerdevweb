@@ -1,0 +1,493 @@
+/* ================= RESET ================= */
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body{
+  background: #f4f4f4;
+  padding-bottom: 130px;
+}
+
+/* ================= BANNER ================= */
+.banner{
+  height: 220px;
+  overflow: hidden;
+}
+
+.banner img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ================= HEADER ================= */
+.header{
+  background: white;
+  text-align: center;
+  padding: 20px;
+  margin-top: -30px;
+  border-radius: 35px 35px 0 0;
+}
+
+.logo{
+  width: 65px;
+  margin-bottom: 5px;
+}
+
+/* ================= TABS (STICKY) ================= */
+.tabs{
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+
+  display: flex;
+  gap: 25px;
+  overflow-x: auto;
+  padding: 15px;
+
+  background: white;
+  border-bottom: 1px solid #eee;
+}
+
+.tabs::-webkit-scrollbar{
+  display: none;
+}
+
+.tabs a{
+  text-decoration: none;
+  color: #888;
+  font-weight: bold;
+  white-space: nowrap;
+  padding-bottom: 6px;
+}
+
+.tabs a.active{
+  color: #000;
+  border-bottom: 3px solid #1db954;
+}
+
+/* ================= SECTIONS ================= */
+.section{
+  padding: 20px;
+  scroll-margin-top: 75px;
+}
+
+.section h2{
+  margin-bottom: 10px;
+}
+
+/* ================= SUBTITULOS ================= */
+.subtitulo{
+  margin-top: 25px;
+  margin-bottom: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+}
+
+/* ================= PRODUCTS (GRID FIJO) ================= */
+.products{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+}
+
+@media(min-width: 768px){
+  .products{
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media(min-width: 1024px){
+  .products{
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* ================= CARD ================= */
+.card{
+  background: white;
+  padding: 12px;
+  border-radius: 30px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  transition: 0.2s;
+}
+
+.card:active{
+  transform: scale(0.95);
+}
+
+/* ================= IMAGE ================= */
+.img-container{
+  position: relative;
+}
+
+.img-container img{
+  width: 100%;
+  border-radius: 25px;
+}
+
+/* ================= BADGE ================= */
+.badge{
+  position: absolute;
+  top: -8px;
+  left: -8px;
+  background: #1db954;
+  color: white;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+/* ================= DELETE BADGE ================= */
+.delete-badge{
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: #ff3b30;
+  color: white;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.delete-badge:active{
+  transform: scale(0.9);
+}
+
+/* ================= PRICE ================= */
+.price{
+  font-weight: bold;
+  margin-top: 8px;
+}
+
+/* ================= CART BAR ================= */
+.cart-bar{
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background: white;
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 30px 30px 0 0;
+  box-shadow: 0 -5px 20px rgba(0,0,0,0.08);
+}
+
+.cart-bar button{
+  background: #1db954;
+  color: white;
+  border: none;
+  padding: 12px 22px;
+  border-radius: 30px;
+  font-weight: bold;
+}
+
+/* ================= CART MODAL ================= */
+.cart-modal{
+  position: fixed;
+  bottom: -100%;
+  width: 100%;
+  height: 95%;
+  background: white;
+  border-radius: 35px 35px 0 0;
+  padding: 20px;
+  transition: 0.4s;
+  box-shadow: 0 -10px 30px rgba(0,0,0,0.15);
+  z-index: 2000;
+
+  display: flex;
+  flex-direction: column;
+}
+
+
+.cart-modal.active{
+  bottom: 0;
+}
+
+.cart-header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+/* ================= INPUT ================= */
+#customerName{
+  width: 100%;
+  padding: 12px;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  margin-top: 15px;
+  font-size: 16px;
+}
+
+/* ================= CART ITEMS ================= */
+.cart-item{
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.cart-item .item-price {
+  min-width: 60px;
+  text-align: right;
+  font-weight: bold;
+}
+
+.cart-item .item-name {
+  flex: 1;                      /* ocupa el espacio disponible */
+  font-size: 14px;
+}
+
+.remove-btn{
+  background: red;
+  color: white;
+  border: none;
+  border-radius: 15px;
+  padding: 5px 10px;
+  font-size: 12px;
+}
+
+/* ================= SEND BUTTON ================= */
+#sendOrder{
+  width: 100%;
+  background: #25D366;
+  color: white;
+  padding: 15px;
+  border: none;
+  border-radius: 30px;
+  margin-top: 20px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+/* ================= TOAST ================= */
+.toast{
+  position: fixed;
+  bottom: 95px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #1db954;
+  color: white;
+  padding: 12px 22px;
+  border-radius: 25px;
+  opacity: 0;
+  transition: 0.3s;
+  z-index: 3000;
+}
+
+.toast.show{
+  opacity: 1;
+}
+.order-section{
+  margin:6px 0;
+}
+
+.section-title{
+  font-weight:bold;
+  margin-bottom:6px;
+}
+
+.order-section label{
+  margin-bottom: 0;
+}
+
+#address{
+  width:100%;
+  padding:10px;
+  border-radius:8px;
+  border:1px solid #ccc;
+}
+
+#cartItems{
+  flex: 1;                 /* 🔑 ocupa solo su espacio */
+  overflow-y: auto;
+  margin-bottom: 12px;
+  padding-right: 4px;
+}
+
+/* scroll bonito (opcional) */
+#cartItems::-webkit-scrollbar{
+  width: 5px;
+}
+
+#cartItems::-webkit-scrollbar-thumb{
+  background: #ccc;
+  border-radius: 10px;
+}
+
+/* ===== BOTÓN WHATSAPP SIEMPRE VISIBLE ===== */
+#sendOrder{
+  position: sticky;
+}
+
+#getLocation{
+  width:100%;
+  margin-top:8px;
+  padding:10px;
+  border:none;
+  border-radius:20px;
+  background:#1db954;
+  color:white;
+  font-weight:bold;
+  font-size:14px;
+}
+#getLocation:active{
+  transform:scale(0.97);
+}
+.qty-controls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.qty-controls button {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: none;
+  background: #28c76f;
+  color: white;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.fila-cambio {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 15px 0;
+}
+
+.texto-cambio {
+  font-weight: 600;
+}
+
+.opciones-cambio {
+  display: flex;
+  gap: 15px;
+}
+
+.fila-opciones {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.titulo-opcion {
+  font-weight: 600;
+}
+
+.opciones {
+  display: flex;
+  gap: 15px;
+}
+/* Caja de transferencia */
+#datos-transferencia {
+  display: none; /* empieza oculto */
+}
+
+.transfer-box {
+  background: #f8f8f8;
+  padding: 12px;
+  margin-top: 10px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+}
+
+.transfer-box p {
+  margin: 4px 0;
+}
+.sugerencia-input {
+  width: 90%;
+  margin-top: 8px;
+  padding: 6px;
+  font-size: 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+/* ================= RADIO BUTTONS HORIZONTALES ================= */
+.radio-group {
+  display: flex;          /* pone los radios en fila */
+  gap: 20px;              /* espacio entre cada opción */
+  flex-wrap: wrap;        /* si no caben, bajan a la siguiente línea */
+}
+
+.radio-group label {
+  display: flex;          /* alinea radio y texto */
+  align-items: center;
+  cursor: pointer;
+  padding: 5px 0;
+  font-weight: 500;
+  gap: 6px;               /* espacio entre radio y texto */
+}
+
+.radio-group input[type="radio"] {
+  width: 18px;
+  height: 18px;
+  margin: 0;              /* elimina márgenes extra */
+}
+
+/* 🔥 FIX bloqueo radios en móvil */
+.cart-modal {
+  pointer-events: auto;
+}
+
+.tabs {
+  pointer-events: auto;
+}
+
+@media (max-width: 768px) {
+  .tabs {
+    z-index: 1;   /* baja el sticky en móvil */
+  }
+
+  .cart-modal {
+    z-index: 5000; /* asegúrate que esté encima de TODO */
+  }
+}
+
+
+
+.exit-demo-btn {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(90deg, #ff3b3b, #ff0000);
+  color: white;
+  padding: 15px 35px;
+  border-radius: 50px;
+  font-weight: bold;
+  text-decoration: none;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+  z-index: 9999;
+  transition: all 0.3s ease;
+  font-size: 16px;
+}
+
+.exit-demo-btn:hover {
+  transform: translateX(-50%) scale(1.1);
+  background: #e60000;
+}
