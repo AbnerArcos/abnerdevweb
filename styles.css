@@ -326,3 +326,20 @@ footer{
   font-size:14px;
   opacity:0.6;
 }
+.pricing-box {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* espacio entre precios */
+}
+
+.pricing-box .price {
+  font-size: 20px;
+  margin: 0;
+  text-align: center;
+}
+
+.pricing-box button {
+  width: 100%;
+}
+
