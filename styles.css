@@ -224,7 +224,6 @@ h2{
   }
 
   .demo-link::after{
-    content:"👆";
     position:absolute;
     top:50%;
     left:50%;
@@ -356,5 +355,6 @@ footer{
   color: #2563eb;           /* Color del check */
   font-weight: bold;
 }
+
 
 
