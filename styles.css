@@ -332,29 +332,5 @@ footer{
   font-size:14px;
   opacity:0.6;
 }
-/* ==============================
-   LISTAS DE INCLUYE
-============================== */
-.service-details ul {
-  list-style: none;        /* Quita los puntos negros */
-  padding-left: 0;         /* Quita el padding por defecto */
-  text-align: left;        /* Alinea el texto a la izquierda */
-}
-
-.service-details ul li {
-  margin-bottom: 10px;     /* Espacio entre cada item */
-  padding-left: 20px;      /* Espacio para el check */
-  position: relative;       /* Para colocar el check personalizado */
-}
-
-/* Agregar el check como pseudo-elemento para un look uniforme */
-.service-details ul li::before {
-  content: "✔";             /* Símbolo de check */
-  position: absolute;
-  left: 0;
-  color: #2563eb;           /* Color del check */
-  font-weight: bold;
-}
-
 
 
