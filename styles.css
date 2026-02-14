@@ -218,63 +218,39 @@ h2{
   transform: scale(1.08);
 }
 
-@media (max-width:768px){
-  .demo-link img{
-    animation: pulseDemo 1.2s infinite;
-  }
-
-  .demo-link::after{
-    content:"👆";
-    position:absolute;
-    top:50%;
-    left:50%;
-    transform:translate(-50%,-50%);
-    font-size:55px;
-    animation: tapFinger 1.2s infinite ease-in-out;
-    z-index:2;
-  }
-
-  @keyframes pulseDemo{
-    0%{ transform: scale(1); }
-    50%{ transform: scale(1.05); }
-    100%{ transform: scale(1); }
-  }
-
-  @keyframes tapFinger{
-    0%{ transform:translate(-50%,-50%) scale(1); }
-    50%{ transform:translate(-50%,-42%) scale(0.9); }
-    100%{ transform:translate(-50%,-50%) scale(1); }
-  }
-
-  .service-container{
-    flex-direction:column;
-    align-items:center;
-  }
-}
-
 /* ==============================
-   CONTACTO / PLAN PROFESIONAL
+   PLAN PROFESIONAL
 ============================== */
 .contact{
   background:#eef2ff;
+  padding:80px 10%;
 }
 
-.pricing-box{
+.plans-container{
+  display:flex;
+  justify-content:center;
+  gap:30px;
+  flex-wrap:wrap;
   margin-top:40px;
+}
+
+.plans-container .pricing-box{
+  flex: 1 1 250px;
+  max-width:300px;
+  background:#f8fafc;
   padding:25px;
   border-radius:16px;
-  background:#f8fafc;
   box-shadow:0 8px 25px rgba(0,0,0,0.05);
   text-align:center;
-  max-width:300px;
-  margin-left:auto;
-  margin-right:auto;
+  display:flex;
+  flex-direction:column;
+  gap:15px;
 }
 
 .price{
   font-size:32px;
   font-weight:800;
-  margin-bottom:15px;
+  margin-bottom:10px;
 }
 
 .price span{
@@ -326,20 +302,48 @@ footer{
   font-size:14px;
   opacity:0.6;
 }
-.pricing-box {
-  margin-top: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px; /* espacio entre precios */
+
+/* ==============================
+   MEDIA QUERIES
+============================== */
+@media (max-width:768px){
+  .demo-link img{
+    animation: pulseDemo 1.2s infinite;
+  }
+
+  .demo-link::after{
+    content:"👆";
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    font-size:55px;
+    animation: tapFinger 1.2s infinite ease-in-out;
+    z-index:2;
+  }
+
+  @keyframes pulseDemo{
+    0%{ transform: scale(1); }
+    50%{ transform: scale(1.05); }
+    100%{ transform: scale(1); }
+  }
+
+  @keyframes tapFinger{
+    0%{ transform:translate(-50%,-50%) scale(1); }
+    50%{ transform:translate(-50%,-42%) scale(0.9); }
+    100%{ transform:translate(-50%,-50%) scale(1); }
+  }
+
+  .service-container{
+    flex-direction:column;
+    align-items:center;
+  }
+
+  .plans-container{
+    flex-direction:column;
+    gap:20px;
+  }
 }
 
-.pricing-box .price {
-  font-size: 20px;
-  margin: 0;
-  text-align: center;
-}
 
-.pricing-box button {
-  width: 100%;
-}
 
