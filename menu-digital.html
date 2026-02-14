@@ -9,102 +9,94 @@
 </head>
 <body>
 
-<header class="hero">
-  <nav class="nav">
-  <a href="index.html" class="back-btn">← Inicio</a>
-  <div class="logo">Abner<span>Dev</span></div>
-</nav>
+  <!-- HEADER -->
+  <header class="hero">
+    <nav class="nav">
+      <a href="index.html" class="back-btn">← Inicio</a>
+      <div class="logo">Abner<span>Dev</span></div>
+    </nav>
 
+    <div class="hero-content">
+      <h2>Menú Digital</h2>
+    </div>
+  </header>
 
-  <div class="hero-content">
-	  <h2>Menu Digital</h2>
-  </div>
-</header>
+  <!-- SECCIÓN DE INCLUYE -->
+  <section class="service-highlight">
+    <div class="service-media">
+      <video autoplay muted loop playsinline class="demo-video">
+        <source src="img/menu-demo.mp4" type="video/mp4">
+        Tu navegador no soporta video.
+      </video>
+    </div>
 
-<section>
-
-  <div class="service-highlight">
-
-    <div class="service-image">
-		<video autoplay muted loop playsinline class="demo-video">
-		<source src="img/menu-demo.mp4" type="video/mp4">
-		Tu navegador no soporta video.
-		</video>
-	</div>
-	
-	<h2>¿Qué incluye?</h2>
-
-    <div class="service-content">
+    <div class="service-details">
+      <h2>¿Qué incluye?</h2>
       <ul>
         <li>✔ Diseño personalizado</li>
         <li>✔ Código QR listo para imprimir</li>
         <li>✔ Carrito de pedidos</li>
         <li>✔ Envío automático a WhatsApp</li>
         <li>✔ Adaptable a celular, tablet y PC</li>
-		<li>✔ Base de datos en google sheets</li>
+        <li>✔ Base de datos en Google Sheets</li>
       </ul>
     </div>
+  </section>
 
-  </div>
-</section>
-
-<section>
-  <h2>Galería</h2>
-
-  <div class="portfolio-grid">
-    <div class="project">
-      <img src="img/menu-digital.jpg" alt="Vista menú 1">
+  <!-- SECCIÓN GALERÍA -->
+  <section class="gallery">
+    <h2>Galería</h2>
+    <div class="portfolio-grid">
+      <div class="project">
+        <img src="img/menu-digital.jpg" alt="Vista menú 1">
+      </div>
+      <div class="project">
+        <img src="img/menu-carrito.jpg" alt="Vista menú 2">
+      </div>
+      <div class="project">
+        <img src="img/menu-excel.jpg" alt="Vista menú 3">
+      </div>
     </div>
+  </section>
 
-    <div class="project">
-      <img src="img/menu-carrito.jpg" alt="Vista menú 2">
+  <!-- SECCIÓN DEMO -->
+  <section class="demo-section">
+    <h2>🚀 Toca la imagen y prueba la demo en vivo</h2>
+    <a href="demo-menu/index.html" class="demo-link">
+      <img src="img/menu-digital.jpg" alt="Probar demo del menú digital">
+    </a>
+  </section>
+
+  <!-- SECCIÓN PLAN PROFESIONAL -->
+  <section class="contact">
+    <h2>Plan Profesional</h2>
+    <div class="card" style="max-width:400px; margin:auto; text-align:center;">
+      <h3 style="font-size:28px;">$99 / mes</h3>
+      <p style="margin:20px 0;">Soporte, actualizaciones y mantenimiento incluidos.</p>
+      <button class="whatsapp-btn" id="whatsappBtn">Contratar Ahora</button>
     </div>
+  </section>
 
-    <div class="project">
-      <img src="img/menu-excel.jpg" alt="Vista menú 3">
-    </div>
-  </div>
-</section>
+  <!-- FOOTER -->
+  <footer>
+    © 2026 Abner Dev | Soluciones Digitales
+  </footer>
 
-<section class="demo-section">
-  <h2>🚀 Toca la imagen y prueba la demo en vivo</h2>
-
-  <a href="demo-menu/index.html" class="demo-link">
-    <img src="img/menu-digital.jpg" alt="Probar demo del menú digital">
-   
-  </a>
-</section>
-
-
-<section class="contact">
-  <h2>Plan Profesional</h2>
-
-  <div class="card" style="max-width:400px;margin:auto;">
-    <h3 style="font-size:28px;">$99 / mes</h3>
-    <p style="margin:20px 0;">
-      Soporte, actualizaciones y mantenimiento incluidos.
-    </p>
-    <button class="primary-btn" id="whatsappBtn">
-      Contratar Ahora
-    </button>
-  </div>
-</section>
-
-<footer>
-  © 2026 Abner Dev | Soluciones Digitales
-</footer>
-
-<script>
-document.getElementById("whatsappBtn").addEventListener("click", function(){
-  const numero = "529811064643";
-  const mensaje = "Hola, quiero contratar el Menú Digital Profesional de $99/mes.";
-  const url = `https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`;
-  window.open(url, "_blank");
-});
-</script>
+  <!-- SCRIPT WHATSAPP -->
+  <script>
+    document.getElementById("whatsappBtn").addEventListener("click", function(){
+      const numero = "529811064643";
+      const mensaje = "Hola, quiero contratar el Menú Digital Profesional de $99/mes.";
+      const url = `https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`;
+      window.open(url, "_blank");
+    });
+  </script>
 
 </body>
 </html>
+
+
+
 
 
 
