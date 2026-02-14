@@ -333,4 +333,16 @@ footer{
   opacity:0.6;
 }
 
+/* ==============================
+   LISTAS DE INCLUYE
+============================== */
+.service-details ul {
+  list-style: none;   /* Quita los puntos negros */
+  padding-left: 0;    /* Elimina el padding por defecto */
+}
+
+.service-details ul li {
+  margin-bottom: 10px;  /* Espacio entre cada elemento */
+}
+
 
