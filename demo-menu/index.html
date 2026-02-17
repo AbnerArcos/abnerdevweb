@@ -5,13 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Chef</title>
 <link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
 </head>
 <body>
-
-<a href="../menu-digital.html" class="exit-demo-btn">
-  ❌ Salir de la Demo
-</a>
-
 
 <div class="banner">
   <img src="img/banner.jpg">
@@ -23,145 +21,181 @@
 </div>
 
 <div class="tabs">
-  <a href="#antojitos">Antojitos</a>
-  <a href="#burguers">Burguers</a>
+  <a href="#comidas">Antojitos</a>
 </div>
 
-<section id="antojitos" class="section">
+<section id="comidas" class="section">
   <h2>Antojitos</h2>
 
-  <!-- SUBCATEGORIA PANUCHOS -->
+
+  <!-- SUBCATEGORIA COMIDAS -->
   <h3 class="subtitulo">Empanadas</h3>
   <div class="products">
+  
+  
 
-    <div class="card" data-name="Empanada de pastor" data-price="25">
-      <div class="img-container">
-        <img src="img/empanadapastor.jpg">
-        <div class="badge">0</div>
-      </div>
-      <p class="price">$25.00</p>
-      <p>Empanadas de pastor</p>
-	  <input 
-  type="text" 
-  class="sugerencia-input" 
-  placeholder="Agregar sugerencia (ej: sin tomate)"
->
-    </div>
+<div class="card special-product"
+     data-name="Empanadas de pastor"
+     data-options='[
+       {"label":"1 x","price":25},
+       {"label":"2 x","price":50},
+       {"label":"3 x","price":75}
+	   {"label":"4 x","price":100}
+     ]'>
 
-    <div class="card" data-name="Empanada de molida" data-price="25">
-      <div class="img-container">
-        <img src="img/empanadamolida.jpg">
-        <div class="badge">0</div>
-      </div>
-      <p class="price">$25.00</p>
-      <p>Empanadas de molida</p>
-	  <input 
-  type="text" 
-  class="sugerencia-input" 
-  placeholder="Agregar sugerencia (ej: sin tomate)"
->
-    </div>
-
-    <div class="card" data-name="Empanada de queso" data-price="25">
-      <div class="img-container">
-        <img src="img/empanadaqueso.jpg">
-        <div class="badge">0</div>
-      </div>
-      <p class="price">$25.00</p>
-      <p>Empanadas de queso</p>
-	  <input 
-  type="text" 
-  class="sugerencia-input" 
-  placeholder="Agregar sugerencia (ej: sin tomate)"
->
-    </div>
-
-<div class="card" data-name="Empanada de pollo" data-price="25">
-      <div class="img-container">
-        <img src="img/empanadapollo.jpg">
-        <div class="badge">0</div>
-      </div>
-      <p class="price">$25.00</p>
-      <p>Empanadas de pollo</p>
-	  <input 
-  type="text" 
-  class="sugerencia-input" 
-  placeholder="Agregar sugerencia (ej: sin tomate)"
->
-    </div>
-
+  <div class="img-container">
+    <img src="img/empanadapastor.jpg">
+    <div class="badge">0</div>
   </div>
 
-<h3 class="subtitulo">Panuchos</h3>
-  <div class="products">
+  <h4 class="product-name">Empanada de pastor</h4>
 
-    <div class="card" data-name="Panucho pastor" data-price="20">
-      <div class="img-container">
-        <img src="img/panuchopastor.jpg">
-        <div class="badge">0</div>
-      </div>
-      <p class="price">$20.00</p>
-      <p>Panucho de pastor</p>
-	  <input 
-  type="text" 
-  class="sugerencia-input" 
-  placeholder="Agregar sugerencia (ej: sin tomate)"
->
-    </div>
+  <p class="product-description">
+    Elige la cantidad
+  </p>
 
-    <div class="card" data-name="Panucho de molida" data-price="20">
-      <div class="img-container">
-        <img src="img/panuchomolida.jpg">
-        <div class="badge">0</div>
-      </div>
-      <p class="price">$20.00</p>
-      <p>Panucho de molida</p>
-	  <input 
-  type="text" 
-  class="sugerencia-input" 
-  placeholder="Agregar sugerencia (ej: sin tomate)"
->
-    </div>
+  <p class="price"> $25</p>
 
-    <div class="card" data-name="Panucho de pollo" data-price="20">
-      <div class="img-container">
-        <img src="img/panuchopollo.jpg">
-        <div class="badge">0</div>
-      </div>
-      <p class="price">$20.00</p>
-      <p>Panucho de pollo</p>
-	  <input 
-  type="text" 
-  class="sugerencia-input" 
-  placeholder="Agregar sugerencia (ej: sin tomate)"
->
-    </div>
+</div>
 
+<div class="card special-product"
+     data-name="Empanadas de molida"
+     data-options='[
+       {"label":"1 x","price":25},
+       {"label":"2 x","price":50},
+       {"label":"3 x","price":75}
+	   {"label":"4 x","price":100}
+     ]'>
+
+  <div class="img-container">
+    <img src="img/empanadamolida.jpg">
+    <div class="badge">0</div>
   </div>
 
-  <!-- SUBCATEGORIA SALBUTES -->
-  <h3 class="subtitulo">Trancas</h3>
+  <h4 class="product-name">Empanada de molida</h4>
+
+  <p class="product-description">
+    Elige la cantidad
+  </p>
+
+  <p class="price"> $25</p>
+
+</div>
+
+<div class="card special-product"
+     data-name="Empanada de queso"
+     data-options='[
+       {"label":"1 x","price":25},
+       {"label":"2 x","price":50},
+       {"label":"3 x","price":75}
+	   {"label":"4 x","price":100}
+     ]'>
+
+  <div class="img-container">
+    <img src="img/empanadaqueso.jpg">
+    <div class="badge">0</div>
+  </div>
+
+  <h4 class="product-name">Empanada de queso</h4>
+
+  <p class="product-description">
+    Elige la cantidad
+  </p>
+
+  <p class="price"> $25</p>
+
+</div>
+
+<div class="card special-product"
+     data-name="Empanada de pollo"
+     data-options='[
+       {"label":"1 x","price":25},
+       {"label":"2 x","price":50},
+       {"label":"3 x","price":75}
+	   {"label":"4 x","price":100}
+     ]'>
+
+  <div class="img-container">
+    <img src="img/empanadapollo.jpg">
+    <div class="badge">0</div>
+  </div>
+
+  <h4 class="product-name">Empanada de pollo</h4>
+
+  <p class="product-description">
+    Elige la cantidad
+  </p>
+
+  <p class="price"> $25</p>
+
+</div>
+</div>
+
+  <!-- SUBCATEGORIA COMIDAS -->
+
+ <h3 class="subtitulo">Panuchos</h3>
   <div class="products">
+  
+ 
 
+<div class="card special-product"
+     data-name="Panuchos de molida"
+     data-options='[
+       {"label":"1 x","price":20},
+       {"label":"2 x","price":40},
+       {"label":"3 x","price":60}
+	   {"label":"4 x","price":80}
+     ]'>
 
-    <div class="card" data-name="Tranca de pastor" data-price="55">
-      <div class="img-container">
-        <img src="img/trancapastor.jpg">
-        <div class="badge">0</div>
-      </div>
-      <p class="price">$55.00</p>
-      <p>Tranca de pastor</p>
-	  <input 
-  type="text" 
-  class="sugerencia-input" 
-  placeholder="Agregar sugerencia (ej: sin tomate)"
->
-    </div>
+  <div class="img-container">
+    <img src="img/panuchomolida.jpg">
+    <div class="badge">0</div>
+  </div>
 
+  <h4 class="product-name">panucho de molida</h4>
 
-    <div class="card" data-name="Trancas de pollo" data-price="55">
-      <div class="img-container">
-        <img src="img/<div class="card special-product"
+  <p class="product-description">
+    Elige la cantidad
+  </p>
+
+  <p class="price"> $20</p>
+
+</div>
+
+<div class="card special-product"
+     data-name="Panuchos de pollo"
+     data-options='[
+       {"label":"1 x","price":20},
+       {"label":"2 x","price":40},
+       {"label":"3 x","price":60}
+	   {"label":"4 x","price":80}
+     ]'>
+
+  <div class="img-container">
+    <img src="img/panuchopollo.jpg">
+    <div class="badge">0</div>
+  </div>
+
+  <h4 class="product-name">panucho de pollo</h4>
+
+  <p class="product-description">
+    Elige la cantidad
+  </p>
+
+  <p class="price"> $20</p>
+
+</div>
+
+</div>
+
+  <!-- SUBCATEGORIA COMIDAS -->
+
+<h3 class="subtitulo">Tranca de pastor</h3>
+  <div class="products">
+  
+ 
+
+<div class="card special-product"
      data-name="Tranca de pastor"
      data-options='[
        {"label":"1 x","price":55},
@@ -183,69 +217,42 @@
 
   <p class="price"> $55</p>
 
-</div>">
-        <div class="badge">0</div>
-      </div>
-      <p class="price">$55.00</p>
-      <p>Tranca de pollo</p>
-	  <input 
-  type="text" 
-  class="sugerencia-input" 
-  placeholder="Agregar sugerencia (ej: sin tomate)"
->
-    </div>
+</div>
 
+<div class="card special-product"
+     data-name="Tranca de pollo"
+     data-options='[
+       {"label":"1 x","price":55},
+       {"label":"2 x","price":110},
+       {"label":"3 x","price":165}
+	   {"label":"4 x","price":220}
+     ]'>
 
+  <div class="img-container">
+    <img src="img/trancapastor.jpg">
+    <div class="badge">0</div>
   </div>
 
-</section>
-<section id="burguers" class="section">
-  <h2>burguers</h2>
-  <div class="products">
+  <h4 class="product-name">Tranca de pollo</h4>
 
-    <div class="card" data-name="Hamburguesa Clasica" data-price="75">
-      <div class="img-container">
-        <img src="img/hamburguesa.jpg">
-        <div class="badge">0</div>
-      </div>
-      <p class="price">$75.00</p>
-      <p>Hamburguesa clasica</p>
-	  <input 
-  type="text" 
-  class="sugerencia-input" 
-  placeholder="Agregar sugerencia (ej: sin tomate)"
->
-    </div>
+  <p class="product-description">
+    Elige la cantidad
+  </p>
 
-    <div class="card" data-name="Champiburguer" data-price="80">
-      <div class="img-container">
-        <img src="img/champiburguer.jpg">
-        <div class="badge">0</div>
-      </div>
-      <p class="price">$80.00</p>
-      <p>Champiburguer</p>
-	  <input 
-  type="text" 
-  class="sugerencia-input" 
-  placeholder="Agregar sugerencia (ej: sin tomate)"
->
-    </div>
+  <p class="price"> $55</p>
 
-    <div class="card" data-name="Hamburguesa de pastor" data-price="85">
-      <div class="img-container">
-        <img src="img/hamburguesapastor.jpg">
-        <div class="badge">0</div>
-      </div>
-      <p class="price">$85.00</p>
-      <p>Hamburguesa de pastor</p>
-	  <input 
-  type="text" 
-  class="sugerencia-input" 
-  placeholder="Agregar sugerencia (ej: sin tomate)"
->
-    </div>
+</div>
 
-  </div>
+
+</div>
+
+
+
+
+
+
+
+
 </section>
 
 <div class="cart-bar">
@@ -285,10 +292,74 @@
 <div class="order-section" id="addressSection" style="display:none;">
   <input type="text" id="address" placeholder="Dirección de entrega">
 
-  <button id="getLocation" type="button">
-    📍 Usar ubicación actual
-  </button>
+  <button id="openMap" type="button">
+  📍 Elegir ubicación en mapa
+</button>
+
+<div id="mapModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:9999; justify-content:center; align-items:center;">
+  
+  <div style="width:95%; height:80%; background:white; border-radius:20px; padding:10px; display:flex; flex-direction:column;">
+    
+    <div id="map" style="flex:1; border-radius:15px;"></div>
+
+    <button id="confirmLocation" style="margin-top:10px; padding:12px; border:none; border-radius:20px; background:#1db954; color:white; font-weight:bold;">
+      Confirmar ubicación
+    </button>
+
+    <button id="closeMap" style="margin-top:5px; padding:10px; border:none; border-radius:20px;">
+      Cancelar
+    </button>
+
+  </div>
+
 </div>
+
+</div>   <!-- aquí termina addressSection -->
+
+<!-- AQUI PEGA LO NUEVO 👇 -->
+
+<div class="order-section" id="pickupSection" style="display:none;">
+
+  <p class="section-title">Recoger en tienda</p>
+
+  <div class="store-item">
+    <label class="store-radio">
+      <input type="radio" name="pickupStore" value="Local 1">
+      <span class="store-name">Local de comida 1</span>
+    </label>
+
+    <span class="store-address">Avenida Lopez Portillo</span>
+
+    <a 
+      href="https://maps.app.goo.gl/giJSQDwbj4hVKBKCA?g_st=ic"
+      target="_blank"
+      class="store-link"
+    >
+      📍 Ver ubicación
+    </a>
+  </div>
+
+  <div class="store-item">
+    <label class="store-radio">
+      <input type="radio" name="pickupStore" value="Local 2">
+      <span class="store-name">Local de comida 2</span>
+    </label>
+
+    <span class="store-address">Avenida Lopez Portillo</span>
+
+    <a 
+      href="https://maps.app.goo.gl/XCX4o4yU1hf5gzMaA?g_st=ic"
+      target="_blank"
+      class="store-link"
+    >
+      📍 Ver ubicación
+    </a>
+  </div>
+	  
+</div>
+
+
+
 
 <!-- ===== FORMA DE PAGO ===== -->
 
@@ -310,10 +381,9 @@
   <!-- DATOS DE TRANSFERENCIA -->
   <div id="datos-transferencia">
     <div class="transfer-box">
-      <p><strong>Banco:</strong> BBVA</p>
-      <p><strong>Cuenta:</strong> 0123456789</p>
-      <p><strong>CLABE:</strong> 012345678901234567</p>
-      <p><strong>Nombre:</strong> Chef</p>
+      <p><strong>Banco:</strong> Bancoppel</p>
+      <p><strong>Clabe:</strong> 4169 1611 0442 3446</p>
+      <p><strong>Nombre:</strong> Sonia Virgen Quintana</p>
     </div>
   </div>
 </div>
@@ -345,8 +415,64 @@
 
 <div class="toast" id="toast">Producto agregado ✅</div>
 
+<!-- MODAL UNIVERSAL -->
+<div id="productModal" class="costilla-modal">
+
+  <div class="costilla-content">
+
+    <h3 id="modalTitle">Seleccionar</h3>
+
+    <div class="weight-controls">
+      <button id="modalMinus">−</button>
+      <span id="modalLabel">1</span>
+      <button id="modalPlus">+</button>
+    </div>
+
+    <p id="modalPrice">$0.00</p>
+
+    <input 
+      type="text" 
+      id="modalComment"
+      placeholder="Agregar comentario (ej: sin cebolla)"
+      class="modal-comment"
+    />
+
+    <div class="modal-buttons">
+      <button id="modalCancel">Cancelar</button>
+      <button id="modalAdd">Agregar</button>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- MODAL MENSAJES -->
+<div id="customModal" class="custom-modal">
+
+  <div class="custom-modal-content">
+
+    <h3 id="customModalTitle"></h3>
+
+    <div id="customModalBody" class="custom-modal-body"></div>
+
+    <div class="custom-modal-buttons">
+      <button id="customCancel">Cancelar</button>
+      <button id="customConfirm">Confirmar</button>
+    </div>
+
+  </div>
+
+</div>
+
 
 <script src="app.js"></script>
 </body>
 </html>
+
+
+
+
+
+
+
 

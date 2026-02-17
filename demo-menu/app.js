@@ -15,7 +15,6 @@ const openCartBtn = document.getElementById("openCart");
 const closeCartBtn = document.getElementById("closeCart");
 const sendOrderBtn = document.getElementById("sendOrder");
 const customerNameInput = document.getElementById("customerName");
-const getLocationBtn = document.getElementById("getLocation");
 let locationLink = "";
 
 // Evitar que el input dispare el click del producto
@@ -66,33 +65,6 @@ if (customerNameInput) {
     localStorage.setItem("customerName", customerNameInput.value);
 }
 
-/* ===== AGREGAR ===== */
-/* ===== AGREGAR ===== */
-cards.forEach(card => {
-  card.addEventListener("click", () => {
-
-    const name = card.dataset.name;
-    const price = Number(card.dataset.price);
-    const noteInput = card.querySelector(".sugerencia-input");
-    const note = noteInput ? noteInput.value.trim() : "";
-
-    if (!cart[name]) {
-      cart[name] = { qty: 0, price, note: "" };
-    }
-
-    cart[name].qty++;
-    total += price;
-
-    // Siempre actualizar la nota si hay texto
-    cart[name].note = note;
-
-    saveData();
-    restoreBadges();
-    showToast();
-    updateCart();
-
-  });
-});
 
 /* ===== CARRITO ===== */
 function updateCart() {
@@ -110,10 +82,12 @@ cartItems.innerHTML += `
     <span class="item-name">${item}</span>
 
     <div class="qty-controls">
-      <button class="minus-btn" data-item="${item}">−</button>
-      <span>${cart[item].qty}</span>
-      <button class="plus-btn" data-item="${item}">+</button>
-    </div>
+  <button class="minus-btn" data-item="${item}">−</button>
+  <span>${cart[item].qty}</span>
+  <button class="plus-btn" data-item="${item}">+</button>
+  <button class="remove-btn" data-item="${item}">✕</button>
+</div>
+
 
     <span class="item-price">$${subtotal}</span>
   </div>
@@ -138,19 +112,61 @@ document.querySelectorAll(".plus-btn").forEach(btn => {
 // ➖ RESTAR
 document.querySelectorAll(".minus-btn").forEach(btn => {
   btn.onclick = () => {
-    const item = btn.dataset.item;
-    cart[item].qty--;
-    total -= cart[item].price;
 
-    if (cart[item].qty <= 0) {
-      delete cart[item];
+    const item = btn.dataset.item;
+
+    if (cart[item].qty > 1) {
+
+      cart[item].qty--;
+      total -= cart[item].price;
+
+      saveData();
+      restoreBadges();
+      updateCart();
+
+    } else {
+
+      showCustomModal(
+        "Eliminar producto",
+        `<p>${item} tiene 1 unidad.<br>¿Deseas eliminarlo del carrito?</p>`,
+        () => {
+          total -= cart[item].price;
+          delete cart[item];
+
+          saveData();
+          restoreBadges();
+          updateCart();
+        }
+      );
+
     }
 
-    saveData();
-    restoreBadges();
-    updateCart();
   };
 });
+
+
+// ❌ ELIMINAR DIRECTO
+document.querySelectorAll(".remove-btn").forEach(btn => {
+  btn.onclick = () => {
+
+    const item = btn.dataset.item;
+
+    showCustomModal(
+      "Eliminar producto",
+      `<p>¿Seguro que deseas eliminar <strong>${item}</strong> del carrito?</p>`,
+      () => {
+        total -= cart[item].qty * cart[item].price;
+        delete cart[item];
+
+        saveData();
+        restoreBadges();
+        updateCart();
+      }
+    );
+
+  };
+});
+
 }
 
 /* ===== WHATSAPP ===== */
@@ -185,7 +201,7 @@ if (sendOrderBtn) {
 	
 
     // ✅ AHORA SÍ: crear el mensaje primero
-    let msg = "🍔 CHEF\n";
+    let msg = "🍔 Fogón el Negrito\n";
     msg += "Cliente: " + customerNameInput.value + "\n\n";
 
     for (let item in cart) {
@@ -199,6 +215,25 @@ if (sendOrderBtn) {
 
     msg += "\nTotal: $" + total.toFixed(2);
     msg += "\nTipo de pedido: " + orderType.value;
+
+	if (orderType.value === "encargo") {
+
+  const selectedStore = document.querySelector("input[name='pickupStore']:checked");
+
+  if (!selectedStore) {
+    alert("Selecciona una tienda para recoger");
+    return;
+  }
+
+  const storeItem = selectedStore.closest(".store-item");
+  const storeName = storeItem.querySelector(".store-name").innerText;
+  const storeAddress = storeItem.querySelector(".store-address").innerText;
+
+  msg += "\nSucursal: " + storeName;
+  msg += "\nDirección tienda: " + storeAddress;
+
+}
+
 
     if (orderType.value === "domicilio") {
 
@@ -214,7 +249,7 @@ if (sendOrderBtn) {
   }
 }
 
-    // 💳 FORMA DE PAGO
+  // 💳 FORMA DE PAGO
 if (paymentType.value === "transferencia") {
   msg += "\nForma de pago: Transferencia";
 } else {
@@ -226,62 +261,31 @@ if (paymentType.value === "transferencia") {
     msg += "\nNo requiere cambio";
   }
 }
-// ENVIAR A GOOGLE SHEETS
-const itemsArray = [];
 
-for (let item in cart) {
-  itemsArray.push({
-    nombre: item,
-    cantidad: cart[item].qty,
-    precio: cart[item].price
-  });
-}
+showCustomModal(
+  "Confirmar pedido 🧾",
+  `
+  <p>¿Estás seguro de enviar este pedido?</p>
+  <div style="text-align:left; max-height:200px; overflow:auto; margin-top:10px;">
+    <pre style="white-space:pre-wrap;">${msg}</pre>
+  </div>
+  `,
+  () => {
 
-	// 🔒 BLOQUEAR BOTÓN
-	sendOrderBtn.disabled = true;
-	const textoOriginal = sendOrderBtn.innerText;
-	sendOrderBtn.innerText = "Enviando pedido...";
-	sendOrderBtn.style.opacity = "0.6";
+    window.location.href = "../menu-digital.html";
 
-fetch("https://script.google.com/macros/s/AKfycbyGJlnvmafbFcEKK5RIESrH01NqGS6OBnZNimcZrJYTAy3ex49JeW2akv0tSAQ9-mMc/exec", {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/x-www-form-urlencoded"
-  },
-  body: new URLSearchParams({
-    cliente: customerNameInput.value,
-    items: JSON.stringify(itemsArray)
-  })
-})
-.then(res => res.text())
-.then(data => {
+    // Limpiar carrito
+    cart = {};
+    total = 0;
+    saveData();
+    restoreBadges();
+    updateCart();
 
-  console.log("Respuesta de Sheets:", data);
-
-  if (data !== "OK") {
-    throw new Error("No respondió OK");
   }
+);
 
-  // 🧹 Limpiar carrito
-  cart = {};
-  total = 0;
-  saveData();
-  restoreBadges();
-  updateCart();
 
-  // 📲 Ir a WhatsApp
-  window.location.href = "../menu-digital.html";
-})
-.catch(error => {
 
-  console.error("Error al guardar en Sheets:", error);
-  alert("Hubo un problema guardando el pedido");
-
-  // 🔓 REACTIVAR BOTÓN
-  sendOrderBtn.disabled = false;
-  sendOrderBtn.innerText = textoOriginal;
-  sendOrderBtn.style.opacity = "1";
-});
   };
 }
 
@@ -360,6 +364,8 @@ if (closeCartBtn) closeCartBtn.onclick = () => cartModal.classList.remove("activ
 
 const orderTypeRadios = document.querySelectorAll("input[name='orderType']");
 const addressSection = document.getElementById("addressSection");
+const pickupSection = document.getElementById("pickupSection");
+const pickupRadios = document.querySelectorAll("input[name='pickupStore']");
 
 /* =====================
    CAMBIO EN EFECTIVO
@@ -386,10 +392,28 @@ paymentRadios.forEach(radio => {
       campoCambio.style.display = "block";
       datosTransferencia.style.display = "none";
     } else {
+
+  showCustomModal(
+    "Instrucción para Pago por transferencia 💳",
+    `
+    <ol style="text-align:left; padding-left:15px;">
+      <li>Selecciona el metodo de pago con transferencia.</li>
+      <li>Espera a que confirmemos disponibilidad de productos.</li>
+	  <li>Una vez se confirme la disponibilidad de los productos te mandaremos el total.</li>
+	  <li>Realiza el pago por transferencia.</li>
+      <li>Envía tu comprobante por WhatsApp.</li>
+      <li>Tu pedido comenzará a prepararse al validar el pago.</li>
+    </ol>
+    `,
+    () => {
       campoCambio.style.display = "none";
       montoCambio.style.display = "none";
       datosTransferencia.style.display = "block";
     }
+  );
+
+}
+
 
   });
 });
@@ -409,47 +433,234 @@ orderTypeRadios.forEach(radio => {
   radio.addEventListener("change", function () {
 
     if (this.value === "domicilio") {
+
+  showCustomModal(
+    "Servicio a domicilio 🚚",
+    `
+    <p>
+      El costo del envío puede variar dependiendo de la distancia 
+      entre tu ubicación y el restaurante.
+    </p>
+    <p>
+      Nuestro equipo confirmará el monto exacto por WhatsApp antes de preparar tu pedido.
+    </p>
+    `,
+    () => {
       addressSection.style.display = "block";
-    } else {
+      pickupSection.style.display = "none";
+    }
+  );
+
+}
+
+    else if (this.value === "encargo") {
       addressSection.style.display = "none";
+      pickupSection.style.display = "block";
     }
 
   });
 });
 
-if (getLocationBtn) {
-  getLocationBtn.onclick = () => {
 
-    if (!navigator.geolocation) {
-      alert("Tu celular no soporta ubicación");
-      return;
-    }
+/* =====================
+   MAPA INTERACTIVO
+===================== */
 
-    getLocationBtn.innerText = "Obteniendo ubicación...";
-	
-	
+const openMapBtn = document.getElementById("openMap");
+const mapModal = document.getElementById("mapModal");
+const confirmLocationBtn = document.getElementById("confirmLocation");
+const closeMapBtn = document.getElementById("closeMap");
 
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        const lat = position.coords.latitude;
-        const lng = position.coords.longitude;
+let mapInstance;
+let marker;
+let selectedLatLng;
 
-        locationLink = `https://maps.google.com/?q=${lat},${lng}`;
+if (openMapBtn) {
 
-        document.getElementById("address").value =
-          "Ubicación enviada por GPS 📍";
+  openMapBtn.onclick = () => {
 
-        getLocationBtn.innerText = "📍 Ubicación lista";
-      },
-      () => {
-        alert("No se pudo obtener la ubicación");
-        getLocationBtn.innerText = "📍 Usar ubicación actual";
+    mapModal.style.display = "flex";
+
+    if (!mapInstance) {
+
+      const defaultLat = 19.4326;
+      const defaultLng = -99.1332;
+
+      mapInstance = L.map("map").setView([defaultLat, defaultLng], 15);
+
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution: "© OpenStreetMap"
+      }).addTo(mapInstance);
+
+      marker = L.marker([defaultLat, defaultLng], {
+        draggable: true
+      }).addTo(mapInstance);
+
+      selectedLatLng = marker.getLatLng();
+
+      marker.on("dragend", () => {
+        selectedLatLng = marker.getLatLng();
+      });
+
+      mapInstance.on("click", (e) => {
+        marker.setLatLng(e.latlng);
+        selectedLatLng = e.latlng;
+      });
+
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(position => {
+          const lat = position.coords.latitude;
+          const lng = position.coords.longitude;
+
+          mapInstance.setView([lat, lng], 17);
+          marker.setLatLng([lat, lng]);
+          selectedLatLng = marker.getLatLng();
+        });
       }
-    );
+    }
   };
 }
 
+if (confirmLocationBtn) {
+  confirmLocationBtn.onclick = () => {
+
+    if (!selectedLatLng) return;
+
+    const lat = selectedLatLng.lat;
+    const lng = selectedLatLng.lng;
+
+    locationLink = `https://maps.google.com/?q=${lat},${lng}`;
+
+    document.getElementById("address").value =
+      "Ubicación seleccionada 📍";
+
+    mapModal.style.display = "none";
+  };
+}
+
+if (closeMapBtn) {
+  closeMapBtn.onclick = () => {
+    mapModal.style.display = "none";
+  };
+}
+
+/* =========================
+   MODAL UNIVERSAL
+========================= */
+
+const productModal = document.getElementById("productModal");
+const modalTitle = document.getElementById("modalTitle");
+const modalLabel = document.getElementById("modalLabel");
+const modalPrice = document.getElementById("modalPrice");
+const modalMinus = document.getElementById("modalMinus");
+const modalPlus = document.getElementById("modalPlus");
+const modalAdd = document.getElementById("modalAdd");
+const modalCancel = document.getElementById("modalCancel");
+const modalComment = document.getElementById("modalComment");
+
+let currentOptions = [];
+let currentIndex = 0;
+let currentProductName = "";
+
+function updateModalUI(){
+  modalLabel.innerText = currentOptions[currentIndex].label;
+  modalPrice.innerText = "$" + currentOptions[currentIndex].price.toFixed(2);
+}
+
+document.querySelectorAll(".special-product").forEach(card => {
+
+  card.addEventListener("click", () => {
+
+    currentProductName = card.dataset.name;
+    currentOptions = JSON.parse(card.dataset.options);
+    currentIndex = 0;
+
+    modalTitle.innerText = currentProductName;
+    modalComment.value = "";
+
+    updateModalUI();
+    productModal.style.display = "flex";
+
+  });
+
 });
+
+modalMinus.onclick = () => {
+  if(currentIndex > 0){
+    currentIndex--;
+    updateModalUI();
+  }
+};
+
+modalPlus.onclick = () => {
+  if(currentIndex < currentOptions.length - 1){
+    currentIndex++;
+    updateModalUI();
+  }
+};
+
+modalCancel.onclick = () => {
+  productModal.style.display = "none";
+};
+
+modalAdd.onclick = () => {
+
+  const selected = currentOptions[currentIndex];
+  const comentario = modalComment.value.trim();
+
+  const confirmar = confirm(
+    `¿Agregar ${selected.label} de ${currentProductName}?`
+  );
+
+  if(!confirmar) return;
+
+  let name = `${currentProductName} (${selected.label})`;
+
+  if(comentario){
+    name += " - " + comentario;
+  }
+
+  if(!cart[name]){
+    cart[name] = { qty: 0, price: selected.price };
+  }
+
+  cart[name].qty++;
+  total += selected.price;
+
+  saveData();
+  restoreBadges();
+  updateCart();
+  showToast();
+
+  productModal.style.display = "none";
+};
+
+function showCustomModal(title, bodyHTML, onConfirm){
+
+  const modal = document.getElementById("customModal");
+  const modalTitle = document.getElementById("customModalTitle");
+  const modalBody = document.getElementById("customModalBody");
+  const confirmBtn = document.getElementById("customConfirm");
+  const cancelBtn = document.getElementById("customCancel");
+
+  modalTitle.innerText = title;
+  modalBody.innerHTML = bodyHTML;
+
+  modal.style.display = "flex";
+
+  confirmBtn.onclick = () => {
+    modal.style.display = "none";
+    onConfirm();
+  };
+
+  cancelBtn.onclick = () => {
+    modal.style.display = "none";
+  };
+}
+
+
+});
+
 
 
 
