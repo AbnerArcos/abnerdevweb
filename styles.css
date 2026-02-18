@@ -346,3 +346,32 @@ footer{
 }
 
 
+/* ==============================
+   DIVISOR DE SECCIONES
+============================== */
+
+.section-divider{
+  margin:120px auto;
+  max-width:900px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+}
+
+.section-divider::before,
+.section-divider::after{
+  content:"";
+  flex:1;
+  height:1px;
+  background:#e2e8f0;
+}
+
+.section-divider span{
+  padding:0 25px;
+  font-size:14px;
+  font-weight:600;
+  color:#2563eb;
+  text-transform:uppercase;
+  letter-spacing:2px;
+}
