@@ -316,12 +316,6 @@ h2{
   margin-bottom:60px;
 }
 
-.product-title{
-  text-align:left;
-  font-size:18px;
-  font-weight:700;
-  margin-bottom:30px;
-}
 
 /* ==============================
    FOOTER
@@ -375,3 +369,80 @@ footer{
   text-transform:uppercase;
   letter-spacing:2px;
 }
+/* ==============================
+   PRODUCTOS
+============================== */
+
+.products-container{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:40px;
+  max-width:1100px;
+  margin:0 auto;
+}
+
+.product-card{
+  background:white;
+  border-radius:20px;
+  padding:30px;
+  box-shadow:0 15px 40px rgba(0,0,0,0.08);
+  transition:all 0.3s ease;
+  text-align:center;
+}
+
+.product-card:hover{
+  transform:translateY(-10px);
+  box-shadow:0 25px 60px rgba(0,0,0,0.12);
+}
+
+.product-title{
+  text-align:center; /* cambiamos de left a center */
+  font-size:22px;
+  font-weight:700;
+  margin-bottom:20px;
+}
+
+.product-img{
+  width:100%;
+  border-radius:15px;
+  margin-bottom:25px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.05);
+}
+
+.product-specs{
+  list-style:none;
+  padding:0;
+  margin-bottom:25px;
+  text-align:left;
+}
+
+.product-specs li{
+  margin-bottom:10px;
+  font-size:15px;
+  color:#475569;
+}
+
+.product-btn{
+  background:#2563eb;
+  color:white;
+  border:none;
+  padding:12px 28px;
+  border-radius:30px;
+  font-weight:600;
+  cursor:pointer;
+  transition:0.3s ease;
+}
+
+.product-btn:hover{
+  transform:scale(1.05);
+}
+.badge{
+  background:#2563eb;
+  color:white;
+  font-size:12px;
+  padding:5px 12px;
+  border-radius:20px;
+  display:inline-block;
+  margin-bottom:15px;
+}
+
