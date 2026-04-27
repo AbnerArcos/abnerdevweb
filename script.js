@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
     },
     "Menu20": {
       nombre: "MenuDigitalprueba",
-      link: "https://buy.stripe.com/4gMbJ3e9KdEYeSGaSD18c01"
+      link: "https://buy.stripe.com/eVqaEZ8Pq0Sc7qebWH18c02"
     }
   };
 
