@@ -1,15 +1,15 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-  const servicesBtn = document.getElementById("servicesBtn");
   const contactBtn = document.getElementById("contactBtn");
   const whatsappBtn = document.getElementById("whatsappBtn");
-  const contratar99 = document.getElementById("contratar99");
-  const contratar149 = document.getElementById("contratar149");
+  const heroWhatsapp = document.getElementById("heroWhatsapp");
+  const contratarBtns = document.querySelectorAll(".contratar-btn");
 
-  if (servicesBtn) {
-    servicesBtn.addEventListener("click", () => {
-      document.getElementById("services").scrollIntoView({ behavior: "smooth" });
-    });
+  const numero = "529811064643";
+
+  function abrirWhatsApp(mensaje){
+    const url = `https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`;
+    window.open(url, "_blank");
   }
 
   if (contactBtn) {
@@ -20,29 +20,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (whatsappBtn) {
     whatsappBtn.addEventListener("click", () => {
-      const numero = "529811064643";
-      const mensaje = "Hola Abner, me interesa tu servicio de desarrollo web.";
-      const url = `https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`;
-      window.open(url, "_blank");
+      abrirWhatsApp("Hola Abner, quiero información sobre tus servicios.");
     });
   }
 
-  if (contratar99) {
-    contratar99.addEventListener("click", () => {
-      const numero = "529811064643";
-      const mensaje = "Hola Abner, quiero contratar el Menú Digital Profesional de $99/mes.";
-      const url = `https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`;
-      window.open(url, "_blank");
+  if (heroWhatsapp) {
+    heroWhatsapp.addEventListener("click", () => {
+      abrirWhatsApp("Hola Abner, quiero cotizar un menú digital.");
     });
   }
 
-  if (contratar149) {
-    contratar149.addEventListener("click", () => {
-      const numero = "529811064643";
-      const mensaje = "Hola Abner, quiero contratar el Menú Digital Profesional de $149/mes.";
-      const url = `https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`;
-      window.open(url, "_blank");
+  contratarBtns.forEach(btn => {
+    btn.addEventListener("click", () => {
+      const mensaje = btn.getAttribute("data-msg");
+      abrirWhatsApp(mensaje);
     });
-  }
+  });
 
 });

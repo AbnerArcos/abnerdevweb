@@ -446,3 +446,32 @@ footer{
   margin-bottom:15px;
 }
 
+/* CTA HERO EXTRA */
+.social-proof{
+  margin-top:15px;
+  font-size:14px;
+  opacity:0.7;
+}
+
+/* PRECIO DESTACADO */
+.price{
+  font-size:34px;
+  font-weight:800;
+  margin-bottom:15px;
+  color:#2563eb;
+}
+
+.price span{
+  font-size:16px;
+  color:#64748b;
+}
+
+/* BOTÓN MÁS AGRESIVO */
+.product-btn{
+  width:100%;
+  background:#2563eb;
+}
+
+.product-btn:hover{
+  background:#1d4ed8;
+}
