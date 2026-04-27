@@ -14,7 +14,11 @@
 <header class="hero">
   <nav class="nav">
     <div class="logo">Abner<span>Dev</span></div>
-    <button id="contactBtn" class="nav-btn">Contacto</button>
+
+    <div style="display:flex; gap:10px;">
+      <button id="clientAreaBtn" class="nav-btn">Área clientes</button>
+      <button id="contactBtn" class="nav-btn">Contacto</button>
+    </div>
   </nav>
 
   <div class="hero-content">
@@ -67,11 +71,38 @@
   © 2026 Abner Dev | Soluciones Digitales
 </footer>
 
+<!-- MODAL CLIENTES -->
+<div id="clientModal" class="modal hidden">
+  <div class="modal-box">
+
+    <!-- LOGIN -->
+    <div id="loginView">
+      <h2>Acceso clientes</h2>
+      <p>Ingresa la clave</p>
+      <input type="password" id="clientKey" placeholder="Clave de acceso">
+      <button id="loginBtn" class="primary-btn">Entrar</button>
+    </div>
+
+    <!-- PANEL -->
+    <div id="panelView" class="hidden">
+      <h2>Tu membresía</h2>
+      <p>Paga tu servicio mensual de forma segura</p>
+
+      <button id="payBtn" class="whatsapp-btn">
+        Pagar ahora
+      </button>
+
+      <button id="logoutBtn" class="nav-btn" style="margin-top:15px;">
+        Cerrar
+      </button>
+    </div>
+
+  </div>
+</div>
+
 <script src="script.js"></script>
 </body>
 </html>
-
-
 
 
 
