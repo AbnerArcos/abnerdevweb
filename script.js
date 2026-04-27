@@ -17,11 +17,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const numero = "529811064643";
 
-  // 🔑 CAMBIA ESTA CLAVE
-  const CLAVE_CORRECTA = "abner123";
+  // 🔐 CLIENTES (CLAVE → DATOS)
+  const CLIENTES = {
+    "MenusDigitales": {
+      nombre: "MenusDigitales",
+      link: "https://buy.stripe.com/28EcN76HigRa39YbWH18c00"
+    },
+    "Menu20": {
+      nombre: "MenuDigitalprueba",
+      link: "https://buy.stripe.com/4gMbJ3e9KdEYeSGaSD18c01"
+    }
+  };
 
-  // 🔗 PEGA TU LINK DE STRIPE AQUÍ
-  const STRIPE_LINK = "https://buy.stripe.com/28EcN76HigRa39YbWH18c00";
+  let clienteActual = null;
 
   function abrirWhatsApp(mensaje){
     const url = `https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`;
@@ -55,21 +63,49 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // LOGIN
   loginBtn.addEventListener("click", () => {
-    if (clientKey.value === CLAVE_CORRECTA) {
-      loginView.classList.add("hidden");
-      panelView.classList.remove("hidden");
+    const clave = clientKey.value.trim();
+
+    if (CLIENTES[clave]) {
+      clienteActual = CLIENTES[clave];
+
+      // guardar sesión
+      localStorage.setItem("cliente", JSON.stringify(clienteActual));
+
+      mostrarPanel();
     } else {
       alert("Clave incorrecta");
     }
   });
 
+  // MOSTRAR PANEL
+  function mostrarPanel(){
+    loginView.classList.add("hidden");
+    panelView.classList.remove("hidden");
+
+    // mostrar nombre del negocio
+    const titulo = panelView.querySelector("h2");
+    titulo.textContent = clienteActual.nombre;
+  }
+
+  // AUTO LOGIN (si ya inició sesión antes)
+  const clienteGuardado = localStorage.getItem("cliente");
+  if (clienteGuardado) {
+    clienteActual = JSON.parse(clienteGuardado);
+    mostrarPanel();
+  }
+
   // PAGO
   payBtn.addEventListener("click", () => {
-    window.open(STRIPE_LINK, "_blank");
+    if (clienteActual && clienteActual.link) {
+      window.open(clienteActual.link, "_blank");
+    }
   });
 
   // LOGOUT
   logoutBtn.addEventListener("click", () => {
+    localStorage.removeItem("cliente");
+    clienteActual = null;
+
     panelView.classList.add("hidden");
     loginView.classList.remove("hidden");
     clientModal.classList.add("hidden");
