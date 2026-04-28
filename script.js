@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // 🔐 Lista de códigos y sus links
   const codigos = {
-    "Menus2026": "https://buy.stripe.com/28EcN76HigRa39YbWH18c00",
+    "Menus2026": "https://buy.stripe.com/bJedRb3v630kh0Od0L18c05",
     "Premium2026": "https://buy.stripe.com/TU_LINK_PREMIUM",
     "Basico2026": "https://buy.stripe.com/TU_LINK_BASICO",
     "ClienteVIP": "https://buy.stripe.com/TU_LINK_VIP"
@@ -17,7 +17,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (codigo === null) return; // si cancela
 
-    // 🔍 Verifica si el código existe
     if (codigos[codigo]) {
       window.open(codigos[codigo], "_blank");
     } else {
