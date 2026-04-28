@@ -10,97 +10,159 @@
 </head>
 <body>
 
-<!-- HEADER -->
-<header class="hero">
-  <nav class="nav">
-    <div class="logo">Abner<span>Dev</span></div>
+<nav>
+  <div class="logo">Glack<span>Hits</span></div>
+  <ul class="nav-links">
+    <li><a href="#producto">Producto</a></li>
+    <li><a href="#incluye">¿Qué incluye?</a></li>
+    <li><a href="#clientes">Clientes</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+  <a href="https://wa.me/9811064643?text=Hola%2C%20quiero%20un%20men%C3%BA%20digital" target="_blank" class="nav-cta">Cotizar</a>
+</nav>
 
-    <div style="display:flex; gap:10px;">
-      <button id="clientAreaBtn" class="nav-btn">Área clientes</button>
-      <button id="contactBtn" class="nav-btn">Contacto</button>
+<section id="hero">
+  <div class="hero-blob b1"></div>
+  <div class="hero-blob b2"></div>
+  <div class="hero-inner">
+    <div>
+      <div class="badge">✨ Menú Digital para tu negocio</div>
+      <h1>Tu menú en el celular de<br><span>cada cliente</span></h1>
+      <p>Diseñamos menús digitales profesionales para restaurantes, cafeterías y negocios de comida. Sin apps, sin papel — solo escanean el QR y ven tu menú al instante.</p>
+      <div class="hero-btns">
+        <a href="#producto" class="btn-main">Ver precio →</a>
+        <a href="https://wa.me/529811064643?text=Hola%2C%20quiero%20un%20men%C3%BA%20digital" target="_blank" class="btn-wa">
+          <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+          WhatsApp
+        </a>
+      </div>
     </div>
-  </nav>
-
-  <div class="hero-content">
-    <h1>Digitaliza tu negocio</h1>
-
-    <p class="social-proof">
-      Más de 20 negocios ya usan nuestros menús digitales 🚀
-    </p>
-  </div>
-</header>
-
-<!-- PRODUCTOS -->
-<section class="services" id="services">
-  <h1 class="section-title">Productos</h1>
-
-  <div class="products-container">
-
-    <div class="product-card">
-      <div class="badge">Más vendido</div>
-
-      <h2 class="product-title">Menú Digital para Local</h2>
-
-      <img src="img/menus-digitales-principal.jpg" alt="Menú Digital Local" class="product-img">
-
-      <div class="price">$200 <span>/mes</span></div>
-
-      <ul class="product-specs">
-        <li>✔ Menú listo en 48 horas</li>
-        <li>✔ Funciona en cualquier celular</li>
-        <li>✔ Aumenta pedidos desde mesa</li>
-        <li>✔ Actualizaciones incluidas</li>
-      </ul>
-
-      <button class="product-btn contratar-btn"
-        data-msg="Hola Abner, quiero contratar el Menú Digital para mi negocio.">
-        Cotizar ahora
-      </button>
+    <div class="phone-wrap">
+      <div style="position:relative;">
+        <div class="phone">
+          <div class="phone-screen">
+            <div class="phone-header">
+              <div class="phone-logo-small">GlackHits</div>
+              <div class="phone-title">🍽️ Mi Restaurante</div>
+            </div>
+            <div class="phone-body">
+              <div class="phone-category">🥗 Entradas</div>
+              <div class="phone-item"><span class="pi-name">Ensalada César</span><span class="pi-price">$85</span></div>
+              <div class="phone-item"><span class="pi-name">Sopa del día</span><span class="pi-price">$65</span></div>
+              <div class="phone-category">🍖 Platos fuertes</div>
+              <div class="phone-item"><span class="pi-name">Filete a la plancha</span><span class="pi-price">$195</span></div>
+              <div class="phone-item"><span class="pi-name">Pasta al pesto</span><span class="pi-price">$145</span></div>
+              <div class="phone-category">🍹 Bebidas</div>
+              <div class="phone-item"><span class="pi-name">Agua fresca</span><span class="pi-price">$30</span></div>
+              <div class="phone-item"><span class="pi-name">Jugo natural</span><span class="pi-price">$45</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="phone-chip chip-left">📱 Solo escanea</div>
+        <div class="phone-chip chip-right">✏️ Fácil de editar</div>
+      </div>
     </div>
-
   </div>
 </section>
 
-<!-- CONTACTO -->
-<section class="contact" id="contact">
-  <h2>¿Trabajamos juntos?</h2>
-  <button class="whatsapp-btn" id="whatsappBtn">Contáctame</button>
+<section id="producto">
+  <div style="max-width:1000px;margin:0 auto;">
+    <span class="section-tag">Nuestro producto</span>
+    <h2 class="section-title">Menú Digital Profesional</h2>
+    <p class="section-sub">Todo lo que tu negocio necesita para digitalizar su menú de forma rápida, elegante y sin complicaciones.</p>
+    <div class="prod-card">
+      <div>
+        <div class="tag-pill">⭐ Un solo plan, todo incluido</div>
+        <h3>Menú Digital</h3>
+        <div class="price">$200</div>
+        <div class="price-note">/ mes · Sin costos ocultos</div>
+        <p>Tu menú siempre actualizado, accesible desde cualquier celular con un QR. Sin descargar ninguna app. Perfecto para restaurantes, cafeterías, taquerías y más.</p>
+        <ul class="prod-features">
+          <li>Diseño personalizado con tus colores y logo</li>
+          <li>Código QR listo para imprimir</li>
+          <li>Categorías y platillos ilimitados</li>
+          <li>Actualizaciones de precios sin costo extra</li>
+          <li>Compatible con cualquier celular</li>
+          <li>Hosting y dominio incluidos</li>
+        </ul>
+        <a href="https://wa.me/529811064643?text=Hola%2C%20quiero%20contratar%20el%20men%C3%BA%20digital%20de%20%24200%2Fmes" target="_blank" class="btn-wa-big" style="font-size:.9rem;padding:.85rem 1.6rem;">
+          <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+          Contratar por WhatsApp
+        </a>
+      </div>
+      <div class="prod-preview">
+        <span class="preview-tag">Vista previa</span>
+        <div class="preview-lines">
+          <div class="pl w80"></div><div class="pl w55"></div>
+          <div class="pl w70"></div><div class="pl w40"></div>
+          <div class="pl w80"></div><div class="pl w55"></div>
+        </div>
+        <h4>Tu menú siempre disponible</h4>
+        <p>Escanean el QR y ven tu menú al instante</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="incluye">
+  <div style="max-width:1000px;margin:0 auto;">
+    <span class="section-tag">Detalles</span>
+    <h2 class="section-title">¿Qué incluye?</h2>
+    <p class="section-sub" style="margin-bottom:3rem;">Todo configurado y listo para usar desde el día uno.</p>
+    <div class="incluye-grid">
+      <div class="inc-card">
+        <div class="inc-icon">🎨</div>
+        <h3>Diseño personalizado</h3>
+        <p>Colores, logo y estilo de tu negocio. Tu menú, tu identidad.</p>
+      </div>
+      <div class="inc-card">
+        <div class="inc-icon">📲</div>
+        <h3>Código QR incluido</h3>
+        <p>Te entregamos el QR listo para imprimir en tus mesas o mostrador.</p>
+      </div>
+      <div class="inc-card">
+        <div class="inc-icon">✏️</div>
+        <h3>Cambios sin costo</h3>
+        <p>¿Nuevo platillo o precio actualizado? Lo cambiamos sin cobro extra.</p>
+      </div>
+      <div class="inc-card">
+        <div class="inc-icon">🌐</div>
+        <h3>Hosting incluido</h3>
+        <p>No pagas por separado. Todo viene en tu mensualidad de $200.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="clientes">
+  <span class="section-tag" style="display:block;margin-bottom:.8rem;">Área exclusiva</span>
+  <h2 class="section-title" style="margin-bottom:.8rem;">¿Ya eres cliente?</h2>
+  <p style="color:var(--muted);margin-bottom:2.5rem;font-size:.95rem;">Realiza tu pago mensual de forma rápida y segura.</p>
+  <div class="clientes-box">
+    <div class="lock-icon">💳</div>
+    <h2>Pago mensual</h2>
+    <p>Haz clic en el botón para completar tu pago a través de Stripe de forma segura y rápida.</p>
+    <a href="https://buy.stripe.com/28EcN76HigRa39YbWH18c00" target="_blank" class="btn-stripe">
+      💳 Pagar mensualidad
+    </a>
+  </div>
+</section>
+
+<section id="contacto">
+  <div class="cta-box">
+    <h2>¿Tienes alguna duda?</h2>
+    <p>Escríbenos por WhatsApp y con gusto te atendemos. Te respondemos en minutos.</p>
+    <a href="https://wa.me/529811064643?text=Hola%2C%20tengo%20una%20pregunta%20sobre%20el%20men%C3%BA%20digital" target="_blank" class="btn-wa-big">
+      <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+      Escribir por WhatsApp
+    </a>
+  </div>
 </section>
 
 <footer>
-  © 2026 Abner Dev | Soluciones Digitales
+  <p>© 2025 <span>GlackHits</span> · Todos los derechos reservados</p>
 </footer>
 
-<!-- MODAL CLIENTES -->
-<div id="clientModal" class="modal hidden">
-  <div class="modal-box">
-
-    <!-- LOGIN -->
-    <div id="loginView">
-      <h2>Pago de clientes</h2>
-      <p>Ingresa la clave</p>
-      <input type="password" id="clientKey" placeholder="Clave de acceso">
-      <button id="loginBtn" class="primary-btn">Entrar</button>
-    </div>
-
-    <!-- PANEL -->
-    <div id="panelView" class="hidden">
-      <h2>Tu membresía</h2>
-      <p>Paga tu servicio mensual de forma segura</p>
-
-      <button id="payBtn" class="whatsapp-btn">
-        Pagar ahora
-      </button>
-
-      <button id="logoutBtn" class="nav-btn" style="margin-top:15px;">
-        Cerrar
-      </button>
-    </div>
-
-  </div>
-</div>
-
-<script src="script.js"></script>
 </body>
 </html>
 
