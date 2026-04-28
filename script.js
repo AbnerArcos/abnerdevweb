@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
   pagarBtn.addEventListener("click", (e) => {
     e.preventDefault();
 
-    const codigoCorrecto = "pagina2026"; 
+    const codigoCorrecto = "Pagina2026"; 
 
     const codigo = prompt("Ingresa tu código de acceso:");
 
