@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // 🔐 Lista de códigos y sus links
   const codigos = {
-    "Menus2026": "https://buy.stripe.com/bJedRb3v630kh0Od0L18c05",
+    "Menus2026": "https://buy.stripe.com/6oU6oJ3v6cAU39Y9Oz18c06",
     "Premium2026": "https://buy.stripe.com/TU_LINK_PREMIUM",
     "Basico2026": "https://buy.stripe.com/TU_LINK_BASICO",
     "ClienteVIP": "https://buy.stripe.com/TU_LINK_VIP"
