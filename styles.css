@@ -1,3 +1,5 @@
+/* ===== RESET ===== */
+
 *{
   margin:0;
   padding:0;
@@ -5,71 +7,274 @@
   font-family:Arial, sans-serif;
 }
 
+html,
 body{
+  min-height:100vh;
   background:#f5f5f5;
   color:#222;
 }
 
+/* ===== BANNER SUPERIOR ===== */
+
+.top-line,
+.bottom-line{
+  width:100%;
+  height:6px;
+  background:#000;
+}
+
+.top-banner{
+  height:120px;
+  background:#000;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  position:relative;
+}
+
+.logo-circle{
+  width:130px;
+  height:130px;
+
+  border-radius:50%;
+  overflow:hidden;
+
+  background:#fff;
+  border:4px solid #000;
+
+  position:absolute;
+  bottom:-25px;
+}
+
+.logo-circle img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+/* ===== HERO ===== */
+
 .hero{
-  background:white;
+  background:#fff;
   text-align:center;
-  padding:40px 20px;
+
+  padding:60px 20px 40px;
+
   border-bottom:1px solid #ddd;
 }
 
-.container{
-  width:90%;
-  max-width:900px;
-  margin:30px auto;
+.hero h1{
+  font-size:2.5rem;
+  color:#111;
+  margin-bottom:10px;
 }
 
-h2{
+.hero p{
+  font-size:1.1rem;
+  color:#666;
+}
+
+.prize-image{
+  display:flex;
+  justify-content:center;
   margin-bottom:20px;
 }
 
-/* BOTÓN GRANDE */
-.big-btn{
-  display:flex;
-  align-items:center;
-  gap:15px;
-  background:white;
-  border:1px solid #e5e5e5;
+.prize-image img{
+  width:180px;
+  height:auto;
+
   border-radius:16px;
-  padding:15px;
+
+  box-shadow:0 10px 25px rgba(0,0,0,.15);
+}
+
+/* ===== TARJETAS ===== */
+
+.card{
+  width:90%;
+  max-width:800px;
+
+  margin:30px auto;
+
+  background:#fff;
+
+  border:1px solid #e5e5e5;
+  border-radius:18px;
+
+  padding:30px;
+}
+
+.card h2{
+  text-align:center;
+  margin-bottom:20px;
+  color:#111;
+}
+
+.card ul{
+  padding-left:20px;
+}
+
+.card li{
   margin-bottom:15px;
+  line-height:1.6;
+  color:#444;
+}
+
+/* ===== PASOS ===== */
+
+.paso{
+  margin-bottom:22px;
+
+  padding:18px;
+
+  background:#fafafa;
+
+  border:1px solid #e8e8e8;
+  border-radius:14px;
+}
+
+.paso:last-child{
+  margin-bottom:0;
+}
+
+.paso h3{
+  font-size:1.05rem;
+  color:#111;
+
+  margin-bottom:12px;
+}
+
+.paso .btn{
+  width:100%;
+  display:block;
+  text-align:center;
+}
+
+/* ===== BOTONES ===== */
+
+.btn{
+  display:block;
+
   text-decoration:none;
-  color:#222;
+
+  background:#111;
+  color:#fff;
+
+  padding:18px;
+
+  border:none;
+  border-radius:14px;
+
+  font-size:1rem;
+
+  cursor:pointer;
+
   transition:.2s;
 }
 
-.big-btn:hover{
-  transform:scale(1.02);
+.btn:hover{
+  opacity:.9;
 }
 
-.big-btn img{
-  width:70px;
-  height:70px;
-  object-fit:cover;
-  border-radius:12px;
-}
+/* ===== MODAL DE PAGO ===== */
 
-.info h3{
-  margin-bottom:5px;
-}
+.payment-card{
+  position:fixed;
 
-.info p{
-  color:#666;
-  font-size:.9rem;
-}
+  top:50%;
+  left:50%;
 
-.disabled{
-  opacity:.5;
-  pointer-events:none;
-}
+  transform:translate(-50%,-50%) scale(0);
 
-footer{
-  text-align:center;
+  width:90%;
+  max-width:420px;
+
+  background:#fff;
+
+  border:1px solid #ddd;
+  border-radius:20px;
+
   padding:30px;
-  color:#777;
+
+  z-index:100;
+
+  box-shadow:0 10px 30px rgba(0,0,0,.1);
+
+  transition:.25s;
 }
-``
+
+.payment-card.active{
+  transform:translate(-50%,-50%) scale(1);
+}
+
+.payment-card h2{
+  color:#111;
+  margin-bottom:20px;
+}
+
+.payment-card p{
+  color:#444;
+  margin-bottom:14px;
+}
+
+.payment-card button{
+  width:100%;
+
+  margin-top:10px;
+  padding:15px;
+
+  border:none;
+  border-radius:12px;
+
+  background:#111;
+  color:#fff;
+
+  cursor:pointer;
+}
+
+/* ===== FOOTER ===== */
+
+.footer{
+  width:100%;
+  margin-top:40px;
+}
+
+.footer-contacto{
+  background:#000;
+
+  padding:20px;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  gap:40px;
+  flex-wrap:wrap;
+}
+
+.footer-contacto a{
+  color:#fff;
+  text-decoration:none;
+  font-weight:bold;
+
+  transition:.3s;
+}
+
+.footer-contacto a:hover{
+  color:#ccc;
+}
+
+.footer-copy{
+  background:#000;
+
+  color:#aaa;
+
+  text-align:center;
+
+  padding:15px;
+
+  font-size:14px;
+}
