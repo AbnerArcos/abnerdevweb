@@ -1,0 +1,149 @@
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial, sans-serif;
+}
+body{
+  background:#f5f5f5;
+  color:#222;
+  min-height:100vh;
+}
+.hero{
+  background:white;
+  text-align:center;
+  padding:60px 20px 40px;
+  border-bottom:1px solid #ddd;
+}
+.hero h1{
+  font-size:2.5rem;
+  margin-bottom:10px;
+  color:#111;
+}
+.hero p{
+  font-size:1.1rem;
+  color:#666;
+}
+.card{
+  width:90%;
+  max-width:800px;
+  margin:30px auto;
+  background:white;
+  border:1px solid #e5e5e5;
+  border-radius:18px;
+  padding:30px;
+}
+.card h2{
+  margin-bottom:20px;
+  color:#111;
+}
+.card ul{
+  padding-left:20px;
+}
+.card li{
+  margin-bottom:15px;
+  line-height:1.6;
+  color:#444;
+}
+.buttons{
+  width:90%;
+  max-width:800px;
+  margin:30px auto;
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+}
+.btn{
+  text-decoration:none;
+  background:#111;
+  color:white;
+  padding:18px;
+  text-align:center;
+  border-radius:14px;
+  font-size:1rem;
+  transition:.2s;
+  border:none;
+  cursor:pointer;
+}
+.btn:hover{
+  opacity:.9;
+}
+.payment-card{
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%) scale(0);
+  width:90%;
+  max-width:420px;
+  background:white;
+  border:1px solid #ddd;
+  border-radius:20px;
+  padding:30px;
+  transition:.25s;
+  z-index:100;
+  box-shadow:0 10px 30px rgba(0,0,0,.1);
+}
+.payment-card.active{
+  transform:translate(-50%,-50%) scale(1);
+}
+.payment-card h2{
+  margin-bottom:20px;
+  color:#111;
+}
+.payment-card p{
+  margin-bottom:14px;
+  color:#444;
+}
+.payment-card button{
+  width:100%;
+  padding:15px;
+  border:none;
+  border-radius:12px;
+  background:#111;
+  color:white;
+  cursor:pointer;
+  margin-top:10px;
+}
+footer{
+  text-align:center;
+  padding:40px 20px;
+  color:#777;
+  font-size:.95rem;
+}
+
+.prize-image{
+  display:flex;
+  justify-content:center;
+  margin-bottom:20px;
+}
+
+.prize-image img{
+  width:180px;
+  height:auto;
+  border-radius:16px;
+  box-shadow:0 10px 25px rgba(0,0,0,.15);
+}
+/* 🔥 SECCIÓN DE PASOS */
+.paso {
+  margin-bottom: 22px;
+  padding: 18px;
+  border-radius: 14px;
+  background: #fafafa;
+  border: 1px solid #e8e8e8;
+}
+
+/* separación del título */
+.paso h3 {
+  font-size: 1.05rem;
+  margin-bottom: 12px;
+  color: #111;
+}
+
+/* botones dentro de cada paso */
+.paso .btn {
+  width: 100%;
+  display: block;
+  text-align: center;
+  margin-top: 6px;
+}

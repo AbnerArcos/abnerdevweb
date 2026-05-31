@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Rifa Google Play</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="background"></div>
+
+  <header class="hero">
+    <div class="prize-image">
+      <img src="premio.jpg" alt="Premio Google Play" />
+    </div>
+    <h1>🎟️ RIFA GOOGLE PLAY 🎟️</h1>
+    <p>Participa por 2 tarjetas Google Play de $250 MXN</p>
+  </header>
+
+  <section class="card">
+    <h2>📌 Reglas de la Rifa</h2>
+    <ul>
+      <li>El ganador se elegirá con los últimos 3 números del premio mayor de la Lotería Nacional.</li>
+      <li>Si no se venden todos los boletos en el tiempo establecido, la rifa será pospuesta y se anunciará una nueva fecha.</li>
+      <li>Los boletos apartados únicamente serán válidos después de realizar el pago y enviar comprobante.</li>
+      <li>Si un boleto apartado resulta ganador y no fue pagado antes del cierre de la rifa, el premio será anulado y se volverá a realizar el sorteo.</li>
+      <li>Después de realizar el pago, no hay devoluciones.</li>
+      <li>Los resultados oficiales se publicarán al finalizar la rifa.</li>
+      <li>Participar en la rifa significa aceptar todas las reglas anteriores.</li>
+      <li>La rifa es 100% transparente y el resultado se toma directamente de la Lotería Nacional.</li>
+    </ul>
+  </section>
+
+  <!-- 🔥 NUEVO: PASOS -->
+  <section class="card">
+
+    <div class="paso">
+      <h3>Paso 1)</h3>
+      <a href="https://minharifa.app/r/doble-google-play-?lang=es" target="_blank" class="btn">
+        🎟️ Aparta tus boletos aquí
+      </a>
+    </div>
+
+    <div class="paso">
+      <h3>Paso 2)</h3>
+      <button class="btn" onclick="mostrarPago()">
+        💳 Paga tus boletos aquí
+      </button>
+    </div>
+
+    <div class="paso">
+      <h3>Paso 3)</h3>
+      <a href="https://wa.me/529811064643" target="_blank" class="btn">
+        📸 Envía de captura tú pago aquí
+      </a>
+    </div>
+
+  </section>
+
+  <section class="payment-card" id="paymentCard">
+    <h2>💳 Datos de Transferencia</h2>
+    <p><strong>Banco:</strong> BANAMEX</p>
+    <p><strong>Nombre:</strong> Abner Alexander del Jordan Arcos Acosta</p>
+    <p><strong>Tarjeta:</strong> 002050905306465476</p>
+    <p><strong>Monto:</strong> Transfiere el total correspondiente a tus boletos. Ejemplo: 1 boleto = $1 MXN, 5 boletos = $5 MXN, 10 boletos = $10 MXN.</p>
+    <p><strong>Concepto:</strong> Usa el mismo nombre que registraste al apartar tu boleto.</p>
+    <button onclick="cerrarPago()">
+      Cerrar
+    </button>
+  </section>
+
+  <footer>
+    🍀 Mucha suerte a todos los participantes
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
