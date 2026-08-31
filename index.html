@@ -66,6 +66,13 @@ body{background:var(--bg);color:var(--text);min-height:100vh}
 .img-upload-clear{position:absolute;top:4px;right:4px;width:20px;height:20px;border-radius:50%;border:none;background:rgba(0,0,0,.55);color:white;font-size:11px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:3}
 .img-upload-loading{position:absolute;inset:0;background:rgba(255,255,255,.85);display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--muted);z-index:4}
 .thumb-placeholder{width:44px;height:44px;border-radius:10px;background:var(--border);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+
+/* LOGO UPLOAD (cuadrito pequeño) */
+.logo-upload-box{width:90px;height:90px;margin:2px auto 0}
+.logo-upload-box .img-upload-placeholder{padding:6px}
+.logo-upload-box .img-upload-placeholder .icon{font-size:18px}
+.logo-upload-box .img-upload-placeholder .label{font-size:9.5px}
+.logo-upload-box .img-upload-preview{width:90px;height:90px;border-radius:8px}
 </style>
 </head>
 <body>
@@ -84,6 +91,10 @@ body{background:var(--bg);color:var(--text);min-height:100vh}
     <div class="panel-body">
 
       <div class="tab-content active" id="tab-general">
+        <div class="form-group">
+          <label>Logo del negocio</label>
+          <div id="logo-upload-container"></div>
+        </div>
         <div class="form-group">
           <label>Nombre del restaurante</label>
           <input type="text" id="restaurantName" value="Menu AbnerDev" oninput="updatePreview()">
@@ -221,7 +232,7 @@ body{background:var(--bg);color:var(--text);min-height:100vh}
 
 <script>
 let menuData = {
-  name:"Menu AbnerDev", emoji:"🍽️", welcome:"", currency:"MXN", gridCols:"2",
+  name:"Menu AbnerDev", emoji:"🍽️", logo:"", welcome:"", currency:"MXN", gridCols:"2",
   waPhone:"529811064643", waBtnText:"Enviar pedido por WhatsApp",
   waPrefix:"Hola, quiero hacer el siguiente pedido:", waSuccess:"✅ Pedido enviado correctamente",
   colorPrimary:"#b58b63", colorBg:"#f9f7f4", colorOuter:"#e9e4de",
@@ -373,6 +384,89 @@ function updateThumb(si, pi, src) {
   t.innerHTML = src ? `<img src="${src}" style="width:44px;height:44px;border-radius:10px;object-fit:cover">` : '🖼️';
 }
 
+function createLogoUpload() {
+  const wrap = document.createElement('div');
+  const box = document.createElement('div');
+  box.className = 'img-upload-box logo-upload-box';
+  box.id = 'box-logo';
+
+  const input = document.createElement('input');
+  input.type = 'file';
+  input.accept = 'image/*';
+
+  const placeholder = document.createElement('div');
+  placeholder.className = 'img-upload-placeholder';
+  placeholder.innerHTML = '<span class="icon">🖼️</span><span class="label">Subir logo<br><span style="color:var(--brand);font-weight:600">o arrastra</span></span>';
+
+  box.appendChild(input);
+  box.appendChild(placeholder);
+
+  if (menuData.logo) renderLogoPreview(box, menuData.logo);
+
+  const processFile = async (file) => {
+    if (!file || !file.type.startsWith('image/')) return;
+    if (file.size > 2*1024*1024) { alert('Máximo 2MB para el logo.'); return; }
+    const loading = document.createElement('div');
+    loading.className = 'img-upload-loading';
+    loading.textContent = 'Procesando...';
+    box.appendChild(loading);
+    try {
+      const b64 = await fileToBase64(file);
+      menuData.logo = b64;
+      loading.remove();
+      renderLogoPreview(box, b64);
+      updatePreview();
+    } catch(e) { loading.remove(); }
+  };
+
+  input.addEventListener('change', e => processFile(e.target.files[0]));
+  box.addEventListener('dragover', e => { e.preventDefault(); box.style.borderColor='var(--brand)'; });
+  box.addEventListener('dragleave', () => { box.style.borderColor=''; });
+  box.addEventListener('drop', e => { e.preventDefault(); box.style.borderColor=''; processFile(e.dataTransfer.files[0]); });
+
+  wrap.appendChild(box);
+  return wrap;
+}
+
+function renderLogoPreview(box, src) {
+  box.innerHTML = '';
+  const img = document.createElement('img');
+  img.className = 'img-upload-preview';
+  img.src = src;
+  const clearBtn = document.createElement('button');
+  clearBtn.className = 'img-upload-clear';
+  clearBtn.textContent = '✕';
+  clearBtn.onclick = e => {
+    e.stopPropagation();
+    menuData.logo = '';
+    updatePreview();
+    renderLogoUploadUI();
+  };
+  const input = document.createElement('input');
+  input.type = 'file'; input.accept = 'image/*';
+  input.style.cssText = 'position:absolute;inset:0;opacity:0;cursor:pointer;z-index:2;width:100%;height:100%';
+  input.addEventListener('change', async e => {
+    const file = e.target.files[0];
+    if (!file || file.size > 2*1024*1024) { if(file) alert('Máximo 2MB.'); return; }
+    const loading = document.createElement('div');
+    loading.className = 'img-upload-loading'; loading.textContent = 'Procesando...';
+    box.appendChild(loading);
+    try {
+      const b64 = await fileToBase64(file);
+      menuData.logo = b64;
+      loading.remove(); renderLogoPreview(box, b64);
+      updatePreview();
+    } catch(e2) { loading.remove(); }
+  });
+  box.appendChild(img); box.appendChild(clearBtn); box.appendChild(input);
+}
+
+function renderLogoUploadUI() {
+  const container = document.getElementById('logo-upload-container');
+  container.innerHTML = '';
+  container.appendChild(createLogoUpload());
+}
+
 function renderSectionsEditor() {
   const container = document.getElementById('sections-editor');
   container.innerHTML = '';
@@ -491,6 +585,7 @@ function generateFinalHTML(d) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>${escH(d.name)}</title>
   <link href="https://fonts.googleapis.com/css2?family=${d.fontFamily}:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
   <style>
     *{margin:0;padding:0;box-sizing:border-box;font-family:'${d.fontFamily}',sans-serif}
     :root{--color:${d.colorPrimary};--color-dark:${darken(d.colorPrimary)};--bg:${d.colorBg};--outer:${d.colorOuter}}
@@ -499,7 +594,9 @@ function generateFinalHTML(d) {
     .app{width:100%;max-width:380px;background:var(--bg);border-radius:30px;padding:20px;min-height:100vh;box-shadow:0 20px 60px rgba(0,0,0,.12);position:relative}
     .top-bar{position:sticky;top:0;background:var(--bg);z-index:100;padding-bottom:12px}
     .header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
-    .header h1{font-size:20px;color:#000;font-weight:500}
+    .header-left{display:flex;align-items:center;gap:10px;min-width:0}
+    .logo-badge{width:42px;height:42px;border-radius:14px;object-fit:cover;box-shadow:0 4px 10px rgba(0,0,0,.12);flex-shrink:0;background:white}
+    .header h1{font-size:20px;color:#000;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
     .tabs{display:flex;gap:10px;overflow-x:auto;white-space:nowrap;padding:6px;background:white;border-radius:999px;scrollbar-width:none}
     .tabs::-webkit-scrollbar{display:none}
     .tab{flex:0 0 auto;padding:12px 20px;border-radius:999px;border:none;background:transparent;font-weight:500;cursor:pointer;color:#000}
@@ -565,13 +662,38 @@ function generateFinalHTML(d) {
     .success-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
     ${d.welcome?'.welcome-msg{background:white;border-radius:16px;padding:12px 16px;margin-bottom:16px;font-size:13px;color:#555;border-left:3px solid var(--color)}':''}
     button{-webkit-appearance:none;appearance:none}
+
+    /* UBICACION */
+    .location-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 16px;border-top:1px solid #eee;cursor:pointer;transition:background .2s}
+    .location-row:active{background:#f7f4ef}
+    .location-row.set{background:#f9f6f1}
+    .location-info{display:flex;align-items:center;gap:10px;min-width:0}
+    .location-icon{font-size:20px;flex-shrink:0}
+    .location-text{display:flex;flex-direction:column;min-width:0}
+    .location-text strong{font-size:13px;color:#000;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .location-text small{color:#888;font-size:11px}
+    .location-arrow{width:30px;height:30px;border-radius:50%;background:var(--color);color:white;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
+    .location-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);opacity:0;pointer-events:none;transition:opacity .3s;z-index:3500}
+    .location-modal-overlay.active{opacity:1;pointer-events:all}
+    .location-modal{position:fixed;left:0;right:0;bottom:-100%;background:white;border-top-left-radius:24px;border-top-right-radius:24px;transition:bottom .4s ease;z-index:4000;padding:18px;max-height:88vh;display:flex;flex-direction:column}
+    .location-modal.active{bottom:0}
+    .location-modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+    .location-modal-header h3{font-size:15px;font-weight:600}
+    .map-wrap{position:relative;width:100%;height:260px;border-radius:16px;overflow:hidden;margin-bottom:12px;background:#e9e4de}
+    #mapContainer{width:100%;height:100%}
+    .map-pin{position:absolute;top:50%;left:50%;transform:translate(-50%,-92%);font-size:34px;pointer-events:none;filter:drop-shadow(0 5px 6px rgba(0,0,0,.35));z-index:500}
+    .map-pin-dot{position:absolute;top:50%;left:50%;width:8px;height:8px;border-radius:50%;background:rgba(0,0,0,.25);transform:translate(-50%,-50%);z-index:499}
+    .use-location-btn{background:transparent;border:2px solid var(--color);color:var(--color-dark);border-radius:999px;padding:10px;font-weight:600;cursor:pointer;margin-bottom:10px;font-size:13px}
+    .loc-address{font-size:11.5px;color:#888;text-align:center;margin-bottom:14px;min-height:15px}
+    .confirm-location-btn{background:var(--color);color:white;border:none;border-radius:14px;padding:14px;font-weight:600;cursor:pointer;font-size:14.5px}
+    .confirm-location-line{display:flex;align-items:center;gap:8px;background:#f7f4ef;border-radius:12px;padding:10px 12px;margin:0 0 14px;font-size:12px;color:#555}
   </style>
 </head>
 <body>
 <div class="app-wrapper">
   <div class="app">
     <div class="top-bar">
-      <header class="header"><h1>${escH(d.emoji)} ${escH(d.name)}</h1></header>
+      <header class="header"><div class="header-left">${d.logo?`<img src="${d.logo}" class="logo-badge" alt="logo">`:''}<h1>${escH(d.emoji)} ${escH(d.name)}</h1></div></header>
       <div class="tabs">${tabsHTML}</div>
     </div>
     ${d.welcome?`<div class="welcome-msg">${escH(d.welcome)}</div>`:''}
@@ -599,6 +721,13 @@ function generateFinalHTML(d) {
 <div class="cart-sheet" id="cartSheet">
   <div class="cart-sheet-header"><span>Tu carrito</span><button id="closeCart">✕</button></div>
   <div class="cart-sheet-content" id="cartSheetContent"></div>
+  <div class="location-row" id="locationRow">
+    <div class="location-info">
+      <span class="location-icon">📍</span>
+      <div class="location-text"><strong id="locationLabel">Poner ubicación</strong><small id="locationSub">Toca para marcar en el mapa</small></div>
+    </div>
+    <span class="location-arrow">➤</span>
+  </div>
   <div class="cart-whatsapp">
     <div class="cart-total">Total: <span id="sheetTotal">$0</span></div>
     <button id="sendWhatsApp">${escH(d.waBtnText)}</button>
@@ -608,6 +737,7 @@ function generateFinalHTML(d) {
   <div class="confirm-content">
     <h3>Confirmar pedido</h3>
     <div id="confirmItems"></div>
+    <div class="confirm-location-line" id="confirmLocationLine">📍 <span id="confirmLocText"></span></div>
     <div class="confirm-total">Total: <span id="confirmTotal">$0</span></div>
     <div class="confirm-buttons">
       <button id="cancelConfirm">Cancelar</button>
@@ -615,6 +745,22 @@ function generateFinalHTML(d) {
     </div>
   </div>
 </div>
+<div class="location-modal-overlay" id="locOverlay"></div>
+<div class="location-modal" id="locationModal">
+  <div class="location-modal-header">
+    <h3>📍 Marca tu ubicación</h3>
+    <button class="close-modal" id="closeLocModal" style="position:static">✕</button>
+  </div>
+  <div class="map-wrap">
+    <div id="mapContainer"></div>
+    <div class="map-pin-dot"></div>
+    <div class="map-pin">📍</div>
+  </div>
+  <button id="useMyLocation" class="use-location-btn">🎯 Usar mi ubicación actual</button>
+  <div class="loc-address" id="locAddressPreview">Arrastra el mapa para ubicar el punto exacto</div>
+  <button id="confirmLocation" class="confirm-location-btn">Confirmar ubicación</button>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"><\/script>
 <script>
 var cart=[];
 var WA_PHONE="${d.waPhone}";
@@ -645,6 +791,55 @@ document.addEventListener("DOMContentLoaded",function(){
   var quantity=1;
   var currentActive="";
   var currentItem={};
+  var orderLocation=null;
+  var map=null;
+  var locationModal=document.getElementById("locationModal");
+  var locOverlay=document.getElementById("locOverlay");
+  var locationRow=document.getElementById("locationRow");
+  var locationLabel=document.getElementById("locationLabel");
+  var locationSub=document.getElementById("locationSub");
+  var locAddressPreview=document.getElementById("locAddressPreview");
+  var confirmLocText=document.getElementById("confirmLocText");
+  function openLocationModal(){
+    locationModal.classList.add("active"); locOverlay.classList.add("active");
+    setTimeout(function(){
+      if(!map){
+        map=L.map('mapContainer',{zoomControl:false,attributionControl:false}).setView([orderLocation?orderLocation.lat:19.4326, orderLocation?orderLocation.lng:-99.1332], orderLocation?17:14);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19}).addTo(map);
+        map.on('move',updateLocPreview);
+      } else {
+        map.invalidateSize();
+        if(orderLocation) map.setView([orderLocation.lat,orderLocation.lng],17);
+      }
+      updateLocPreview();
+    },350);
+  }
+  function closeLocationModal(){ locationModal.classList.remove("active"); locOverlay.classList.remove("active"); }
+  function updateLocPreview(){
+    var c=map.getCenter();
+    locAddressPreview.textContent="Lat "+c.lat.toFixed(5)+", Lng "+c.lng.toFixed(5);
+  }
+  locationRow.addEventListener("click",openLocationModal);
+  document.getElementById("closeLocModal").addEventListener("click",closeLocationModal);
+  locOverlay.addEventListener("click",closeLocationModal);
+  document.getElementById("useMyLocation").addEventListener("click",function(){
+    if(!navigator.geolocation){ locAddressPreview.textContent="Tu navegador no soporta geolocalización."; return; }
+    locAddressPreview.textContent="Obteniendo tu ubicación...";
+    navigator.geolocation.getCurrentPosition(function(pos){
+      map.setView([pos.coords.latitude,pos.coords.longitude],17);
+    },function(){
+      locAddressPreview.textContent="No se pudo obtener tu ubicación. Arrastra el mapa.";
+    },{enableHighAccuracy:true,timeout:8000});
+  });
+  document.getElementById("confirmLocation").addEventListener("click",function(){
+    var c=map.getCenter();
+    orderLocation={lat:c.lat,lng:c.lng};
+    locationLabel.textContent="Ubicación agregada ✅";
+    locationSub.textContent="Lat "+c.lat.toFixed(4)+", Lng "+c.lng.toFixed(4);
+    locationRow.classList.add("set");
+    if(navigator.vibrate)navigator.vibrate(40);
+    closeLocationModal();
+  });
   tabs.forEach(function(tab){
     tab.addEventListener("click",function(){
       var target=document.getElementById(tab.dataset.target);
@@ -724,7 +919,16 @@ document.addEventListener("DOMContentLoaded",function(){
   }
   document.getElementById("sendWhatsApp").addEventListener("click",function(){
     if(cart.length===0)return;
+    if(!orderLocation){
+      if(navigator.vibrate)navigator.vibrate(60);
+      openLocationModal();
+      var warn=document.createElement("div"); warn.classList.add("success-toast","show"); warn.style.background="#e53935"; warn.textContent="📍 Agrega tu ubicación para continuar";
+      document.body.appendChild(warn);
+      setTimeout(function(){warn.classList.remove("show");setTimeout(function(){warn.remove();},300);},2400);
+      return;
+    }
     if(navigator.vibrate)navigator.vibrate(40);
+    confirmLocText.textContent="Lat "+orderLocation.lat.toFixed(5)+", Lng "+orderLocation.lng.toFixed(5);
     confirmItemsEl.innerHTML=""; var total=0;
     cart.forEach(function(item){
       var sub=item.price*item.quantity; total+=sub;
@@ -738,6 +942,7 @@ document.addEventListener("DOMContentLoaded",function(){
   });
   document.getElementById("cancelConfirm").addEventListener("click",function(){confirmModal.classList.remove("active");});
   document.getElementById("confirmSend").addEventListener("click",function(){
+    if(!orderLocation){ confirmModal.classList.remove("active"); openLocationModal(); return; }
     if(navigator.vibrate)navigator.vibrate([80,40,80]);
     var msg=WA_PREFIX+"\\n\\n"; var total=0;
     cart.forEach(function(item){
@@ -747,6 +952,7 @@ document.addEventListener("DOMContentLoaded",function(){
       msg+="\\n";
     });
     msg+="\\nTotal: $"+total+" "+CURRENCY;
+    msg+="\\n\\n📍 Ubicación exacta: https://www.google.com/maps?q="+orderLocation.lat+","+orderLocation.lng;
     window.open("https://wa.me/"+WA_PHONE+"?text="+encodeURIComponent(msg),"_blank");
     cart=[]; updateCartBar(); renderCart();
     confirmModal.classList.remove("active"); cartSheet.classList.remove("active");
@@ -782,6 +988,7 @@ function downloadHTML() {
   URL.revokeObjectURL(url);
 }
 
+renderLogoUploadUI();
 renderSectionsEditor();
 updatePreview();
 </script>
