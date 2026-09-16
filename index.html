@@ -40,9 +40,9 @@
     --sec-stats:#6C4FCB;
     --sec-stats-soft:#EFEAFB;
     --sec-stats-ink:#4B3593;
-    --sec-products:#7D8492;
-    --sec-products-soft:#ECEDF0;
-    --sec-products-ink:#464C57;
+    --sec-products:#C9A876;
+    --sec-products-soft:#F7EFE1;
+    --sec-products-ink:#7A5A32;
     --radius-card:16px;
     --radius-btn:12px;
     --radius-chip:999px;
@@ -129,15 +129,15 @@
   body[data-section="products"] #view .prod-row{ border-left:3px solid var(--sec-products); }
 
   body[data-section="history"] #view .search-box svg{ color:var(--sec-history); }
-  body[data-section="history"] #view .filter-chip.active:not(.is-danger){
+  body[data-section="history"] .filter-chip.active:not(.is-danger){
     background:var(--sec-history); color:#fff; box-shadow:0 4px 10px rgba(46,125,192,0.3);
   }
 
   body[data-section="sale"] .btn.primary{ background:var(--sec-sale); color:#fff; }
   body[data-section="sale"] .opt-card.active{ border-color:var(--sec-sale); background:var(--sec-sale-soft); color:var(--ink); }
 
-  body[data-section="products"] .btn.primary{ background:var(--sec-products); color:#fff; }
-  body[data-section="products"] .btn.ghost{ border-color:var(--sec-products); color:var(--sec-products); }
+  body[data-section="products"] .btn.primary{ background:var(--sec-products); color:var(--ink); }
+  body[data-section="products"] .btn.ghost{ border-color:var(--sec-products); color:var(--sec-products-ink); }
 
   /* ---------- Bottom nav ---------- */
   .bottomnav{
@@ -429,25 +429,43 @@
   }
   .search-box svg{ width:17px; height:17px; color:var(--ink-soft); flex-shrink:0; }
   .search-box input{ border:none; outline:none; background:none; flex:1; font-size:14px; color:var(--ink); font-weight:500; }
-  .filter-row{ display:flex; gap:8px; overflow-x:auto; margin-bottom:0; }
-  .filter-row::-webkit-scrollbar{ display:none; }
   .filter-chip{
-    flex:0 0 auto; font-size:12.5px; font-weight:700; padding:8px 14px; border-radius:999px;
+    flex:0 0 auto; font-size:13.5px; font-weight:700; padding:10px 16px; border-radius:999px;
     border:1.5px solid var(--border); background:var(--surface); color:var(--ink-soft);
+    white-space:nowrap; display:inline-flex; align-items:center; gap:6px;
     transition:background .15s ease, color .15s ease, border-color .15s ease;
   }
   .filter-chip.active{ background:var(--accent-strong); color:var(--ink); border-color:transparent; box-shadow:0 4px 10px rgba(245,191,60,0.3); }
   .filter-chip.active.is-danger{ background:var(--accent-2); color:#fff; box-shadow:0 4px 10px rgba(225,89,76,0.3); }
 
-  /* ---------- Historial: panel de filtros ---------- */
-  .hist-filters{ padding:16px 16px 14px; margin-bottom:18px; }
-  .hist-filter-group{ margin-bottom:14px; }
-  .hist-filter-group:last-child{ margin-bottom:0; }
-  .hist-filter-label{
-    display:block; font-size:10.5px; font-weight:800; color:var(--ink-soft);
-    text-transform:uppercase; letter-spacing:.4px; margin-bottom:8px;
+  /* ---------- Historial: botón compacto de Filtros ---------- */
+  .filters-trigger-row{ display:flex; align-items:center; gap:14px; margin-bottom:18px; }
+  .filters-trigger-btn{
+    display:flex; align-items:center; gap:8px;
+    background:var(--surface); border:1.5px solid var(--border);
+    padding:11px 17px; border-radius:999px; font-size:14px; font-weight:700; color:var(--ink);
+    box-shadow:var(--shadow-card);
   }
-  .hist-filter-divider{ height:1px; background:var(--border); margin:14px 0; }
+  .filters-trigger-btn .fti-icon{ width:18px; height:18px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .filters-trigger-btn .fti-icon svg{ width:18px; height:18px; }
+  .filters-trigger-badge{
+    background:var(--sec-history); color:#fff; font-size:11px; font-weight:800;
+    border-radius:999px; min-width:19px; height:19px; padding:0 5px;
+    display:inline-flex; align-items:center; justify-content:center;
+  }
+  .filters-clear-btn{ background:none; border:none; color:var(--ink-soft); font-size:13.5px; font-weight:700; padding:8px 2px; }
+  .filters-clear-btn:active{ opacity:.6; }
+
+  /* ---------- Historial: grupos de filtros dentro del modal ---------- */
+  .filter-modal-group{ margin-bottom:22px; }
+  .filter-modal-group:last-child{ margin-bottom:6px; }
+  .filter-modal-label{ display:flex; align-items:center; gap:9px; font-size:14px; font-weight:800; color:var(--ink); margin-bottom:12px; }
+  .filter-modal-label .fml-icon{
+    width:28px; height:28px; border-radius:9px; background:var(--sec-history-soft); color:var(--sec-history);
+    display:flex; align-items:center; justify-content:center; flex-shrink:0;
+  }
+  .filter-modal-label .fml-icon svg{ width:15px; height:15px; }
+  .filter-pill-row{ display:flex; flex-wrap:wrap; gap:9px; }
 
   /* ---------- Historial: gráfico de ventas ---------- */
   .hist-chart-card{ margin-bottom:18px; }
@@ -638,6 +656,11 @@ const ICONS = {
   check: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 12.5 10 17 19 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
   person: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="8" r="3.4" stroke="currentColor" stroke-width="1.9"/><path d="M5 20c0-3.6 3.1-6.2 7-6.2s7 2.6 7 6.2" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg>`,
   plateSet: `<svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="20" cy="20" r="15.2" stroke="#C9CEDD" stroke-width="1.8"/><circle cx="20" cy="20" r="8.4" stroke="#C9CEDD" stroke-width="1.4"/><g stroke="#C9CEDD" stroke-width="1.8" stroke-linecap="round"><path d="M11.5 9v9.4M9.6 9v5.6a1.9 1.9 0 0 0 1.9 1.9v0a1.9 1.9 0 0 0 1.9-1.9V9"/><path d="M28.4 9c-1.9 0-3.2 1.8-3.2 4.4v3c0 1.3 1 2.3 2.3 2.3h.9V9Z"/></g></svg>`,
+  sliders: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 7h9M17 7h3M4 17h3M11 17h9" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/><circle cx="13" cy="7" r="2.3" stroke="currentColor" stroke-width="1.9"/><circle cx="8" cy="17" r="2.3" stroke="currentColor" stroke-width="1.9"/></svg>`,
+  calendar: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="5.3" width="16" height="15" rx="2.3" stroke="currentColor" stroke-width="1.8"/><path d="M4 10h16M8 3.3v3.4M16 3.3v3.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>`,
+  statusCircle: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="8.4" stroke="currentColor" stroke-width="1.8"/><path d="M8.3 12.2 10.7 14.6 15.7 9.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+  utensils: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 2.5v6.4a2 2 0 0 0 2 2V21M7 2.5v8.4M9 2.5v8.4M17 2.5c-1.5 0-2.6 1.6-2.6 3.7v3.9c0 1.1.9 2 2 2h.6V2.5ZM17 12.1V21" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+  card: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="5.8" width="18" height="12.4" rx="2.2" stroke="currentColor" stroke-width="1.8"/><path d="M3 10h18" stroke="currentColor" stroke-width="1.8"/><path d="M6.3 14.4h4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>`,
 };
 function icon(name){ return ICONS[name] || ''; }
 
@@ -1354,6 +1377,7 @@ function renderSaleRow(sale){
 }
 
 function renderHistoryShell(){
+  const activeCount = ['period','status','service','payment'].filter(k => historyFilters[k] !== 'all').length;
   return `
     <h1 class="page-title">Historial</h1>
     <p class="page-sub">Todas las ventas registradas</p>
@@ -1363,49 +1387,80 @@ function renderHistoryShell(){
       <input type="text" id="historySearch" placeholder="Buscar por pedido o producto" value="${escapeHtml(historyFilters.search)}" oninput="onHistorySearch(this.value)">
     </div>
 
-    <div class="card hist-filters">
-      <div class="hist-filter-group">
-        <span class="hist-filter-label">Periodo</span>
-        <div class="filter-row">
-          ${['all','today','week','month'].map(p => `
-            <button class="filter-chip ${historyFilters.period===p?'active':''}" onclick="setHistoryFilter('period','${p}')">
-              ${ {all:'Todas', today:'Hoy', week:'Esta semana', month:'Este mes'}[p] }
-            </button>
+    <div class="filters-trigger-row">
+      <button class="filters-trigger-btn" onclick="openHistoryFilters()">
+        <span class="fti-icon">${icon('sliders')}</span>
+        <span>Filtros</span>
+        ${activeCount > 0 ? `<span class="filters-trigger-badge">${activeCount}</span>` : ''}
+      </button>
+      ${activeCount > 0 ? `<button class="filters-clear-btn" onclick="clearHistoryFilters()">Limpiar filtros</button>` : ''}
+    </div>
+
+    <div id="historyList"></div>
+  `;
+}
+
+function openHistoryFilters(){
+  const periodOptions = [
+    { id:'all',   label:'Todas' },
+    { id:'today', label:'Hoy' },
+    { id:'week',  label:'Esta semana' },
+    { id:'month', label:'Este mes' },
+  ];
+  const html = `
+    <div id="historyFilterModal">
+      <div class="sheet-header">
+        <h2>Filtros</h2>
+        <button class="sheet-close" onclick="closeModal()">${icon('close')}</button>
+      </div>
+
+      <div class="filter-modal-group">
+        <div class="filter-modal-label"><span class="fml-icon">${icon('calendar')}</span>Periodo</div>
+        <div class="filter-pill-row">
+          ${periodOptions.map(p => `
+            <button class="filter-chip ${historyFilters.period===p.id?'active':''}" onclick="setHistoryFilter('period','${p.id}')">${p.label}</button>
           `).join('')}
         </div>
       </div>
 
-      <div class="hist-filter-divider"></div>
-      <div class="hist-filter-group">
-        <span class="hist-filter-label">Estado</span>
-        <div class="filter-row">
+      <div class="filter-modal-group">
+        <div class="filter-modal-label"><span class="fml-icon">${icon('statusCircle')}</span>Estado</div>
+        <div class="filter-pill-row">
           <button class="filter-chip ${historyFilters.status==='all'?'active':''}" onclick="setHistoryFilter('status','all')">Todos los estados</button>
           <button class="filter-chip ${historyFilters.status==='activa'?'active':''}" onclick="setHistoryFilter('status','activa')">Activas</button>
           <button class="filter-chip ${historyFilters.status==='cancelada'?'active is-danger':''}" onclick="setHistoryFilter('status','cancelada')">Canceladas</button>
         </div>
       </div>
 
-      <div class="hist-filter-divider"></div>
-      <div class="hist-filter-group">
-        <span class="hist-filter-label">Servicio</span>
-        <div class="filter-row">
+      <div class="filter-modal-group">
+        <div class="filter-modal-label"><span class="fml-icon">${icon('utensils')}</span>Servicio</div>
+        <div class="filter-pill-row">
           <button class="filter-chip ${historyFilters.service==='all'?'active':''}" onclick="setHistoryFilter('service','all')">Todo servicio</button>
           ${SERVICE_TYPES.map(s => `<button class="filter-chip ${historyFilters.service===s.id?'active':''}" onclick="setHistoryFilter('service','${s.id}')">${s.emoji} ${s.name}</button>`).join('')}
         </div>
       </div>
 
-      <div class="hist-filter-divider"></div>
-      <div class="hist-filter-group">
-        <span class="hist-filter-label">Método de pago</span>
-        <div class="filter-row">
+      <div class="filter-modal-group">
+        <div class="filter-modal-label"><span class="fml-icon">${icon('card')}</span>Método de pago</div>
+        <div class="filter-pill-row">
           <button class="filter-chip ${historyFilters.payment==='all'?'active':''}" onclick="setHistoryFilter('payment','all')">Todo pago</button>
           ${PAYMENT_METHODS.map(p => `<button class="filter-chip ${historyFilters.payment===p.id?'active':''}" onclick="setHistoryFilter('payment','${p.id}')">${p.emoji} ${p.name}</button>`).join('')}
         </div>
       </div>
-    </div>
 
-    <div id="historyList"></div>
+      <button class="btn dark block" onclick="closeModal()">Ver resultados</button>
+    </div>
   `;
+  openModal(html, { dismissible:true });
+}
+
+function clearHistoryFilters(){
+  historyFilters.period = 'all';
+  historyFilters.status = 'all';
+  historyFilters.service = 'all';
+  historyFilters.payment = 'all';
+  render();
+  if(document.getElementById('historyFilterModal')) openHistoryFilters();
 }
 
 function matchesHistoryFilters(sale){
@@ -1501,6 +1556,7 @@ function onHistorySearch(val){ historyFilters.search = val; renderHistoryList();
 function setHistoryFilter(key, val){
   historyFilters[key] = val;
   render();
+  if(document.getElementById('historyFilterModal')) openHistoryFilters();
 }
 
 function openSaleDetail(saleId){
