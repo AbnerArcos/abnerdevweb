@@ -31,9 +31,9 @@
     --sec-home:#25D366;
     --sec-home-soft:#E5FAEC;
     --sec-home-ink:#0E7A3D;
-    --sec-sale:#C7CBD3;
-    --sec-sale-soft:#F5F6F8;
-    --sec-sale-ink:#6B7280;
+    --sec-sale:#25D366;
+    --sec-sale-soft:#E5FAEC;
+    --sec-sale-ink:#0E7A3D;
     --sec-history:#2E7DC0;
     --sec-history-soft:#E7F2FB;
     --sec-history-ink:#1D5D8F;
@@ -88,19 +88,12 @@
   .brand{display:flex; align-items:center; gap:11px;}
   .brand-mark{
     width:42px; height:42px; border-radius:13px;
-    background:var(--accent-strong);
+    background:var(--sec-home);
     display:flex; align-items:center; justify-content:center;
-    box-shadow:0 4px 10px rgba(245,191,60,0.35);
+    box-shadow:0 4px 10px rgba(37,211,102,0.35);
     transition:background .2s ease, box-shadow .2s ease;
   }
   .brand-mark svg{ width:21px; height:21px; }
-
-  /* El logo adopta el color de la sección activa */
-  body[data-section="home"] .brand-mark{ background:var(--sec-home); box-shadow:0 4px 10px rgba(37,211,102,0.35); }
-  body[data-section="sale"] .brand-mark{ background:var(--sec-sale); box-shadow:0 4px 10px rgba(199,203,211,0.5); }
-  body[data-section="history"] .brand-mark{ background:var(--sec-history); box-shadow:0 4px 10px rgba(46,125,192,0.35); }
-  body[data-section="stats"] .brand-mark{ background:var(--sec-stats); box-shadow:0 4px 10px rgba(108,79,203,0.35); }
-  body[data-section="products"] .brand-mark{ background:var(--sec-products); box-shadow:0 4px 10px rgba(125,132,146,0.35); }
   .brand-name{ font-size:21px; font-weight:800; letter-spacing:0.1px; color:var(--ink); }
   .topbar-clock{ font-family:var(--sans); font-weight:600; font-size:13px; color:var(--ink-soft); text-align:right; line-height:1.35; }
 
@@ -140,9 +133,7 @@
     background:var(--sec-history); color:#fff; box-shadow:0 4px 10px rgba(46,125,192,0.3);
   }
 
-  body[data-section="sale"] .btn.primary{ background:var(--sec-sale); color:var(--ink); }
-  body[data-section="sale"] .cartbar-icon svg{ color:var(--ink); }
-  body[data-section="sale"] .cart-total-pill .ctp-icon{ color:var(--ink); }
+  body[data-section="sale"] .btn.primary{ background:var(--sec-sale); color:#fff; }
   body[data-section="sale"] .opt-card.active{ border-color:var(--sec-sale); background:var(--sec-sale-soft); color:var(--ink); }
 
   body[data-section="products"] .btn.primary{ background:var(--sec-products); color:#fff; }
