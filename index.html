@@ -27,6 +27,22 @@
     --nav-bg:#FFFFFF;
     --nav-ink:#A2A9BC;
     --nav-active-bg:#FFD666;
+    /* Identidad de color por sección del menú inferior */
+    --sec-home:#F5BF3C;
+    --sec-home-soft:#FFF4D9;
+    --sec-home-ink:#7A5A0E;
+    --sec-sale:#25D366;
+    --sec-sale-soft:#E5FAEC;
+    --sec-sale-ink:#0E7A3D;
+    --sec-history:#2E7DC0;
+    --sec-history-soft:#E7F2FB;
+    --sec-history-ink:#1D5D8F;
+    --sec-stats:#6C4FCB;
+    --sec-stats-soft:#EFEAFB;
+    --sec-stats-ink:#4B3593;
+    --sec-products:#A0623A;
+    --sec-products-soft:#F5EAE0;
+    --sec-products-ink:#7A4A2C;
     --radius-card:16px;
     --radius-btn:12px;
     --radius-chip:999px;
@@ -88,8 +104,38 @@
   }
   .view::-webkit-scrollbar{ width:0; }
 
-  h1.page-title{ font-size:24px; margin:6px 0 3px; font-weight:800; color:var(--ink); letter-spacing:-0.2px; }
+  h1.page-title{ font-size:24px; margin:6px 0 3px; font-weight:800; color:var(--ink); letter-spacing:-0.2px; display:flex; align-items:center; gap:10px; }
+  h1.page-title::before{ content:''; display:block; width:5px; height:22px; border-radius:3px; background:var(--ink-faint); flex-shrink:0; }
   p.page-sub{ font-size:14px; color:var(--ink-soft); margin:0 0 20px; font-weight:500; }
+
+  /* ---------- Identidad visual por sección (encabezado, acentos, íconos) ---------- */
+  body[data-section="home"] h1.page-title::before{ background:var(--sec-home); }
+  body[data-section="sale"] h1.page-title::before{ background:var(--sec-sale); }
+  body[data-section="history"] h1.page-title::before{ background:var(--sec-history); }
+  body[data-section="stats"] h1.page-title::before{ background:var(--sec-stats); }
+  body[data-section="products"] h1.page-title::before{ background:var(--sec-products); }
+
+  body[data-section="home"] #view .section-title::before{ background:var(--sec-home); }
+  body[data-section="sale"] #view .section-title::before{ background:var(--sec-sale); }
+  body[data-section="history"] #view .section-title::before{ background:var(--sec-history); }
+  body[data-section="stats"] #view .section-title::before{ background:var(--sec-stats); }
+  body[data-section="products"] #view .section-title::before{ background:var(--sec-products); }
+
+  body[data-section="stats"] #view .stat-card,
+  body[data-section="stats"] #view .card{ border-top:3px solid var(--sec-stats); }
+  body[data-section="history"] #view .card{ border-top:3px solid var(--sec-history); }
+  body[data-section="products"] #view .prod-row{ border-left:3px solid var(--sec-products); }
+
+  body[data-section="history"] #view .search-box svg{ color:var(--sec-history); }
+  body[data-section="history"] #view .filter-chip.active:not(.is-danger){
+    background:var(--sec-history); color:#fff; box-shadow:0 4px 10px rgba(46,125,192,0.3);
+  }
+
+  body[data-section="sale"] .btn.primary{ background:var(--sec-sale); color:#fff; }
+  body[data-section="sale"] .opt-card.active{ border-color:var(--sec-sale); background:var(--sec-sale-soft); color:var(--ink); }
+
+  body[data-section="products"] .btn.primary{ background:var(--sec-products); color:#fff; }
+  body[data-section="products"] .btn.ghost{ border-color:var(--sec-products); color:var(--sec-products); }
 
   /* ---------- Bottom nav ---------- */
   .bottomnav{
@@ -112,6 +158,11 @@
   .navbtn .navicon svg{ width:22px; height:22px; }
   .navbtn span:last-child{ font-size:11px; font-weight:700; letter-spacing:.1px; }
   .navbtn.active{ color:var(--ink); background:var(--nav-active-bg); }
+  .navbtn.active[data-view="home"]{ background:var(--sec-home-soft); color:var(--sec-home-ink); }
+  .navbtn.active[data-view="sale"]{ background:var(--sec-sale-soft); color:var(--sec-sale-ink); }
+  .navbtn.active[data-view="history"]{ background:var(--sec-history-soft); color:var(--sec-history-ink); }
+  .navbtn.active[data-view="stats"]{ background:var(--sec-stats-soft); color:var(--sec-stats-ink); }
+  .navbtn.active[data-view="products"]{ background:var(--sec-products-soft); color:var(--sec-products-ink); }
   .navbtn:active{ transform:scale(0.95); }
 
   /* ---------- Cards / generic ---------- */
@@ -243,7 +294,7 @@
     background:var(--ink); color:#fff; border-radius:20px;
     padding:12px 16px 12px 12px; display:flex; align-items:center; justify-content:space-between; gap:10px;
     box-shadow:0 14px 30px rgba(22,33,62,0.42);
-    border:2px solid rgba(255,214,102,0.5);
+    border:2px solid rgba(37,211,102,0.5);
     width:100%;
     animation:cartbarPop .32s cubic-bezier(.34,1.56,.64,1);
   }
@@ -253,10 +304,10 @@
   }
   .cartbar-left{ display:flex; align-items:center; gap:11px; min-width:0; }
   .cartbar-icon{
-    width:38px; height:38px; border-radius:50%; background:var(--accent-strong);
+    width:38px; height:38px; border-radius:50%; background:var(--sec-sale);
     display:flex; align-items:center; justify-content:center; flex-shrink:0; position:relative;
   }
-  .cartbar-icon svg{ width:18px; height:18px; color:var(--accent-ink); }
+  .cartbar-icon svg{ width:18px; height:18px; color:#fff; }
   .cartbar-count{
     position:absolute; top:-5px; right:-5px;
     background:var(--accent-2); color:#fff; font-size:11px; font-weight:800;
@@ -315,8 +366,8 @@
     font-size:13px; font-weight:800; white-space:nowrap;
   }
   .cart-total-pill .ctp-icon{
-    width:22px; height:22px; border-radius:50%; background:var(--accent-strong);
-    color:var(--accent-ink); display:flex; align-items:center; justify-content:center; flex-shrink:0;
+    width:22px; height:22px; border-radius:50%; background:var(--sec-sale);
+    color:#fff; display:flex; align-items:center; justify-content:center; flex-shrink:0;
   }
   .cart-total-pill .ctp-icon svg{ width:13px; height:13px; }
 
@@ -499,6 +550,11 @@
     display:flex; align-items:center; gap:12px;
   }
   .toast.show{ opacity:1; transform:translate(-50%,0) scale(1); }
+  .toast.toast-top{
+    top:calc(82px + env(safe-area-inset-top)); bottom:auto;
+    transform:translate(-50%, -10px) scale(0.96);
+  }
+  .toast.toast-top.show{ transform:translate(-50%,0) scale(1); }
   .toast-icon{
     width:36px; height:36px; border-radius:50%; background:var(--surface-alt); color:var(--ink);
     display:flex; align-items:center; justify-content:center; flex-shrink:0;
@@ -822,6 +878,7 @@ function goTo(view){
 }
 
 function render(){
+  document.body.dataset.section = currentView;
   document.querySelectorAll('.navbtn').forEach(b => b.classList.toggle('active', b.dataset.view === currentView));
   const el = document.getElementById('view');
   if(currentView === 'home') el.innerHTML = renderHome();
@@ -906,9 +963,9 @@ function renderSale(){
   const list = saleCategoryFilter === 'todos' ? products : products.filter(p => p.category === saleCategoryFilter);
 
   const chips = `<div class="chip-row">
-      <button class="chip ${saleCategoryFilter==='todos'?'active':''}" style="${saleCategoryFilter==='todos'?'background:var(--accent-strong)':''}" onclick="setSaleCategory('todos')">Todos</button>
+      <button class="chip ${saleCategoryFilter==='todos'?'active':''}" style="${saleCategoryFilter==='todos'?'background:var(--sec-sale)':''}" onclick="setSaleCategory('todos')">Todos</button>
       ${categories.map(c => `
-        <button class="chip ${saleCategoryFilter===c.id?'active':''}" style="${saleCategoryFilter===c.id?'background:var(--accent-strong)':''}" onclick="setSaleCategory('${c.id}')">${c.emoji} ${c.name}</button>
+        <button class="chip ${saleCategoryFilter===c.id?'active':''}" style="${saleCategoryFilter===c.id?'background:var(--sec-sale)':''}" onclick="setSaleCategory('${c.id}')">${c.emoji} ${c.name}</button>
       `).join('')}
     </div>`;
 
@@ -988,7 +1045,7 @@ function addToCart(productId){
   if(item){ item.qty += 1; } else { cart.push({ productId, qty:1 }); }
   const p = findProduct(productId);
   vibrate(25);
-  toast('Producto agregado al carrito', { icon:icon('check'), variant:'toast-success', subtitle: p ? p.name : '' });
+  toast('Producto agregado al carrito', { icon:icon('check'), variant:'toast-success toast-top', subtitle: p ? p.name : '', duration: 1100 });
   render();
 }
 
@@ -1431,7 +1488,7 @@ function buildHistoryChart(sales){
       ${rows.map(r => `
         <div class="bar-row">
           <div class="bar-row-top"><span>${r.label}</span><span class="bv">${formatMoney(r.total)}</span></div>
-          <div class="bar-track"><div class="bar-fill" style="width:${(r.total/maxVal)*100}%; background:var(--accent-strong);"></div></div>
+          <div class="bar-track"><div class="bar-fill" style="width:${(r.total/maxVal)*100}%; background:var(--sec-history);"></div></div>
         </div>
       `).join('')}
     </div>
@@ -1555,7 +1612,7 @@ function renderStats(){
         const v = byPayment[p.id];
         return `<div class="bar-row">
           <div class="bar-row-top"><span>${p.emoji} ${p.name}</span><span class="bv">${formatMoney(v.total)} · ${v.count}</span></div>
-          <div class="bar-track"><div class="bar-fill" style="width:${(v.total/maxPayment)*100}%; background:var(--accent-strong);"></div></div>
+          <div class="bar-track"><div class="bar-fill" style="width:${(v.total/maxPayment)*100}%; background:var(--sec-stats);"></div></div>
         </div>`;
       }).join('')}
     </div>
