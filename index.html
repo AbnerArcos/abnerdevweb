@@ -6,27 +6,33 @@
 <title>Mesa · Punto de venta</title>
 <style>
   :root{
-    --bg:#FBF8F2;
+    --bg:#F4F6FB;
     --surface:#FFFFFF;
-    --surface-alt:#F1ECE0;
-    --ink:#262220;
-    --ink-soft:#7A7168;
-    --ink-faint:#B3A996;
-    --accent:#E8A33D;
-    --accent-ink:#4A2E05;
-    --accent-2:#C1443B;
-    --success:#5B8C5A;
-    --success-bg:#E9F2E8;
-    --danger-bg:#F7E8E6;
-    --border:#E7DFCD;
-    --nav-bg:#23201B;
-    --nav-ink:#C9C0AE;
-    --radius-card:14px;
-    --radius-btn:10px;
+    --surface-alt:#F0F2F8;
+    --surface-soft:#FFF4D9;
+    --ink:#16213E;
+    --ink-soft:#8A93AC;
+    --ink-faint:#C9CEDD;
+    --accent:#FFD666;
+    --accent-strong:#F5BF3C;
+    --accent-soft:#FFF0C2;
+    --accent-ink:#16213E;
+    --accent-2:#E1594C;
+    --success:#33A873;
+    --success-bg:#E7F7EF;
+    --danger-bg:#FBEAE8;
+    --border:#E8EBF2;
+    --nav-bg:#FFFFFF;
+    --nav-ink:#A2A9BC;
+    --nav-active-bg:#FFD666;
+    --radius-card:16px;
+    --radius-btn:12px;
     --radius-chip:999px;
-    --radius-sheet:22px;
-    --shadow-sheet:0 -8px 30px rgba(35,32,27,0.25);
-    --mono: 'Courier New', Courier, monospace;
+    --radius-sheet:24px;
+    --shadow-card:0 2px 14px rgba(22,33,62,0.06);
+    --shadow-sheet:0 -10px 30px rgba(22,33,62,0.16);
+    --shadow-pop:0 10px 26px rgba(22,33,62,0.14);
+    --mono: 'SFMono-Regular', ui-monospace, 'Courier New', Courier, monospace;
     --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   }
   *{box-sizing:border-box;}
@@ -41,7 +47,8 @@
   }
   button, input, select{ font-family:inherit; }
   button{cursor:pointer;}
-  :focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
+  :focus-visible{ outline:2px solid var(--accent-strong); outline-offset:2px; }
+  svg{ display:block; }
 
   .app{
     max-width:560px;
@@ -57,50 +64,52 @@
   .topbar{
     position:sticky; top:0; z-index:20;
     display:flex; align-items:center; justify-content:space-between;
-    padding:14px 18px;
+    padding:16px 18px;
     background:var(--bg);
-    border-bottom:1px solid var(--border);
   }
-  .brand{display:flex; align-items:center; gap:8px;}
+  .brand{display:flex; align-items:center; gap:11px;}
   .brand-mark{
-    width:34px; height:34px; border-radius:10px;
-    background:var(--nav-bg);
+    width:42px; height:42px; border-radius:13px;
+    background:var(--accent-strong);
     display:flex; align-items:center; justify-content:center;
-    font-size:17px;
+    box-shadow:0 4px 10px rgba(245,191,60,0.35);
   }
-  .brand-name{ font-size:19px; font-weight:700; letter-spacing:0.2px; }
-  .topbar-clock{ font-family:var(--mono); font-size:12.5px; color:var(--ink-soft); text-align:right; line-height:1.3; }
+  .brand-mark svg{ width:21px; height:21px; }
+  .brand-name{ font-size:21px; font-weight:800; letter-spacing:0.1px; color:var(--ink); }
+  .topbar-clock{ font-family:var(--sans); font-weight:600; font-size:13px; color:var(--ink-soft); text-align:right; line-height:1.35; }
 
   /* ---------- Main view ---------- */
   .view{
     flex:1;
     overflow-y:auto;
-    padding:18px 16px 100px;
+    padding:6px 18px 110px;
   }
   .view::-webkit-scrollbar{ width:0; }
 
-  h1.page-title{ font-size:21px; margin:2px 0 4px; font-weight:700; }
-  p.page-sub{ font-size:13.5px; color:var(--ink-soft); margin:0 0 18px; }
+  h1.page-title{ font-size:24px; margin:6px 0 3px; font-weight:800; color:var(--ink); letter-spacing:-0.2px; }
+  p.page-sub{ font-size:14px; color:var(--ink-soft); margin:0 0 20px; font-weight:500; }
 
   /* ---------- Bottom nav ---------- */
   .bottomnav{
     position:sticky; bottom:0; z-index:20;
     display:flex;
     background:var(--nav-bg);
-    padding:8px 6px calc(8px + env(safe-area-inset-bottom));
+    padding:10px 8px calc(10px + env(safe-area-inset-bottom));
+    box-shadow:0 -1px 0 var(--border), 0 -8px 24px rgba(22,33,62,0.05);
   }
   .navbtn{
     flex:1;
     background:none; border:none;
-    display:flex; flex-direction:column; align-items:center; gap:3px;
-    padding:6px 2px;
-    color:var(--nav-ink);
-    border-radius:12px;
+    display:flex; flex-direction:column; align-items:center; gap:4px;
+    padding:8px 4px;
+    color:var(--ink-soft);
+    border-radius:14px;
     transition:background .15s ease, color .15s ease;
   }
-  .navbtn .navicon{ font-size:19px; }
-  .navbtn span:last-child{ font-size:10.5px; font-weight:600; letter-spacing:.1px; }
-  .navbtn.active{ color:var(--accent); background:rgba(232,163,61,0.12); }
+  .navbtn .navicon{ width:22px; height:22px; display:flex; align-items:center; justify-content:center; }
+  .navbtn .navicon svg{ width:22px; height:22px; }
+  .navbtn span:last-child{ font-size:11px; font-weight:700; letter-spacing:.1px; }
+  .navbtn.active{ color:var(--ink); background:var(--nav-active-bg); }
   .navbtn:active{ transform:scale(0.95); }
 
   /* ---------- Cards / generic ---------- */
@@ -108,96 +117,121 @@
     background:var(--surface);
     border:1px solid var(--border);
     border-radius:var(--radius-card);
-    padding:16px;
+    padding:18px;
+    box-shadow:var(--shadow-card);
   }
-  .stat-grid{ display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:16px; }
+  .stat-grid{ display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:18px; }
   .stat-card{
     background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-card);
-    padding:14px 14px 12px;
+    padding:16px 16px 15px; box-shadow:var(--shadow-card); position:relative; overflow:hidden;
   }
-  .stat-card .stat-label{ font-size:11.5px; color:var(--ink-soft); font-weight:600; }
-  .stat-card .stat-value{ font-family:var(--mono); font-size:21px; font-weight:700; margin-top:4px; }
+  .stat-icon{
+    width:36px; height:36px; border-radius:11px; background:var(--surface-soft);
+    display:flex; align-items:center; justify-content:center; margin-bottom:10px;
+  }
+  .stat-icon svg{ width:18px; height:18px; }
+  .stat-card .stat-label{ font-size:13px; color:var(--ink-soft); font-weight:600; display:flex; align-items:center; justify-content:space-between; }
+  .stat-card .stat-value{ font-family:var(--sans); font-size:23px; font-weight:800; margin-top:6px; color:var(--ink); letter-spacing:-0.3px; }
   .stat-card.wide{ grid-column:1 / -1; }
+  .stat-card.wide{ display:flex; align-items:center; justify-content:space-between; }
+  .stat-card.wide .stat-icon{ margin-bottom:0; }
+  .stat-card-row{ display:flex; align-items:center; gap:13px; }
+  .stat-card-chev{ color:var(--ink-faint); }
+  .stat-card-chev svg{ width:18px; height:18px; }
 
   .btn{
-    display:inline-flex; align-items:center; justify-content:center; gap:6px;
+    display:inline-flex; align-items:center; justify-content:center; gap:7px;
     border:none; border-radius:var(--radius-btn);
-    padding:13px 18px; font-size:15px; font-weight:700;
+    padding:14px 18px; font-size:15px; font-weight:700;
     background:var(--surface-alt); color:var(--ink);
   }
   .btn:active{ transform:scale(0.98); }
-  .btn.primary{ background:var(--accent); color:var(--accent-ink); }
-  .btn.dark{ background:var(--nav-bg); color:#fff; }
+  .btn.primary{ background:var(--accent-strong); color:var(--accent-ink); }
+  .btn.dark{ background:var(--ink); color:#fff; }
   .btn.danger{ background:var(--danger-bg); color:var(--accent-2); }
   .btn.block{ width:100%; }
-  .btn.ghost{ background:transparent; border:1px solid var(--border); }
+  .btn.ghost{ background:transparent; border:1.5px solid var(--border); }
   .btn:disabled{ opacity:.45; }
+  .btn svg{ width:16px; height:16px; }
 
   .cta-home{
     display:flex; align-items:center; justify-content:space-between;
-    background:var(--nav-bg); color:#fff;
-    border-radius:18px; padding:18px 18px; margin-bottom:18px;
+    background:linear-gradient(135deg, #FFE29A, var(--accent-strong));
+    color:var(--ink);
+    border-radius:20px; padding:20px 20px; margin-bottom:20px;
     border:none; width:100%; text-align:left;
+    box-shadow:0 10px 24px rgba(245,191,60,0.35);
   }
-  .cta-home .cta-title{ font-size:16.5px; font-weight:700; }
-  .cta-home .cta-sub{ font-size:12.5px; color:var(--nav-ink); margin-top:2px; }
-  .cta-home .cta-arrow{ font-size:22px; color:var(--accent); }
+  .cta-home-left{ display:flex; align-items:center; gap:14px; }
+  .cta-home-icon{
+    width:46px; height:46px; border-radius:50%; background:rgba(255,255,255,0.55);
+    display:flex; align-items:center; justify-content:center; flex-shrink:0;
+  }
+  .cta-home-icon svg{ width:20px; height:20px; }
+  .cta-home .cta-title{ font-size:17.5px; font-weight:800; }
+  .cta-home .cta-sub{ font-size:12.5px; color:rgba(22,33,62,0.65); margin-top:2px; font-weight:600; }
+  .cta-home .cta-arrow{ color:var(--ink); flex-shrink:0; }
+  .cta-home .cta-arrow svg{ width:22px; height:22px; }
 
-  .section-title{ font-size:13px; font-weight:700; text-transform:none; color:var(--ink-soft); margin:22px 0 10px; }
+  .section-title{ font-size:15px; font-weight:800; color:var(--ink); margin:24px 0 12px; display:flex; align-items:center; gap:8px; }
+  .section-title::before{ content:''; display:block; width:4px; height:16px; border-radius:3px; background:var(--accent-strong); }
   .section-title:first-child{ margin-top:0; }
 
-  .empty-state{ text-align:center; padding:40px 16px; color:var(--ink-soft); }
-  .empty-state .empty-emoji{ font-size:34px; display:block; margin-bottom:10px; }
-  .empty-state .empty-title{ font-size:15px; font-weight:700; color:var(--ink); margin-bottom:4px;}
-  .empty-state .empty-text{ font-size:13px; line-height:1.5; }
+  .empty-state{ text-align:center; padding:36px 20px 20px; color:var(--ink-soft); }
+  .empty-illustration{ display:flex; align-items:center; justify-content:center; margin-bottom:14px; }
+  .empty-illustration svg{ width:132px; height:132px; }
+  .empty-state .empty-title{ font-size:16px; font-weight:800; color:var(--ink); margin-bottom:5px;}
+  .empty-state .empty-text{ font-size:13.5px; line-height:1.55; max-width:280px; margin:0 auto; }
 
   /* ---------- Category chips ---------- */
-  .chip-row{ display:flex; gap:8px; overflow-x:auto; padding-bottom:4px; margin-bottom:16px; }
+  .chip-row{ display:flex; gap:8px; overflow-x:auto; padding-bottom:4px; margin-bottom:18px; }
   .chip-row::-webkit-scrollbar{ display:none; }
   .chip{
     flex:0 0 auto;
-    border:1px solid var(--border); background:var(--surface);
-    padding:9px 15px; border-radius:var(--radius-chip);
-    font-size:13.5px; font-weight:600; color:var(--ink-soft);
+    border:1.5px solid var(--border); background:var(--surface);
+    padding:10px 16px; border-radius:var(--radius-chip);
+    font-size:13.5px; font-weight:700; color:var(--ink-soft);
     display:flex; align-items:center; gap:6px; white-space:nowrap;
   }
-  .chip.active{ color:#fff; border-color:transparent; }
+  .chip.active{ color:var(--ink); border-color:transparent; }
 
   /* ---------- Product grid ---------- */
-  .product-grid{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .product-grid{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
   .product-card{
     background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-card);
-    padding:0; overflow:hidden; text-align:left; border-left-width:5px; border-left-style:solid;
+    padding:0; overflow:hidden; text-align:left; box-shadow:var(--shadow-card);
   }
   .product-card:active{ transform:scale(0.97); }
-  .product-card .pc-inner{ padding:12px 12px 13px; }
+  .product-card .pc-top{ height:5px; }
+  .product-card .pc-inner{ padding:14px 14px 15px; }
   .product-card .pc-emoji{ font-size:22px; }
-  .product-card .pc-name{ font-size:13.5px; font-weight:700; margin:8px 0 6px; line-height:1.25; min-height:34px; }
-  .product-card .pc-price{ font-family:var(--mono); font-size:15px; font-weight:700; color:var(--ink); }
+  .product-card .pc-name{ font-size:13.5px; font-weight:700; margin:9px 0 7px; line-height:1.3; min-height:34px; color:var(--ink); }
+  .product-card .pc-price{ font-family:var(--sans); font-size:15px; font-weight:800; color:var(--ink); }
 
   /* ---------- Cart mini bar ---------- */
   .cartbar{
     position:fixed; left:50%; transform:translateX(-50%);
-    bottom:78px; z-index:15;
-    width:100%; max-width:528px; padding:0 16px;
+    bottom:84px; z-index:15;
+    width:100%; max-width:528px; padding:0 18px;
   }
   .cartbar-inner{
-    background:var(--nav-bg); color:#fff; border-radius:16px;
-    padding:13px 16px; display:flex; align-items:center; justify-content:space-between;
-    box-shadow:0 10px 24px rgba(35,32,27,0.3);
+    background:var(--ink); color:#fff; border-radius:18px;
+    padding:14px 18px; display:flex; align-items:center; justify-content:space-between;
+    box-shadow:0 12px 26px rgba(22,33,62,0.35);
     border:none; width:100%;
   }
   .cartbar-count{
-    background:var(--accent); color:var(--accent-ink); font-size:12px; font-weight:700;
-    border-radius:999px; width:22px; height:22px; display:inline-flex; align-items:center; justify-content:center;
-    margin-right:8px;
+    background:var(--accent-strong); color:var(--accent-ink); font-size:12px; font-weight:800;
+    border-radius:999px; width:23px; height:23px; display:inline-flex; align-items:center; justify-content:center;
+    margin-right:9px;
   }
-  .cartbar-total{ font-family:var(--mono); font-weight:700; }
-  .cartbar-cta{ color:var(--accent); font-weight:700; font-size:13.5px; }
+  .cartbar-total{ font-weight:800; }
+  .cartbar-cta{ color:var(--accent-strong); font-weight:700; font-size:13.5px; display:flex; align-items:center; gap:4px; }
+  .cartbar-cta svg{ width:15px; height:15px; }
 
   /* ---------- Modal / sheet ---------- */
   .modal-overlay{
-    position:fixed; inset:0; background:rgba(20,17,14,0.5);
+    position:fixed; inset:0; background:rgba(16,22,42,0.45);
     display:flex; align-items:flex-end; justify-content:center;
     z-index:100; animation:fadeIn .15s ease;
   }
@@ -208,51 +242,53 @@
     border-radius:var(--radius-sheet) var(--radius-sheet) 0 0;
     box-shadow:var(--shadow-sheet);
     animation:slideUp .18s ease;
-    padding:10px 18px 26px;
+    padding:10px 20px 28px;
   }
   @keyframes slideUp{ from{transform:translateY(24px); opacity:0;} to{transform:translateY(0); opacity:1;} }
-  .sheet-grip{ width:38px; height:4px; background:var(--ink-faint); border-radius:99px; margin:6px auto 14px; }
+  .sheet-grip{ width:38px; height:4px; background:var(--ink-faint); border-radius:99px; margin:8px auto 16px; }
   .modal-center{ align-items:center; }
   .modal-sheet.modal-card{ border-radius:var(--radius-sheet); margin:0 18px; max-height:88dvh; }
 
-  .sheet-header{ display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; }
-  .sheet-header h2{ font-size:17px; margin:0; }
-  .sheet-close{ background:var(--surface-alt); border:none; width:30px; height:30px; border-radius:50%; font-size:15px; color:var(--ink-soft); }
+  .sheet-header{ display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; }
+  .sheet-header h2{ font-size:18px; margin:0; font-weight:800; color:var(--ink); }
+  .sheet-close{ background:var(--surface-alt); border:none; width:32px; height:32px; border-radius:50%; color:var(--ink-soft); display:flex; align-items:center; justify-content:center; }
+  .sheet-close svg{ width:14px; height:14px; }
 
   /* ---------- Cart list ---------- */
-  .cart-item{ display:flex; align-items:center; gap:10px; padding:11px 0; border-bottom:1px solid var(--border); }
+  .cart-item{ display:flex; align-items:center; gap:10px; padding:12px 0; border-bottom:1px solid var(--border); }
   .cart-item:last-child{ border-bottom:none; }
   .cart-item-info{ flex:1; min-width:0; }
-  .cart-item-name{ font-size:13.5px; font-weight:700; }
-  .cart-item-price{ font-family:var(--mono); font-size:12px; color:var(--ink-soft); margin-top:2px; }
+  .cart-item-name{ font-size:13.5px; font-weight:700; color:var(--ink); }
+  .cart-item-price{ font-size:12px; color:var(--ink-soft); margin-top:2px; font-weight:600; }
   .qty-control{ display:flex; align-items:center; gap:8px; background:var(--surface-alt); border-radius:999px; padding:4px; }
-  .qty-btn{ width:26px; height:26px; border-radius:50%; border:none; background:var(--surface); font-size:15px; font-weight:700; display:flex; align-items:center; justify-content:center; }
-  .qty-val{ font-family:var(--mono); font-size:13.5px; font-weight:700; min-width:16px; text-align:center; }
-  .cart-item-remove{ background:none; border:none; color:var(--accent-2); font-size:17px; padding:4px 2px; }
-  .cart-item-subtotal{ font-family:var(--mono); font-size:13px; font-weight:700; width:56px; text-align:right; }
+  .qty-btn{ width:27px; height:27px; border-radius:50%; border:none; background:var(--surface); font-size:15px; font-weight:700; display:flex; align-items:center; justify-content:center; color:var(--ink); box-shadow:0 1px 3px rgba(22,33,62,0.12); }
+  .qty-val{ font-size:13.5px; font-weight:800; min-width:16px; text-align:center; color:var(--ink); }
+  .cart-item-remove{ background:none; border:none; color:var(--accent-2); font-size:15px; padding:4px 2px; display:flex; }
+  .cart-item-remove svg{ width:16px; height:16px; }
+  .cart-item-subtotal{ font-size:13px; font-weight:800; width:58px; text-align:right; color:var(--ink); }
 
-  .totals{ margin-top:14px; padding-top:10px; border-top:1px dashed var(--border); }
-  .totals-row{ display:flex; justify-content:space-between; font-size:13.5px; padding:4px 0; color:var(--ink-soft); }
-  .totals-row.grand{ color:var(--ink); font-size:17px; font-weight:700; padding-top:8px; }
-  .totals-row .v{ font-family:var(--mono); }
+  .totals{ margin-top:16px; padding-top:12px; border-top:1px dashed var(--border); }
+  .totals-row{ display:flex; justify-content:space-between; font-size:13.5px; padding:5px 0; color:var(--ink-soft); font-weight:600; }
+  .totals-row.grand{ color:var(--ink); font-size:18px; font-weight:800; padding-top:9px; }
+  .totals-row .v{ font-weight:700; }
 
   /* ---------- Option groups (service/payment) ---------- */
-  .opt-grid{ display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin-bottom:14px; }
+  .opt-grid{ display:grid; grid-template-columns:1fr 1fr 1fr; gap:9px; margin-bottom:16px; }
   .opt-card{
-    border:1.5px solid var(--border); background:var(--surface); border-radius:12px;
-    padding:12px 6px; text-align:center; font-size:12.5px; font-weight:700; color:var(--ink-soft);
+    border:1.5px solid var(--border); background:var(--surface); border-radius:13px;
+    padding:13px 6px; text-align:center; font-size:12.5px; font-weight:700; color:var(--ink-soft);
   }
   .opt-card .opt-emoji{ display:block; font-size:19px; margin-bottom:5px; }
-  .opt-card.active{ border-color:var(--accent); background:rgba(232,163,61,0.12); color:var(--accent-ink); }
+  .opt-card.active{ border-color:var(--accent-strong); background:var(--accent-soft); color:var(--ink); }
 
-  .field{ margin-bottom:14px; }
-  .field label{ display:block; font-size:12.5px; font-weight:700; color:var(--ink-soft); margin-bottom:6px; }
+  .field{ margin-bottom:16px; }
+  .field label{ display:block; font-size:12.5px; font-weight:700; color:var(--ink-soft); margin-bottom:7px; }
   .field input, .field select{
-    width:100%; border:1.5px solid var(--border); border-radius:10px;
-    padding:12px 13px; font-size:15px; background:var(--surface); color:var(--ink);
+    width:100%; border:1.5px solid var(--border); border-radius:12px;
+    padding:13px 14px; font-size:15px; background:var(--surface); color:var(--ink); font-weight:600;
   }
-  .field input:focus, .field select:focus{ border-color:var(--accent); }
-  .field-hint{ font-size:12px; margin-top:6px; font-weight:600; }
+  .field input:focus, .field select:focus{ border-color:var(--accent-strong); }
+  .field-hint{ font-size:12px; margin-top:7px; font-weight:700; }
   .field-hint.ok{ color:var(--success); }
   .field-hint.warn{ color:var(--accent-2); }
 
@@ -269,82 +305,87 @@
 
   /* ---------- History rows ---------- */
   .search-box{
-    display:flex; align-items:center; gap:8px; background:var(--surface); border:1.5px solid var(--border);
-    border-radius:12px; padding:11px 14px; margin-bottom:12px;
+    display:flex; align-items:center; gap:9px; background:var(--surface); border:1.5px solid var(--border);
+    border-radius:13px; padding:12px 15px; margin-bottom:14px; box-shadow:var(--shadow-card);
   }
-  .search-box input{ border:none; outline:none; background:none; flex:1; font-size:14px; color:var(--ink); }
-  .filter-row{ display:flex; gap:7px; overflow-x:auto; margin-bottom:16px; }
+  .search-box svg{ width:17px; height:17px; color:var(--ink-soft); flex-shrink:0; }
+  .search-box input{ border:none; outline:none; background:none; flex:1; font-size:14px; color:var(--ink); font-weight:500; }
+  .filter-row{ display:flex; gap:8px; overflow-x:auto; margin-bottom:10px; }
   .filter-row::-webkit-scrollbar{ display:none; }
   .filter-chip{
-    flex:0 0 auto; font-size:12px; font-weight:700; padding:7px 12px; border-radius:999px;
-    border:1px solid var(--border); background:var(--surface); color:var(--ink-soft);
+    flex:0 0 auto; font-size:12px; font-weight:700; padding:8px 13px; border-radius:999px;
+    border:1.5px solid var(--border); background:var(--surface); color:var(--ink-soft);
   }
-  .filter-chip.active{ background:var(--nav-bg); color:#fff; border-color:var(--nav-bg); }
+  .filter-chip.active{ background:var(--ink); color:#fff; border-color:var(--ink); }
 
   .sale-row{
-    display:flex; align-items:center; gap:12px; background:var(--surface); border:1px solid var(--border);
-    border-radius:var(--radius-card); padding:13px 14px; margin-bottom:9px; text-align:left; width:100%;
+    display:flex; align-items:center; gap:13px; background:var(--surface); border:1px solid var(--border);
+    border-radius:var(--radius-card); padding:14px 15px; margin-bottom:10px; text-align:left; width:100%;
+    box-shadow:var(--shadow-card);
   }
   .sale-row.cancelled{ opacity:.55; }
   .sale-row-badge{
-    width:40px; height:40px; border-radius:11px; background:var(--surface-alt); display:flex; align-items:center; justify-content:center; font-size:17px; flex-shrink:0;
+    width:42px; height:42px; border-radius:12px; background:var(--surface-soft); display:flex; align-items:center; justify-content:center; font-size:17px; flex-shrink:0;
   }
   .sale-row-main{ flex:1; min-width:0; }
-  .sale-row-num{ font-family:var(--mono); font-size:13px; font-weight:700; }
-  .sale-row-meta{ font-size:11.5px; color:var(--ink-soft); margin-top:2px; }
+  .sale-row-num{ font-size:13.5px; font-weight:800; color:var(--ink); }
+  .sale-row-meta{ font-size:11.5px; color:var(--ink-soft); margin-top:2px; font-weight:600; }
   .sale-row-right{ text-align:right; }
-  .sale-row-total{ font-family:var(--mono); font-size:14.5px; font-weight:700; }
-  .tag{ display:inline-block; font-size:10px; font-weight:700; padding:2px 7px; border-radius:999px; margin-top:3px; }
+  .sale-row-total{ font-size:15px; font-weight:800; color:var(--ink); }
+  .tag{ display:inline-block; font-size:10px; font-weight:800; padding:2px 8px; border-radius:999px; margin-top:4px; }
   .tag.cancel{ background:var(--danger-bg); color:var(--accent-2); }
 
   /* ---------- Ticket ---------- */
-  .ticket{ font-family:var(--mono); background:var(--surface); border-radius:14px; padding:20px 18px; border:1px dashed var(--ink-faint); }
+  .ticket{ font-family:var(--mono); background:var(--surface); border-radius:16px; padding:22px 18px; border:1.5px dashed var(--ink-faint); }
   .ticket-center{ text-align:center; }
-  .ticket h3{ margin:0 0 2px; font-size:16px; letter-spacing:1px; }
+  .ticket h3{ margin:0 0 2px; font-size:16px; letter-spacing:1px; color:var(--ink); }
   .ticket .ticket-sub{ font-size:11px; color:var(--ink-soft); margin-bottom:10px; }
   .ticket hr{ border:none; border-top:1px dashed var(--ink-faint); margin:10px 0; }
-  .ticket-line{ display:flex; justify-content:space-between; font-size:12.5px; margin:2px 0; }
+  .ticket-line{ display:flex; justify-content:space-between; font-size:12.5px; margin:2px 0; color:var(--ink); }
   .ticket-item-row{ font-size:12.5px; margin:5px 0; }
-  .ticket-item-row .ti-name{ display:flex; justify-content:space-between; }
+  .ticket-item-row .ti-name{ display:flex; justify-content:space-between; color:var(--ink); }
   .ticket-item-qty{ color:var(--ink-soft); }
   .ticket-total{ font-size:15px; font-weight:700; }
   .ticket-meta{ font-size:11.5px; color:var(--ink-soft); margin:1px 0; }
 
   /* ---------- Products view ---------- */
-  .prod-row{ display:flex; align-items:center; gap:10px; background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:11px 12px; margin-bottom:8px; }
+  .prod-row{ display:flex; align-items:center; gap:11px; background:var(--surface); border:1px solid var(--border); border-radius:13px; padding:12px 13px; margin-bottom:9px; box-shadow:var(--shadow-card); }
   .prod-row .pr-dot{ width:8px; height:8px; border-radius:50%; flex-shrink:0; }
   .prod-row .pr-info{ flex:1; min-width:0; }
-  .prod-row .pr-name{ font-size:13.5px; font-weight:700; }
-  .prod-row .pr-price{ font-family:var(--mono); font-size:12px; color:var(--ink-soft); margin-top:1px; }
-  .icon-btn{ background:var(--surface-alt); border:none; width:30px; height:30px; border-radius:9px; font-size:13px; }
-  .cat-header{ display:flex; align-items:center; gap:8px; margin:20px 0 10px; }
+  .prod-row .pr-name{ font-size:13.5px; font-weight:700; color:var(--ink); }
+  .prod-row .pr-price{ font-size:12px; color:var(--ink-soft); margin-top:2px; font-weight:600; }
+  .icon-btn{ background:var(--surface-alt); border:none; width:32px; height:32px; border-radius:10px; color:var(--ink-soft); display:flex; align-items:center; justify-content:center; }
+  .icon-btn svg{ width:14px; height:14px; }
+  .cat-header{ display:flex; align-items:center; gap:8px; margin:22px 0 11px; }
   .cat-header:first-child{ margin-top:0; }
   .cat-header .cat-emoji{ font-size:16px; }
-  .cat-header .cat-name{ font-size:14px; font-weight:700; }
-  .cat-header .cat-count{ font-size:11.5px; color:var(--ink-soft); }
+  .cat-header .cat-name{ font-size:14.5px; font-weight:800; color:var(--ink); }
+  .cat-header .cat-count{ font-size:11.5px; color:var(--ink-soft); font-weight:600; }
 
-  .fab-row{ display:flex; justify-content:flex-end; margin-bottom:4px; }
+  .fab-row{ display:flex; justify-content:flex-end; margin-bottom:6px; }
 
   /* ---------- Bars for stats ---------- */
-  .bar-row{ margin-bottom:12px; }
-  .bar-row-top{ display:flex; justify-content:space-between; font-size:12.5px; font-weight:600; margin-bottom:5px; }
-  .bar-row-top .bv{ font-family:var(--mono); color:var(--ink-soft); }
+  .bar-row{ margin-bottom:13px; }
+  .bar-row:last-child{ margin-bottom:0; }
+  .bar-row-top{ display:flex; justify-content:space-between; font-size:12.5px; font-weight:700; margin-bottom:6px; color:var(--ink); }
+  .bar-row-top .bv{ color:var(--ink-soft); font-weight:600; }
   .bar-track{ height:9px; background:var(--surface-alt); border-radius:999px; overflow:hidden; }
   .bar-fill{ height:100%; border-radius:999px; }
 
-  .top-product-row{ display:flex; align-items:center; gap:10px; padding:9px 0; border-bottom:1px solid var(--border); }
+  .top-product-row{ display:flex; align-items:center; gap:11px; padding:10px 0; border-bottom:1px solid var(--border); }
   .top-product-row:last-child{ border-bottom:none; }
-  .top-product-rank{ width:22px; height:22px; border-radius:7px; background:var(--surface-alt); font-size:11px; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
-  .top-product-name{ flex:1; font-size:13px; font-weight:700; }
-  .top-product-qty{ font-size:11px; color:var(--ink-soft); }
-  .top-product-rev{ font-family:var(--mono); font-size:13px; font-weight:700; }
+  .top-product-rank{ width:24px; height:24px; border-radius:8px; background:var(--surface-soft); font-size:11px; font-weight:800; color:var(--ink); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .top-product-name{ flex:1; font-size:13px; font-weight:700; color:var(--ink); }
+  .top-product-qty{ font-size:11px; color:var(--ink-soft); font-weight:600; }
+  .top-product-rev{ font-size:13px; font-weight:800; color:var(--ink); }
 
   /* ---------- Toast ---------- */
   .toast{
     position:fixed; left:50%; bottom:150px; transform:translate(-50%, 12px);
-    background:var(--nav-bg); color:#fff; font-size:13px; font-weight:600;
-    padding:11px 18px; border-radius:999px; z-index:200; opacity:0; pointer-events:none;
+    background:var(--ink); color:#fff; font-size:13px; font-weight:700;
+    padding:12px 20px; border-radius:999px; z-index:200; opacity:0; pointer-events:none;
     transition:opacity .2s ease, transform .2s ease; max-width:80%; text-align:center;
+    box-shadow:0 10px 24px rgba(22,33,62,0.3);
   }
   .toast.show{ opacity:1; transform:translate(-50%,0); }
 
@@ -366,7 +407,7 @@
 <div class="app">
   <header class="topbar">
     <div class="brand">
-      <span class="brand-mark">🍽️</span>
+      <span class="brand-mark" id="brandMark"></span>
       <span class="brand-name">Mesa</span>
     </div>
     <div class="topbar-clock" id="clock"></div>
@@ -375,11 +416,11 @@
   <main class="view" id="view"></main>
 
   <nav class="bottomnav no-print">
-    <button class="navbtn" data-view="home" onclick="goTo('home')"><span class="navicon">🏠</span><span>Inicio</span></button>
-    <button class="navbtn" data-view="sale" onclick="goTo('sale')"><span class="navicon">🛒</span><span>Nueva venta</span></button>
-    <button class="navbtn" data-view="history" onclick="goTo('history')"><span class="navicon">🧾</span><span>Historial</span></button>
-    <button class="navbtn" data-view="stats" onclick="goTo('stats')"><span class="navicon">📊</span><span>Ventas</span></button>
-    <button class="navbtn" data-view="products" onclick="goTo('products')"><span class="navicon">🍔</span><span>Productos</span></button>
+    <button class="navbtn" data-view="home" data-icon="home" onclick="goTo('home')"><span class="navicon"></span><span>Inicio</span></button>
+    <button class="navbtn" data-view="sale" data-icon="cart" onclick="goTo('sale')"><span class="navicon"></span><span>Nueva venta</span></button>
+    <button class="navbtn" data-view="history" data-icon="receipt" onclick="goTo('history')"><span class="navicon"></span><span>Historial</span></button>
+    <button class="navbtn" data-view="stats" data-icon="chart" onclick="goTo('stats')"><span class="navicon"></span><span>Ventas</span></button>
+    <button class="navbtn" data-view="products" data-icon="box" onclick="goTo('products')"><span class="navicon"></span><span>Productos</span></button>
   </nav>
 </div>
 
@@ -391,6 +432,119 @@
    MESA — Prototipo funcional de POS para restaurante
    Un solo archivo. Datos persistidos en localStorage.
 ========================================================= */
+
+/* =========================================================
+   ICONOGRAFÍA — íconos de línea SVG (sin emojis)
+========================================================= */
+const ICONS = {
+  fork: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 2v7a2 2 0 0 0 4 0V2M9 9v13M17 2c-1.5 0-2.5 1.4-2.5 3.5V11c0 1.1.9 2 2 2h1V2z" stroke="#16213E" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+  home: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 11.2 12 4l8 7.2" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 9.8V19a1 1 0 0 0 1 1h3.2v-4.6a1.8 1.8 0 0 1 1.8-1.8v0a1.8 1.8 0 0 1 1.8 1.8V20H17a1 1 0 0 0 1-1V9.8" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+  cart: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 4h2l1.4 10.2A2 2 0 0 0 8.4 16h8.2a2 2 0 0 0 2-1.7L20 7H6" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9.5" cy="20" r="1.3" fill="currentColor"/><circle cx="16.5" cy="20" r="1.3" fill="currentColor"/></svg>`,
+  receipt: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 3h12v17.2c0 .6-.6 1-1.1.7L15 19.4l-1.9 1.5a1 1 0 0 1-1.2 0L10 19.4l-1.9 1.5c-.5.3-1.1-.1-1.1-.7V3Z" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/><path d="M9 8h6M9 11.5h6M9 15h3.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>`,
+  chart: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 20V10M10 20V4M16 20v-7M20 20H4" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+  box: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 8.4 12 4l8 4.4v7.2L12 20l-8-4.4V8.4Z" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/><path d="M4 8.4 12 12.8m0 0 8-4.4M12 12.8V20" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></svg>`,
+  plus: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>`,
+  arrowRight: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+  chevronRight: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+  document: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 3h7l4 4v14H7V3Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M14 3v4h4" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M9.5 12.5h5M9.5 15.5h5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>`,
+  ticket: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 9.5a2 2 0 0 1 0-3.8V5a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v.7a2 2 0 0 1 0 3.8v.5a2 2 0 0 1 0 3.8v.7a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-.7a2 2 0 0 1 0-3.8v-.5Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M9 4.5v15" stroke="currentColor" stroke-width="1.5" stroke-dasharray="2 2"/></svg>`,
+  search: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="1.9"/><path d="m20 20-4.3-4.3" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg>`,
+  close: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"/></svg>`,
+  edit: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="m14.5 4.5 5 5L8 21H3v-5L14.5 4.5Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>`,
+  print: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 8V3h10v5" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><rect x="4" y="8" width="16" height="8" rx="1.5" stroke="currentColor" stroke-width="1.8"/><path d="M7 14h10v7H7v-7Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>`,
+  trash: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 7h14M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2m-9 0 1 13a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1l1-13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`
+};
+function icon(name){ return ICONS[name] || ''; }
+
+/* =========================================================
+   ILUSTRACIONES — estados vacíos (SVG inline, sin emojis)
+   Paleta: azul marino (ink), gris claro (surface-alt/faint),
+   amarillo suave (accent) — formas suaves, sombras sutiles.
+========================================================= */
+const ILLUSTRATIONS = {
+  // Actividad reciente / Ventas del día sin registros: recibo con check
+  receiptEmpty: `
+  <svg viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <ellipse cx="80" cy="140" rx="42" ry="7" fill="#EEF1F7"/>
+    <path d="M46 20h68c1.7 0 3 1.3 3 3v104l-9-6-9 6-9-6-9 6-9-6-9 6-9-6-9 6V23c0-1.7 1.3-3 3-3Z" fill="#FFFFFF" stroke="#16213E" stroke-width="2.2" stroke-linejoin="round"/>
+    <path d="M58 40h44M58 52h44M58 64h28" stroke="#D8DCE8" stroke-width="3.4" stroke-linecap="round"/>
+    <circle cx="112" cy="100" r="20" fill="#FFD666"/>
+    <path d="M103 100.5l6 6 12-13" stroke="#16213E" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M27 34l8 3-8 3M133 50l-8 3 8 3" stroke="#C9CEDD" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="30" cy="70" r="3" fill="#FFE29A"/>
+    <circle cx="132" cy="90" r="2.4" fill="#FFE29A"/>
+  </svg>`,
+
+  // Productos sin catálogo: bolsa / caja de compras vacía
+  boxEmpty: `
+  <svg viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <ellipse cx="80" cy="138" rx="44" ry="7" fill="#EEF1F7"/>
+    <path d="M55 46l-8 14h66l-8-14" stroke="#16213E" stroke-width="2.2" stroke-linejoin="round"/>
+    <path d="M47 60h66l-5 62a4 4 0 0 1-4 3.6H56a4 4 0 0 1-4-3.6l-5-62Z" fill="#FFFFFF" stroke="#16213E" stroke-width="2.2" stroke-linejoin="round"/>
+    <path d="M65 46a15 15 0 0 1 30 0" stroke="#16213E" stroke-width="2.2" stroke-linecap="round"/>
+    <path d="M62 82h36" stroke="#D8DCE8" stroke-width="3.4" stroke-linecap="round"/>
+    <circle cx="121" cy="52" r="16" fill="#FFD666"/>
+    <path d="M121 45v14M114 52h14" stroke="#16213E" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="33" cy="88" r="2.6" fill="#E4E8F0"/>
+    <circle cx="39" cy="102" r="2" fill="#FFE29A"/>
+  </svg>`,
+
+  // Historial sin registros: documentos apilados
+  docsEmpty: `
+  <svg viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <ellipse cx="80" cy="140" rx="44" ry="7" fill="#EEF1F7"/>
+    <rect x="38" y="34" width="70" height="90" rx="8" fill="#F0F2F8" stroke="#D8DCE8" stroke-width="2"/>
+    <rect x="52" y="22" width="70" height="90" rx="8" fill="#FFFFFF" stroke="#16213E" stroke-width="2.2"/>
+    <path d="M66 42h42M66 54h42M66 66h28" stroke="#D8DCE8" stroke-width="3.4" stroke-linecap="round"/>
+    <rect x="66" y="82" width="30" height="18" rx="5" fill="#FFF0C2"/>
+    <path d="M74 91l5 5 9-10" stroke="#16213E" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="126" cy="46" r="3" fill="#FFE29A"/>
+    <circle cx="30" cy="60" r="2.4" fill="#D8DCE8"/>
+  </svg>`,
+
+  // Carrito vacío
+  cartEmpty: `
+  <svg viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <ellipse cx="80" cy="140" rx="44" ry="7" fill="#EEF1F7"/>
+    <path d="M32 30h10l6.4 12" stroke="#16213E" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M48.4 42h68.6c2.2 0 3.7 2.1 3 4.2l-10 30.4a4 4 0 0 1-3.8 2.8H63a4 4 0 0 1-3.9-3.1L48.4 42Z" fill="#FFFFFF" stroke="#16213E" stroke-width="2.2" stroke-linejoin="round"/>
+    <path d="M60 55h56" stroke="#EEF1F7" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="70" cy="118" r="8" fill="#FFFFFF" stroke="#16213E" stroke-width="2.2"/>
+    <circle cx="104" cy="118" r="8" fill="#FFFFFF" stroke="#16213E" stroke-width="2.2"/>
+    <circle cx="118" cy="56" r="15" fill="#FFD666"/>
+    <path d="M112 56h12M118 50v12" stroke="#16213E" stroke-width="2.8" stroke-linecap="round"/>
+  </svg>`,
+
+  // Ventas / estadísticas sin datos: gráfico de barras vacío
+  chartEmpty: `
+  <svg viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <ellipse cx="80" cy="140" rx="44" ry="7" fill="#EEF1F7"/>
+    <path d="M32 118V34" stroke="#D8DCE8" stroke-width="2.2" stroke-linecap="round"/>
+    <path d="M32 118h96" stroke="#D8DCE8" stroke-width="2.2" stroke-linecap="round"/>
+    <rect x="46" y="96" width="16" height="22" rx="4" fill="#F0F2F8"/>
+    <rect x="72" y="78" width="16" height="40" rx="4" fill="#F0F2F8"/>
+    <rect x="98" y="60" width="16" height="58" rx="4" fill="#FFF0C2"/>
+    <path d="M46 66l24-14 22 10 24-20" stroke="#FFD666" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="1 8"/>
+    <circle cx="116" cy="42" r="6" fill="#16213E"/>
+    <path d="M113.5 42l1.8 1.8 3.2-3.6" stroke="#FFD666" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>`,
+
+  // Sin resultados de búsqueda
+  searchEmpty: `
+  <svg viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <ellipse cx="80" cy="140" rx="44" ry="7" fill="#EEF1F7"/>
+    <circle cx="72" cy="70" r="34" fill="#FFFFFF" stroke="#16213E" stroke-width="2.4"/>
+    <circle cx="72" cy="70" r="22" fill="#F5F6FB"/>
+    <path d="M96 94l24 24" stroke="#16213E" stroke-width="4.4" stroke-linecap="round"/>
+    <circle cx="120" cy="118" r="7" fill="#FFD666"/>
+    <path d="M64 70h16" stroke="#C9CEDD" stroke-width="3" stroke-linecap="round"/>
+  </svg>`
+};
+function illustration(name, opts){
+  opts = opts || {};
+  return `<div class="empty-illustration" style="${opts.style||''}">${ILLUSTRATIONS[name] || ''}</div>`;
+}
+
 
 const IVA_RATE = 0.16;
 
@@ -544,33 +698,44 @@ function renderHome(){
     <p class="page-sub">${now.toLocaleDateString('es-MX', { weekday:'long', day:'numeric', month:'long' })}</p>
 
     <button class="cta-home" onclick="goTo('sale')">
-      <div>
-        <div class="cta-title">+ Nueva venta</div>
-        <div class="cta-sub">Tomar un pedido y cobrar</div>
+      <div class="cta-home-left">
+        <div class="cta-home-icon">${icon('plus')}</div>
+        <div>
+          <div class="cta-title">Nueva venta</div>
+          <div class="cta-sub">Tomar un pedido y cobrar</div>
+        </div>
       </div>
-      <div class="cta-arrow">→</div>
+      <div class="cta-arrow">${icon('arrowRight')}</div>
     </button>
 
     <div class="section-title">Hoy</div>
     <div class="stat-grid">
       <div class="stat-card">
-        <div class="stat-label">Ventas de hoy</div>
+        <div class="stat-icon">${icon('document')}</div>
+        <div class="stat-label">Ventas de hoy<span class="stat-card-chev">${icon('chevronRight')}</span></div>
         <div class="stat-value">${formatMoney(totalHoy)}</div>
       </div>
       <div class="stat-card">
-        <div class="stat-label">Pedidos de hoy</div>
+        <div class="stat-icon">${icon('box')}</div>
+        <div class="stat-label">Pedidos de hoy<span class="stat-card-chev">${icon('chevronRight')}</span></div>
         <div class="stat-value">${pedidosHoy}</div>
       </div>
       <div class="stat-card wide">
-        <div class="stat-label">Ticket promedio de hoy</div>
-        <div class="stat-value">${formatMoney(ticketProm)}</div>
+        <div class="stat-card-row">
+          <div class="stat-icon">${icon('ticket')}</div>
+          <div>
+            <div class="stat-label">Ticket promedio de hoy</div>
+            <div class="stat-value">${formatMoney(ticketProm)}</div>
+          </div>
+        </div>
+        <span class="stat-card-chev">${icon('chevronRight')}</span>
       </div>
     </div>
 
     <div class="section-title">Actividad reciente</div>
     ${recientes.length === 0 ? `
       <div class="empty-state">
-        <span class="empty-emoji">🧾</span>
+        ${illustration('receiptEmpty')}
         <div class="empty-title">Aún no hay ventas</div>
         <div class="empty-text">Cuando registres tu primera venta, aparecerá aquí.</div>
       </div>
@@ -586,22 +751,23 @@ function renderSale(){
   const list = saleCategoryFilter === 'todos' ? products : products.filter(p => p.category === saleCategoryFilter);
 
   const chips = `<div class="chip-row">
-      <button class="chip ${saleCategoryFilter==='todos'?'active':''}" style="${saleCategoryFilter==='todos'?'background:'+'#23201B':''}" onclick="setSaleCategory('todos')">Todos</button>
+      <button class="chip ${saleCategoryFilter==='todos'?'active':''}" style="${saleCategoryFilter==='todos'?'background:var(--accent-strong)':''}" onclick="setSaleCategory('todos')">Todos</button>
       ${CATEGORIES.map(c => `
-        <button class="chip ${saleCategoryFilter===c.id?'active':''}" style="${saleCategoryFilter===c.id?'background:'+c.color:''}" onclick="setSaleCategory('${c.id}')">${c.emoji} ${c.name}</button>
+        <button class="chip ${saleCategoryFilter===c.id?'active':''}" style="${saleCategoryFilter===c.id?'background:var(--accent-strong)':''}" onclick="setSaleCategory('${c.id}')">${c.emoji} ${c.name}</button>
       `).join('')}
     </div>`;
 
   const grid = list.length === 0 ? `
       <div class="empty-state">
-        <span class="empty-emoji">🍽️</span>
+        ${illustration('boxEmpty')}
         <div class="empty-title">Sin productos aquí</div>
         <div class="empty-text">No hay productos activos en esta categoría.</div>
       </div>
     ` : `<div class="product-grid">
       ${list.map(p => {
         const cat = categoryOf(p.category);
-        return `<button class="product-card" style="border-left-color:${cat.color}" onclick="addToCart('${p.id}')">
+        return `<button class="product-card" onclick="addToCart('${p.id}')">
+          <div class="pc-top" style="background:${cat.color}"></div>
           <div class="pc-inner">
             <span class="pc-emoji">${cat.emoji}</span>
             <div class="pc-name">${escapeHtml(p.name)}</div>
@@ -680,7 +846,7 @@ function cartSheetHTML(step){
     return `
       <div class="sheet-header">
         <h2>Cobrar pedido</h2>
-        <button class="sheet-close" onclick="closeModal()">✕</button>
+        <button class="sheet-close" onclick="closeModal()">${icon('close')}</button>
       </div>
 
       <div class="section-title" style="margin-top:0;">Tipo de servicio</div>
@@ -733,11 +899,11 @@ function cartSheetHTML(step){
   return `
     <div class="sheet-header">
       <h2>Carrito</h2>
-      <button class="sheet-close" onclick="closeModal()">✕</button>
+      <button class="sheet-close" onclick="closeModal()">${icon('close')}</button>
     </div>
     ${cart.length === 0 ? `
       <div class="empty-state">
-        <span class="empty-emoji">🛒</span>
+        ${illustration('cartEmpty')}
         <div class="empty-title">Carrito vacío</div>
         <div class="empty-text">Agrega productos desde el catálogo.</div>
       </div>
@@ -756,7 +922,7 @@ function cartSheetHTML(step){
             <button class="qty-btn" onclick="changeQty('${p.id}', 1)">+</button>
           </div>
           <div class="cart-item-subtotal">${formatMoney(p.price * c.qty)}</div>
-          <button class="cart-item-remove" onclick="removeFromCart('${p.id}')">✕</button>
+          <button class="cart-item-remove" onclick="removeFromCart('${p.id}')">${icon('trash')}</button>
         </div>
       `;
     }).join('')}
@@ -885,11 +1051,11 @@ function showTicket(sale, opts){
   const html = `
     <div class="sheet-header no-print">
       <h2>${opts.fromCheckout ? 'Venta cobrada' : 'Detalle de venta'}</h2>
-      <button class="sheet-close" onclick="closeModal(); ${opts.fromCheckout ? 'afterSaleClosed();' : 'render();'}">✕</button>
+      <button class="sheet-close" onclick="closeModal(); ${opts.fromCheckout ? 'afterSaleClosed();' : 'render();'}">${icon('close')}</button>
     </div>
     <div id="ticket-print">${ticketHTML(sale)}</div>
     <div style="display:flex; gap:10px; margin-top:16px;" class="no-print">
-      <button class="btn ghost" onclick="window.print()">🖨️ Imprimir</button>
+      <button class="btn ghost" onclick="window.print()">${icon('print')} Imprimir</button>
       <button class="btn dark block" onclick="closeModal(); ${opts.fromCheckout ? 'afterSaleClosed();' : 'render();'}">Cerrar</button>
     </div>
   `;
@@ -924,7 +1090,7 @@ function renderHistoryShell(){
     <p class="page-sub">Todas las ventas registradas</p>
 
     <div class="search-box">
-      <span>🔎</span>
+      <span>${icon('search')}</span>
       <input type="text" id="historySearch" placeholder="Buscar por pedido o producto" value="${escapeHtml(historyFilters.search)}" oninput="onHistorySearch(this.value)">
     </div>
 
@@ -976,14 +1142,23 @@ function matchesHistoryFilters(sale){
 function renderHistoryList(){
   const container = document.getElementById('historyList');
   if(!container) return;
-  const sales = DB.getSales().slice().sort((a,b)=> new Date(b.date)-new Date(a.date)).filter(matchesHistoryFilters);
-  container.innerHTML = sales.length === 0 ? `
-    <div class="empty-state">
-      <span class="empty-emoji">🔍</span>
-      <div class="empty-title">Sin resultados</div>
-      <div class="empty-text">No hay ventas que coincidan con estos filtros.</div>
-    </div>
-  ` : sales.map(s => renderSaleRow(s)).join('');
+  const allSales = DB.getSales();
+  const sales = allSales.slice().sort((a,b)=> new Date(b.date)-new Date(a.date)).filter(matchesHistoryFilters);
+  container.innerHTML = sales.length === 0 ? (
+    allSales.length === 0 ? `
+      <div class="empty-state">
+        ${illustration('docsEmpty')}
+        <div class="empty-title">Aún no hay historial</div>
+        <div class="empty-text">Cuando registres tu primera venta, aparecerá aquí.</div>
+      </div>
+    ` : `
+      <div class="empty-state">
+        ${illustration('searchEmpty')}
+        <div class="empty-title">Sin resultados</div>
+        <div class="empty-text">No hay ventas que coincidan con estos filtros.</div>
+      </div>
+    `
+  ) : sales.map(s => renderSaleRow(s)).join('');
 }
 
 function onHistorySearch(val){ historyFilters.search = val; renderHistoryList(); }
@@ -998,11 +1173,11 @@ function openSaleDetail(saleId){
   const html = `
     <div class="sheet-header no-print">
       <h2>Detalle de venta</h2>
-      <button class="sheet-close" onclick="closeModal()">✕</button>
+      <button class="sheet-close" onclick="closeModal()">${icon('close')}</button>
     </div>
     <div id="ticket-print">${ticketHTML(sale)}</div>
     <div style="display:flex; gap:10px; margin-top:16px;" class="no-print">
-      <button class="btn ghost" onclick="window.print()">🖨️ Imprimir</button>
+      <button class="btn ghost" onclick="window.print()">${icon('print')} Imprimir</button>
       ${!sale.cancelled ? `<button class="btn danger block" onclick="cancelSale('${sale.id}')">Cancelar venta</button>` : `<button class="btn dark block" onclick="closeModal()">Cerrar</button>`}
     </div>
   `;
@@ -1042,7 +1217,7 @@ function renderStats(){
       <h1 class="page-title">Ventas</h1>
       <p class="page-sub">Estadísticas del negocio</p>
       <div class="empty-state">
-        <span class="empty-emoji">📊</span>
+        ${illustration('chartEmpty')}
         <div class="empty-title">Aún no hay ventas registradas</div>
         <div class="empty-text">Cuando cobres tu primer pedido, verás aquí las estadísticas reales.</div>
       </div>
@@ -1103,7 +1278,7 @@ function renderStats(){
         const v = byPayment[p.id];
         return `<div class="bar-row">
           <div class="bar-row-top"><span>${p.emoji} ${p.name}</span><span class="bv">${formatMoney(v.total)} · ${v.count}</span></div>
-          <div class="bar-track"><div class="bar-fill" style="width:${(v.total/maxPayment)*100}%; background:var(--accent);"></div></div>
+          <div class="bar-track"><div class="bar-fill" style="width:${(v.total/maxPayment)*100}%; background:var(--accent-strong);"></div></div>
         </div>`;
       }).join('')}
     </div>
@@ -1114,7 +1289,7 @@ function renderStats(){
         const v = byService[s.id];
         return `<div class="bar-row">
           <div class="bar-row-top"><span>${s.emoji} ${s.name}</span><span class="bv">${formatMoney(v.total)} · ${v.count}</span></div>
-          <div class="bar-track"><div class="bar-fill" style="width:${(v.total/maxService)*100}%; background:var(--nav-bg);"></div></div>
+          <div class="bar-track"><div class="bar-fill" style="width:${(v.total/maxService)*100}%; background:var(--ink);"></div></div>
         </div>`;
       }).join('')}
     </div>
@@ -1142,8 +1317,16 @@ function renderProducts(){
     <p class="page-sub">Administra tu catálogo</p>
 
     <div class="fab-row">
-      <button class="btn primary" onclick="openProductForm()">+ Nuevo producto</button>
+      <button class="btn primary" onclick="openProductForm()">${icon('plus')} Nuevo producto</button>
     </div>
+
+    ${products.length === 0 ? `
+      <div class="empty-state">
+        ${illustration('boxEmpty')}
+        <div class="empty-title">Aún no hay productos</div>
+        <div class="empty-text">Agrega tu primer producto para empezar a vender.</div>
+      </div>
+    ` : ''}
 
     ${CATEGORIES.map(cat => {
       const items = products.filter(p => p.category === cat.id);
@@ -1165,7 +1348,7 @@ function renderProducts(){
               <input type="checkbox" ${p.active?'checked':''} onchange="toggleProductActive('${p.id}', this.checked)">
               <span class="track"></span>
             </label>
-            <button class="icon-btn" onclick="openProductForm('${p.id}')">✎</button>
+            <button class="icon-btn" onclick="openProductForm('${p.id}')">${icon('edit')}</button>
           </div>
         `).join('')}
       `;
@@ -1188,7 +1371,7 @@ function openProductForm(productId){
   const html = `
     <div class="sheet-header">
       <h2>${editing ? 'Editar producto' : 'Nuevo producto'}</h2>
-      <button class="sheet-close" onclick="closeModal()">✕</button>
+      <button class="sheet-close" onclick="closeModal()">${icon('close')}</button>
     </div>
     <div class="field">
       <label>Nombre</label>
@@ -1241,7 +1424,17 @@ function tickClock(){
     now.toLocaleTimeString('es-MX', { hour:'2-digit', minute:'2-digit' });
 }
 
+function paintChrome(){
+  const mark = document.getElementById('brandMark');
+  if(mark) mark.innerHTML = ICONS.fork;
+  document.querySelectorAll('.navbtn').forEach(btn => {
+    const holder = btn.querySelector('.navicon');
+    if(holder) holder.innerHTML = icon(btn.dataset.icon);
+  });
+}
+
 initDB();
+paintChrome();
 render();
 tickClock();
 setInterval(tickClock, 30000);
