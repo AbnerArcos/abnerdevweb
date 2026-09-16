@@ -200,13 +200,24 @@
   .product-card{
     background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-card);
     padding:0; overflow:hidden; text-align:left; box-shadow:var(--shadow-card);
+    display:flex; flex-direction:column;
   }
   .product-card:active{ transform:scale(0.97); }
   .product-card .pc-top{ height:5px; }
-  .product-card .pc-inner{ padding:14px 14px 15px; }
-  .product-card .pc-emoji{ font-size:22px; }
-  .product-card .pc-name{ font-size:13.5px; font-weight:700; margin:9px 0 7px; line-height:1.3; min-height:34px; color:var(--ink); }
-  .product-card .pc-price{ font-family:var(--sans); font-size:15px; font-weight:800; color:var(--ink); }
+  .product-card .pc-photo{
+    width:100%; height:96px; background:var(--surface-alt); flex-shrink:0;
+    display:flex; align-items:center; justify-content:center; overflow:hidden;
+  }
+  .product-card .pc-photo img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .product-card .pc-photo.is-placeholder svg{ width:34px; height:34px; }
+  .product-card .pc-inner{ padding:12px 13px 14px; display:flex; flex-direction:column; flex:1; }
+  .product-card .pc-name{
+    font-size:13.5px; font-weight:700; margin:0 0 7px; line-height:1.3; height:34px;
+    color:var(--ink); display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;
+    overflow:hidden; text-overflow:ellipsis;
+  }
+  .product-card .pc-price{ font-family:var(--sans); font-size:15px; font-weight:800; color:var(--ink); margin-top:auto; }
+  .product-card .pc-cat{ font-size:10.5px; font-weight:700; color:var(--ink-soft); text-transform:uppercase; letter-spacing:.3px; margin-bottom:3px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
 
   /* ---------- Cart mini bar ---------- */
   .cartbar{
@@ -349,10 +360,12 @@
   .ticket-meta{ font-size:11.5px; color:var(--ink-soft); margin:1px 0; }
 
   /* ---------- Products view ---------- */
-  .prod-row{ display:flex; align-items:center; gap:11px; background:var(--surface); border:1px solid var(--border); border-radius:13px; padding:12px 13px; margin-bottom:9px; box-shadow:var(--shadow-card); }
-  .prod-row .pr-dot{ width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+  .prod-row{ display:flex; align-items:center; gap:11px; background:var(--surface); border:1px solid var(--border); border-radius:13px; padding:10px 13px; margin-bottom:9px; box-shadow:var(--shadow-card); }
+  .prod-row .pr-photo{ width:44px; height:44px; border-radius:11px; background:var(--surface-alt); flex-shrink:0; display:flex; align-items:center; justify-content:center; overflow:hidden; }
+  .prod-row .pr-photo img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .prod-row .pr-photo svg{ width:19px; height:19px; }
   .prod-row .pr-info{ flex:1; min-width:0; }
-  .prod-row .pr-name{ font-size:13.5px; font-weight:700; color:var(--ink); }
+  .prod-row .pr-name{ font-size:13.5px; font-weight:700; color:var(--ink); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
   .prod-row .pr-price{ font-size:12px; color:var(--ink-soft); margin-top:2px; font-weight:600; }
   .icon-btn{ background:var(--surface-alt); border:none; width:32px; height:32px; border-radius:10px; color:var(--ink-soft); display:flex; align-items:center; justify-content:center; }
   .icon-btn svg{ width:14px; height:14px; }
@@ -361,6 +374,29 @@
   .cat-header .cat-emoji{ font-size:16px; }
   .cat-header .cat-name{ font-size:14.5px; font-weight:800; color:var(--ink); }
   .cat-header .cat-count{ font-size:11.5px; color:var(--ink-soft); font-weight:600; }
+
+  /* ---------- Gestión de categorías ---------- */
+  .catmgr-row{ display:flex; align-items:center; gap:11px; background:var(--surface); border:1px solid var(--border); border-radius:13px; padding:10px 12px; margin-bottom:8px; }
+  .catmgr-dot{ width:30px; height:30px; border-radius:9px; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:15px; }
+  .catmgr-name{ flex:1; font-size:13.5px; font-weight:700; color:var(--ink); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .catmgr-count{ font-size:11px; color:var(--ink-soft); font-weight:600; margin-right:2px; }
+  .catmgr-actions{ display:flex; gap:6px; }
+
+  /* ---------- Uploader de foto de producto ---------- */
+  .photo-upload{
+    width:100%; height:150px; border-radius:14px; border:1.5px dashed var(--ink-faint);
+    background:var(--surface-alt); display:flex; flex-direction:column; align-items:center; justify-content:center;
+    gap:7px; color:var(--ink-soft); font-size:12.5px; font-weight:700; overflow:hidden; position:relative; cursor:pointer;
+  }
+  .photo-upload img{ width:100%; height:100%; object-fit:cover; position:absolute; inset:0; }
+  .photo-upload svg{ width:26px; height:26px; }
+  .photo-upload .photo-upload-hint{ position:relative; z-index:1; }
+  .photo-upload.has-image .photo-upload-hint{ display:none; }
+  .photo-upload-remove{
+    position:absolute; top:8px; right:8px; z-index:2; background:rgba(22,33,62,0.65); color:#fff;
+    border:none; width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+  }
+  .photo-upload-remove svg{ width:13px; height:13px; }
 
   .fab-row{ display:flex; justify-content:flex-end; margin-bottom:6px; }
 
@@ -452,7 +488,11 @@ const ICONS = {
   close: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"/></svg>`,
   edit: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="m14.5 4.5 5 5L8 21H3v-5L14.5 4.5Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>`,
   print: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 8V3h10v5" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><rect x="4" y="8" width="16" height="8" rx="1.5" stroke="currentColor" stroke-width="1.8"/><path d="M7 14h10v7H7v-7Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>`,
-  trash: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 7h14M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2m-9 0 1 13a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1l1-13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`
+  trash: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 7h14M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2m-9 0 1 13a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1l1-13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+  camera: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 8.5A1.5 1.5 0 0 1 5.5 7H8l1.4-2h5.2L16 7h2.5A1.5 1.5 0 0 1 20 8.5v9A1.5 1.5 0 0 1 18.5 19h-13A1.5 1.5 0 0 1 4 17.5v-9Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="12" cy="13" r="4" stroke="currentColor" stroke-width="1.8"/></svg>`,
+  tag: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11.6 3.4 20 11.8a2 2 0 0 1 0 2.8l-5.4 5.4a2 2 0 0 1-2.8 0L3.4 11.6V4a.6.6 0 0 1 .6-.6h7.6Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="8" cy="8" r="1.6" fill="currentColor"/></svg>`,
+  plate: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="8.6" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="4.4" stroke="currentColor" stroke-width="1.3"/></svg>`,
+  plateSet: `<svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="20" cy="20" r="15.2" stroke="#C9CEDD" stroke-width="1.8"/><circle cx="20" cy="20" r="8.4" stroke="#C9CEDD" stroke-width="1.4"/><g stroke="#C9CEDD" stroke-width="1.8" stroke-linecap="round"><path d="M11.5 9v9.4M9.6 9v5.6a1.9 1.9 0 0 0 1.9 1.9v0a1.9 1.9 0 0 0 1.9-1.9V9"/><path d="M28.4 9c-1.9 0-3.2 1.8-3.2 4.4v3c0 1.3 1 2.3 2.3 2.3h.9V9Z"/></g></svg>`,
 };
 function icon(name){ return ICONS[name] || ''; }
 
@@ -548,13 +588,16 @@ function illustration(name, opts){
 
 const IVA_RATE = 0.16;
 
-const CATEGORIES = [
-  { id:'hamburguesas', name:'Hamburguesas', emoji:'🍔', color:'#C1443B' },
-  { id:'tacos',        name:'Tacos',        emoji:'🌮', color:'#E8A33D' },
-  { id:'complementos', name:'Complementos', emoji:'🍟', color:'#5B8C5A' },
-  { id:'bebidas',      name:'Bebidas',      emoji:'🥤', color:'#3D7EA6' },
-  { id:'postres',      name:'Postres',      emoji:'🍰', color:'#8B5FA3' },
-];
+function defaultCategories(){
+  return [
+    { id:'hamburguesas', name:'Hamburguesas', emoji:'🍔', color:'#C1443B' },
+    { id:'tacos',        name:'Tacos',        emoji:'🌮', color:'#E8A33D' },
+    { id:'complementos', name:'Complementos', emoji:'🍟', color:'#5B8C5A' },
+    { id:'bebidas',      name:'Bebidas',      emoji:'🥤', color:'#3D7EA6' },
+    { id:'postres',      name:'Postres',      emoji:'🍰', color:'#8B5FA3' },
+  ];
+}
+const UNCATEGORIZED = { id:'_none', name:'Sin categoría', emoji:'🍽️', color:'#8A93AC' };
 
 const SERVICE_TYPES = [
   { id:'comer',     name:'Comer aquí',  emoji:'🍽️' },
@@ -570,26 +613,26 @@ const PAYMENT_METHODS = [
 
 function defaultProducts(){
   return [
-    { id:'p1',  name:'Hamburguesa Clásica',    price:89,  category:'hamburguesas', active:true },
-    { id:'p2',  name:'Hamburguesa con Queso',  price:99,  category:'hamburguesas', active:true },
-    { id:'p3',  name:'Hamburguesa Doble',      price:129, category:'hamburguesas', active:true },
-    { id:'p4',  name:'Hamburguesa BBQ',        price:119, category:'hamburguesas', active:true },
-    { id:'p5',  name:'Taco de Asada',          price:22,  category:'tacos', active:true },
-    { id:'p6',  name:'Taco de Pastor',         price:20,  category:'tacos', active:true },
-    { id:'p7',  name:'Taco de Bistec',         price:22,  category:'tacos', active:true },
-    { id:'p8',  name:'Taco de Suadero',        price:20,  category:'tacos', active:true },
-    { id:'p9',  name:'Papas a la Francesa',    price:45,  category:'complementos', active:true },
-    { id:'p10', name:'Aros de Cebolla',        price:55,  category:'complementos', active:true },
-    { id:'p11', name:'Ensalada César',         price:55,  category:'complementos', active:true },
-    { id:'p12', name:'Nachos con Queso',       price:65,  category:'complementos', active:true },
-    { id:'p13', name:'Refresco',               price:25,  category:'bebidas', active:true },
-    { id:'p14', name:'Agua de Horchata',       price:30,  category:'bebidas', active:true },
-    { id:'p15', name:'Limonada Natural',       price:28,  category:'bebidas', active:true },
-    { id:'p16', name:'Café Americano',         price:25,  category:'bebidas', active:true },
-    { id:'p17', name:'Pastel de Chocolate',    price:55,  category:'postres', active:true },
-    { id:'p18', name:'Flan Napolitano',        price:45,  category:'postres', active:true },
-    { id:'p19', name:'Helado 2 bolas',         price:40,  category:'postres', active:true },
-    { id:'p20', name:'Churros con Cajeta',     price:42,  category:'postres', active:true },
+    { id:'p1',  name:'Hamburguesa Clásica',    price:89,  category:'hamburguesas', active:true, image:null },
+    { id:'p2',  name:'Hamburguesa con Queso',  price:99,  category:'hamburguesas', active:true, image:null },
+    { id:'p3',  name:'Hamburguesa Doble',      price:129, category:'hamburguesas', active:true, image:null },
+    { id:'p4',  name:'Hamburguesa BBQ',        price:119, category:'hamburguesas', active:true, image:null },
+    { id:'p5',  name:'Taco de Asada',          price:22,  category:'tacos', active:true, image:null },
+    { id:'p6',  name:'Taco de Pastor',         price:20,  category:'tacos', active:true, image:null },
+    { id:'p7',  name:'Taco de Bistec',         price:22,  category:'tacos', active:true, image:null },
+    { id:'p8',  name:'Taco de Suadero',        price:20,  category:'tacos', active:true, image:null },
+    { id:'p9',  name:'Papas a la Francesa',    price:45,  category:'complementos', active:true, image:null },
+    { id:'p10', name:'Aros de Cebolla',        price:55,  category:'complementos', active:true, image:null },
+    { id:'p11', name:'Ensalada César',         price:55,  category:'complementos', active:true, image:null },
+    { id:'p12', name:'Nachos con Queso',       price:65,  category:'complementos', active:true, image:null },
+    { id:'p13', name:'Refresco',               price:25,  category:'bebidas', active:true, image:null },
+    { id:'p14', name:'Agua de Horchata',       price:30,  category:'bebidas', active:true, image:null },
+    { id:'p15', name:'Limonada Natural',       price:28,  category:'bebidas', active:true, image:null },
+    { id:'p16', name:'Café Americano',         price:25,  category:'bebidas', active:true, image:null },
+    { id:'p17', name:'Pastel de Chocolate',    price:55,  category:'postres', active:true, image:null },
+    { id:'p18', name:'Flan Napolitano',        price:45,  category:'postres', active:true, image:null },
+    { id:'p19', name:'Helado 2 bolas',         price:40,  category:'postres', active:true, image:null },
+    { id:'p20', name:'Churros con Cajeta',     price:42,  category:'postres', active:true, image:null },
   ];
 }
 
@@ -597,6 +640,8 @@ function defaultProducts(){
 const DB = {
   getProducts(){ return JSON.parse(localStorage.getItem('mesa_products') || '[]'); },
   saveProducts(list){ localStorage.setItem('mesa_products', JSON.stringify(list)); },
+  getCategories(){ return JSON.parse(localStorage.getItem('mesa_categories') || '[]'); },
+  saveCategories(list){ localStorage.setItem('mesa_categories', JSON.stringify(list)); },
   getSales(){ return JSON.parse(localStorage.getItem('mesa_sales') || '[]'); },
   saveSales(list){ localStorage.setItem('mesa_sales', JSON.stringify(list)); },
   nextSaleNumber(){
@@ -608,6 +653,7 @@ const DB = {
 
 function initDB(){
   if(localStorage.getItem('mesa_products') === null){ DB.saveProducts(defaultProducts()); }
+  if(localStorage.getItem('mesa_categories') === null){ DB.saveCategories(defaultCategories()); }
   if(localStorage.getItem('mesa_sales') === null){ DB.saveSales([]); }
   if(localStorage.getItem('mesa_counter') === null){ localStorage.setItem('mesa_counter','0'); }
 }
@@ -618,6 +664,7 @@ let cart = [];               // { productId, qty }
 let checkout = { serviceType:'comer', table:'', paymentMethod:'efectivo', cash:'' };
 let saleCategoryFilter = 'todos';
 let historyFilters = { search:'', period:'all', service:'all', payment:'all', status:'all' };
+let productFormImage = null; // dataURL temporal mientras se edita el formulario de producto
 
 /* ---------- Helpers ---------- */
 function formatMoney(n){
@@ -634,7 +681,7 @@ function formatDateShort(iso){
   return d.toLocaleDateString('es-MX', { day:'2-digit', month:'short' });
 }
 function findProduct(id){ return DB.getProducts().find(p => p.id === id); }
-function categoryOf(id){ return CATEGORIES.find(c => c.id === id) || CATEGORIES[0]; }
+function categoryOf(id){ return DB.getCategories().find(c => c.id === id) || UNCATEGORIZED; }
 function serviceOf(id){ return SERVICE_TYPES.find(s => s.id === id) || SERVICE_TYPES[0]; }
 function paymentOf(id){ return PAYMENT_METHODS.find(p => p.id === id) || PAYMENT_METHODS[0]; }
 function orderNumberLabel(n){ return '#' + String(n).padStart(4,'0'); }
@@ -747,12 +794,14 @@ function renderHome(){
    VISTA: NUEVA VENTA
 ========================================================= */
 function renderSale(){
+  const categories = DB.getCategories();
+  if(saleCategoryFilter !== 'todos' && !categories.some(c => c.id === saleCategoryFilter)){ saleCategoryFilter = 'todos'; }
   const products = DB.getProducts().filter(p => p.active);
   const list = saleCategoryFilter === 'todos' ? products : products.filter(p => p.category === saleCategoryFilter);
 
   const chips = `<div class="chip-row">
       <button class="chip ${saleCategoryFilter==='todos'?'active':''}" style="${saleCategoryFilter==='todos'?'background:var(--accent-strong)':''}" onclick="setSaleCategory('todos')">Todos</button>
-      ${CATEGORIES.map(c => `
+      ${categories.map(c => `
         <button class="chip ${saleCategoryFilter===c.id?'active':''}" style="${saleCategoryFilter===c.id?'background:var(--accent-strong)':''}" onclick="setSaleCategory('${c.id}')">${c.emoji} ${c.name}</button>
       `).join('')}
     </div>`;
@@ -768,8 +817,11 @@ function renderSale(){
         const cat = categoryOf(p.category);
         return `<button class="product-card" onclick="addToCart('${p.id}')">
           <div class="pc-top" style="background:${cat.color}"></div>
+          <div class="pc-photo ${p.image ? '' : 'is-placeholder'}">
+            ${p.image ? `<img src="${p.image}" alt="${escapeHtml(p.name)}">` : icon('plateSet')}
+          </div>
           <div class="pc-inner">
-            <span class="pc-emoji">${cat.emoji}</span>
+            <div class="pc-cat">${escapeHtml(cat.name)}</div>
             <div class="pc-name">${escapeHtml(p.name)}</div>
             <div class="pc-price">${formatMoney(p.price)}</div>
           </div>
@@ -1312,11 +1364,13 @@ function renderStats(){
 ========================================================= */
 function renderProducts(){
   const products = DB.getProducts();
+  const categories = DB.getCategories();
   return `
     <h1 class="page-title">Productos</h1>
     <p class="page-sub">Administra tu catálogo</p>
 
-    <div class="fab-row">
+    <div class="fab-row" style="gap:8px;">
+      <button class="btn ghost" onclick="openCategoryManager()">${icon('tag')} Categorías</button>
       <button class="btn primary" onclick="openProductForm()">${icon('plus')} Nuevo producto</button>
     </div>
 
@@ -1328,7 +1382,7 @@ function renderProducts(){
       </div>
     ` : ''}
 
-    ${CATEGORIES.map(cat => {
+    ${categories.map(cat => {
       const items = products.filter(p => p.category === cat.id);
       if(items.length === 0) return '';
       return `
@@ -1337,22 +1391,40 @@ function renderProducts(){
           <span class="cat-name">${cat.name}</span>
           <span class="cat-count">· ${items.length}</span>
         </div>
-        ${items.map(p => `
-          <div class="prod-row">
-            <span class="pr-dot" style="background:${cat.color}"></span>
-            <div class="pr-info">
-              <div class="pr-name">${escapeHtml(p.name)}</div>
-              <div class="pr-price">${formatMoney(p.price)}</div>
-            </div>
-            <label class="switch">
-              <input type="checkbox" ${p.active?'checked':''} onchange="toggleProductActive('${p.id}', this.checked)">
-              <span class="track"></span>
-            </label>
-            <button class="icon-btn" onclick="openProductForm('${p.id}')">${icon('edit')}</button>
-          </div>
-        `).join('')}
+        ${items.map(p => renderProdRow(p, cat)).join('')}
       `;
     }).join('')}
+    ${(() => {
+      const orphans = products.filter(p => !categories.some(c => c.id === p.category));
+      if(orphans.length === 0) return '';
+      return `
+        <div class="cat-header">
+          <span class="cat-emoji">${UNCATEGORIZED.emoji}</span>
+          <span class="cat-name">${UNCATEGORIZED.name}</span>
+          <span class="cat-count">· ${orphans.length}</span>
+        </div>
+        ${orphans.map(p => renderProdRow(p, UNCATEGORIZED)).join('')}
+      `;
+    })()}
+  `;
+}
+
+function renderProdRow(p, cat){
+  return `
+    <div class="prod-row">
+      <div class="pr-photo">
+        ${p.image ? `<img src="${p.image}" alt="${escapeHtml(p.name)}">` : `<span style="color:${cat.color}">${icon('plate')}</span>`}
+      </div>
+      <div class="pr-info">
+        <div class="pr-name">${escapeHtml(p.name)}</div>
+        <div class="pr-price">${formatMoney(p.price)}</div>
+      </div>
+      <label class="switch">
+        <input type="checkbox" ${p.active?'checked':''} onchange="toggleProductActive('${p.id}', this.checked)">
+        <span class="track"></span>
+      </label>
+      <button class="icon-btn" onclick="openProductForm('${p.id}')">${icon('edit')}</button>
+    </div>
   `;
 }
 
@@ -1365,13 +1437,140 @@ function toggleProductActive(id, active){
   toast(active ? 'Producto activado' : 'Producto desactivado');
 }
 
+/* =========================================================
+   GESTIÓN DE CATEGORÍAS
+========================================================= */
+function openCategoryManager(){
+  const categories = DB.getCategories();
+  const products = DB.getProducts();
+  const html = `
+    <div class="sheet-header">
+      <h2>Categorías</h2>
+      <button class="sheet-close" onclick="closeModal(); render();">${icon('close')}</button>
+    </div>
+    ${categories.length === 0 ? `
+      <div class="empty-state" style="padding:20px 10px;">
+        <div class="empty-title">Sin categorías</div>
+        <div class="empty-text">Crea una categoría para organizar tu catálogo.</div>
+      </div>
+    ` : categories.map(c => {
+      const count = products.filter(p => p.category === c.id).length;
+      return `
+        <div class="catmgr-row">
+          <div class="catmgr-dot" style="background:${c.color}22">${c.emoji}</div>
+          <div class="catmgr-name">${escapeHtml(c.name)}</div>
+          <div class="catmgr-count">${count} prod.</div>
+          <div class="catmgr-actions">
+            <button class="icon-btn" onclick="openCategoryForm('${c.id}')">${icon('edit')}</button>
+            <button class="icon-btn" onclick="deleteCategory('${c.id}')">${icon('trash')}</button>
+          </div>
+        </div>
+      `;
+    }).join('')}
+    <button class="btn primary block" style="margin-top:14px;" onclick="openCategoryForm()">${icon('plus')} Nueva categoría</button>
+  `;
+  openModal(html, { dismissible:true });
+}
+
+function openCategoryForm(categoryId){
+  const categories = DB.getCategories();
+  const editing = categoryId ? categories.find(c => c.id === categoryId) : null;
+  const html = `
+    <div class="sheet-header">
+      <h2>${editing ? 'Editar categoría' : 'Nueva categoría'}</h2>
+      <button class="sheet-close" onclick="openCategoryManager()">${icon('close')}</button>
+    </div>
+    <div class="field">
+      <label>Nombre</label>
+      <input id="cfName" type="text" placeholder="Ej. Postres" value="${editing ? escapeHtml(editing.name) : ''}">
+    </div>
+    <div class="field">
+      <label>Ícono (emoji, opcional)</label>
+      <input id="cfEmoji" type="text" maxlength="4" placeholder="🍰" value="${editing ? escapeHtml(editing.emoji) : ''}">
+    </div>
+    <div class="field">
+      <label>Color</label>
+      <input id="cfColor" type="color" style="height:46px; padding:4px;" value="${editing ? editing.color : '#F5BF3C'}">
+    </div>
+    <button class="btn primary block" onclick="saveCategoryForm('${editing ? editing.id : ''}')">${editing ? 'Guardar cambios' : 'Crear categoría'}</button>
+  `;
+  openModal(html, { dismissible:true });
+}
+
+function saveCategoryForm(categoryId){
+  const name = document.getElementById('cfName').value.trim();
+  const emoji = document.getElementById('cfEmoji').value.trim() || '🍽️';
+  const color = document.getElementById('cfColor').value || '#F5BF3C';
+  if(!name){ toast('Escribe un nombre para la categoría'); return; }
+
+  const categories = DB.getCategories();
+  if(categoryId){
+    const c = categories.find(x => x.id === categoryId);
+    c.name = name; c.emoji = emoji; c.color = color;
+  } else {
+    categories.push({ id:'cat' + Date.now(), name, emoji, color });
+  }
+  DB.saveCategories(categories);
+  toast(categoryId ? 'Categoría actualizada' : 'Categoría creada');
+  openCategoryManager();
+  renderBackgroundIfProducts();
+}
+
+function deleteCategory(categoryId){
+  const categories = DB.getCategories();
+  const cat = categories.find(c => c.id === categoryId);
+  if(!cat) return;
+  const products = DB.getProducts();
+  const affected = products.filter(p => p.category === categoryId);
+  const msg = affected.length > 0
+    ? `"${cat.name}" tiene ${affected.length} producto(s). Se moverán a "Sin categoría". ¿Eliminar de todas formas?`
+    : `¿Eliminar la categoría "${cat.name}"?`;
+  const ok = window.confirm(msg);
+  if(!ok) return;
+
+  const remaining = categories.filter(c => c.id !== categoryId);
+  DB.saveCategories(remaining);
+
+  if(affected.length > 0){
+    affected.forEach(p => p.category = UNCATEGORIZED.id);
+    DB.saveProducts(products);
+  }
+  if(saleCategoryFilter === categoryId) saleCategoryFilter = 'todos';
+
+  toast('Categoría eliminada');
+  openCategoryManager();
+  renderBackgroundIfProducts();
+}
+
+function renderBackgroundIfProducts(){ if(currentView === 'products') render(); }
+
+
 function openProductForm(productId){
   const products = DB.getProducts();
+  const categories = DB.getCategories();
   const editing = productId ? products.find(p => p.id === productId) : null;
+
+  if(categories.length === 0){
+    toast('Primero crea una categoría');
+    openCategoryForm();
+    return;
+  }
+
+  productFormImage = editing ? (editing.image || null) : null;
+
   const html = `
     <div class="sheet-header">
       <h2>${editing ? 'Editar producto' : 'Nuevo producto'}</h2>
       <button class="sheet-close" onclick="closeModal()">${icon('close')}</button>
+    </div>
+    <div class="field">
+      <label>Foto del producto (opcional)</label>
+      <label class="photo-upload ${productFormImage ? 'has-image' : ''}" id="pfPhotoBox">
+        ${productFormImage ? `<img id="pfPhotoImg" src="${productFormImage}" alt="">` : icon('camera')}
+        <span class="photo-upload-hint">Toca para subir una foto</span>
+        <input id="pfPhotoInput" type="file" accept="image/*" style="display:none" onchange="onProductPhotoSelected(this)">
+      </label>
+      ${productFormImage ? `<button type="button" class="btn ghost block photo-upload-remove-block" style="margin-top:8px;" onclick="removeProductPhoto()">${icon('trash')} Quitar foto</button>` : ''}
     </div>
     <div class="field">
       <label>Nombre</label>
@@ -1384,12 +1583,66 @@ function openProductForm(productId){
     <div class="field">
       <label>Categoría</label>
       <select id="pfCategory">
-        ${CATEGORIES.map(c => `<option value="${c.id}" ${editing && editing.category===c.id ? 'selected':''}>${c.emoji} ${c.name}</option>`).join('')}
+        ${categories.map(c => `<option value="${c.id}" ${editing && editing.category===c.id ? 'selected':''}>${c.emoji} ${c.name}</option>`).join('')}
       </select>
     </div>
     <button class="btn primary block" onclick="saveProductForm('${editing ? editing.id : ''}')">${editing ? 'Guardar cambios' : 'Agregar producto'}</button>
   `;
   openModal(html, { dismissible:true });
+}
+
+/* Redimensiona/recorta cualquier imagen a un cuadro fijo (cover) para que
+   el tamaño de la tarjeta de producto nunca cambie, sin importar la foto original. */
+const PRODUCT_IMAGE_SIZE = 320;
+function onProductPhotoSelected(input){
+  const file = input.files && input.files[0];
+  if(!file) return;
+  if(!file.type.startsWith('image/')){ toast('Selecciona un archivo de imagen'); return; }
+
+  const reader = new FileReader();
+  reader.onload = function(e){
+    const img = new Image();
+    img.onload = function(){
+      const size = PRODUCT_IMAGE_SIZE;
+      const canvas = document.createElement('canvas');
+      canvas.width = size; canvas.height = size;
+      const ctx = canvas.getContext('2d');
+      const scale = Math.max(size / img.width, size / img.height);
+      const w = img.width * scale, h = img.height * scale;
+      const dx = (size - w) / 2, dy = (size - h) / 2;
+      ctx.fillStyle = '#FFFFFF';
+      ctx.fillRect(0, 0, size, size);
+      ctx.drawImage(img, dx, dy, w, h);
+      productFormImage = canvas.toDataURL('image/jpeg', 0.85);
+
+      const box = document.getElementById('pfPhotoBox');
+      if(box){
+        box.classList.add('has-image');
+        box.innerHTML = `<img id="pfPhotoImg" src="${productFormImage}" alt="">
+          <span class="photo-upload-hint">Toca para subir una foto</span>
+          <input id="pfPhotoInput" type="file" accept="image/*" style="display:none" onchange="onProductPhotoSelected(this)">`;
+        let removeBtn = box.parentElement.querySelector('.photo-upload-remove-block');
+        if(!removeBtn){
+          box.insertAdjacentHTML('afterend', `<button type="button" class="btn ghost block photo-upload-remove-block" style="margin-top:8px;" onclick="removeProductPhoto()">${icon('trash')} Quitar foto</button>`);
+        }
+      }
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+function removeProductPhoto(){
+  productFormImage = null;
+  const box = document.getElementById('pfPhotoBox');
+  if(box){
+    box.classList.remove('has-image');
+    box.innerHTML = `${icon('camera')}
+      <span class="photo-upload-hint">Toca para subir una foto</span>
+      <input id="pfPhotoInput" type="file" accept="image/*" style="display:none" onchange="onProductPhotoSelected(this)">`;
+  }
+  const removeBtn = document.querySelector('.photo-upload-remove-block');
+  if(removeBtn) removeBtn.remove();
 }
 
 function saveProductForm(productId){
@@ -1403,11 +1656,12 @@ function saveProductForm(productId){
   const products = DB.getProducts();
   if(productId){
     const p = products.find(x => x.id === productId);
-    p.name = name; p.price = round2(price); p.category = category;
+    p.name = name; p.price = round2(price); p.category = category; p.image = productFormImage;
   } else {
-    products.push({ id:'p' + Date.now(), name, price: round2(price), category, active:true });
+    products.push({ id:'p' + Date.now(), name, price: round2(price), category, active:true, image: productFormImage });
   }
   DB.saveProducts(products);
+  productFormImage = null;
   closeModal();
   toast(productId ? 'Producto actualizado' : 'Producto agregado');
   render();
