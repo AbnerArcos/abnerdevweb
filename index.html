@@ -28,21 +28,21 @@
     --nav-ink:#A2A9BC;
     --nav-active-bg:#FFD666;
     /* Identidad de color por sección del menú inferior */
-    --sec-home:#F5BF3C;
-    --sec-home-soft:#FFF4D9;
-    --sec-home-ink:#7A5A0E;
-    --sec-sale:#25D366;
-    --sec-sale-soft:#E5FAEC;
-    --sec-sale-ink:#0E7A3D;
+    --sec-home:#25D366;
+    --sec-home-soft:#E5FAEC;
+    --sec-home-ink:#0E7A3D;
+    --sec-sale:#C7CBD3;
+    --sec-sale-soft:#F5F6F8;
+    --sec-sale-ink:#6B7280;
     --sec-history:#2E7DC0;
     --sec-history-soft:#E7F2FB;
     --sec-history-ink:#1D5D8F;
     --sec-stats:#6C4FCB;
     --sec-stats-soft:#EFEAFB;
     --sec-stats-ink:#4B3593;
-    --sec-products:#A0623A;
-    --sec-products-soft:#F5EAE0;
-    --sec-products-ink:#7A4A2C;
+    --sec-products:#7D8492;
+    --sec-products-soft:#ECEDF0;
+    --sec-products-ink:#464C57;
     --radius-card:16px;
     --radius-btn:12px;
     --radius-chip:999px;
@@ -96,11 +96,11 @@
   .brand-mark svg{ width:21px; height:21px; }
 
   /* El logo adopta el color de la sección activa */
-  body[data-section="home"] .brand-mark{ background:var(--sec-home); box-shadow:0 4px 10px rgba(245,191,60,0.35); }
-  body[data-section="sale"] .brand-mark{ background:var(--sec-sale); box-shadow:0 4px 10px rgba(37,211,102,0.35); }
+  body[data-section="home"] .brand-mark{ background:var(--sec-home); box-shadow:0 4px 10px rgba(37,211,102,0.35); }
+  body[data-section="sale"] .brand-mark{ background:var(--sec-sale); box-shadow:0 4px 10px rgba(199,203,211,0.5); }
   body[data-section="history"] .brand-mark{ background:var(--sec-history); box-shadow:0 4px 10px rgba(46,125,192,0.35); }
   body[data-section="stats"] .brand-mark{ background:var(--sec-stats); box-shadow:0 4px 10px rgba(108,79,203,0.35); }
-  body[data-section="products"] .brand-mark{ background:var(--sec-products); box-shadow:0 4px 10px rgba(160,98,58,0.35); }
+  body[data-section="products"] .brand-mark{ background:var(--sec-products); box-shadow:0 4px 10px rgba(125,132,146,0.35); }
   .brand-name{ font-size:21px; font-weight:800; letter-spacing:0.1px; color:var(--ink); }
   .topbar-clock{ font-family:var(--sans); font-weight:600; font-size:13px; color:var(--ink-soft); text-align:right; line-height:1.35; }
 
@@ -131,6 +131,7 @@
 
   body[data-section="stats"] #view .stat-card,
   body[data-section="stats"] #view .card{ border-top:3px solid var(--sec-stats); }
+  body[data-section="home"] #view .stat-icon{ background:var(--sec-home-soft); }
   body[data-section="history"] #view .card{ border-top:3px solid var(--sec-history); }
   body[data-section="products"] #view .prod-row{ border-left:3px solid var(--sec-products); }
 
@@ -139,7 +140,9 @@
     background:var(--sec-history); color:#fff; box-shadow:0 4px 10px rgba(46,125,192,0.3);
   }
 
-  body[data-section="sale"] .btn.primary{ background:var(--sec-sale); color:#fff; }
+  body[data-section="sale"] .btn.primary{ background:var(--sec-sale); color:var(--ink); }
+  body[data-section="sale"] .cartbar-icon svg{ color:var(--ink); }
+  body[data-section="sale"] .cart-total-pill .ctp-icon{ color:var(--ink); }
   body[data-section="sale"] .opt-card.active{ border-color:var(--sec-sale); background:var(--sec-sale-soft); color:var(--ink); }
 
   body[data-section="products"] .btn.primary{ background:var(--sec-products); color:#fff; }
@@ -218,11 +221,11 @@
 
   .cta-home{
     display:flex; align-items:center; justify-content:space-between;
-    background:linear-gradient(135deg, #FFE29A, var(--accent-strong));
+    background:linear-gradient(135deg, #A9F0C6, var(--sec-home));
     color:var(--ink);
     border-radius:20px; padding:20px 20px; margin-bottom:20px;
     border:none; width:100%; text-align:left;
-    box-shadow:0 10px 24px rgba(245,191,60,0.35);
+    box-shadow:0 10px 24px rgba(37,211,102,0.35);
   }
   .cta-home-left{ display:flex; align-items:center; gap:14px; }
   .cta-home-icon{
