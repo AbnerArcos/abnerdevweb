@@ -643,6 +643,26 @@
     .stat-grid{ grid-template-columns:repeat(4,1fr); }
     .opt-grid{ grid-template-columns:repeat(3,1fr); max-width:520px; }
 
+    /* ---- Nueva venta en PC: tarjetas bien pequeñas, ~8 por fila ---- */
+    .product-grid{
+      grid-template-columns:repeat(auto-fill, minmax(120px, 1fr));
+      gap:8px;
+      max-width:1240px;
+    }
+    .product-card .pc-photo{ aspect-ratio:4 / 3.2; }
+    .product-card .pc-photo.is-placeholder svg{ width:20px; height:20px; }
+    .product-card .pc-inner{ padding:7px 8px 2px; }
+    .product-card .pc-cat{ font-size:8.5px; margin-bottom:2px; }
+    .product-card .pc-name{
+      font-size:11px; line-height:1.25; height:26px;
+    }
+    .product-card .pc-pricebar, .product-card .pc-qtybar{ padding:5px 8px 8px; gap:4px; }
+    .product-card .pc-price{ font-size:12px; }
+    .product-card .pc-qty-total{ font-size:11px; }
+    .product-card .qty-control.mini{ padding:2px; }
+    .product-card .qty-control.mini .qty-btn{ width:19px; height:19px; font-size:12px; }
+    .product-card .qty-control.mini .qty-val{ font-size:11px; min-width:10px; }
+
     /* ---- Carrito flotante y notificaciones: recentrar respecto al contenido (a la derecha del menú lateral) ---- */
     .cartbar{ left:calc(50% + 54px); bottom:28px; max-width:620px; }
     .toast{ left:calc(50% + 54px); }
@@ -664,8 +684,8 @@
   }
 
   @media (min-width:1100px){
-    .product-grid{ grid-template-columns:repeat(4,1fr); }
     .stat-grid{ grid-template-columns:repeat(4,1fr); }
+  }
   }
 </style>
 </head>
