@@ -597,6 +597,76 @@
   @media (min-width:640px){
     .product-grid{ grid-template-columns:1fr 1fr 1fr; }
   }
+
+  /* =========================================================
+     ADAPTACIÓN A PC / TABLET
+     Todo lo de arriba es el diseño de celular y queda intacto:
+     estas reglas solo se activan desde 700px de ancho en adelante,
+     así que en el teléfono no cambia nada (ni diseño ni funciones).
+  ========================================================= */
+  @media (min-width:700px){
+    body{ background:#E7EAF3; }
+
+    .app{
+      max-width:1400px;
+      display:grid;
+      grid-template-columns:108px 1fr;
+      grid-template-rows:auto 1fr;
+      grid-template-areas:
+        "nav topbar"
+        "nav view";
+    }
+
+    /* ---- Topbar con más aire ---- */
+    .topbar{ grid-area:topbar; padding:24px 36px 12px; }
+
+    /* ---- Contenido principal ---- */
+    .view{ grid-area:view; padding:20px 36px 140px; }
+
+    /* ---- Barra inferior -> menú lateral fijo ---- */
+    .bottomnav{
+      grid-area:nav;
+      position:sticky; top:0; bottom:auto;
+      height:100dvh;
+      flex-direction:column;
+      justify-content:flex-start;
+      align-items:stretch;
+      gap:8px;
+      padding:28px 10px 20px;
+      box-shadow:1px 0 0 var(--border), 8px 0 24px rgba(22,33,62,0.05);
+    }
+    .navbtn{ flex:0 0 auto; padding:13px 4px; }
+    .navbtn .navicon{ margin:0 auto; }
+    .navbtn span:last-child{ font-size:11.5px; }
+
+    /* ---- Rejillas: aprovechar el ancho extra ---- */
+    .stat-grid{ grid-template-columns:repeat(4,1fr); }
+    .opt-grid{ grid-template-columns:repeat(3,1fr); max-width:520px; }
+
+    /* ---- Carrito flotante y notificaciones: recentrar respecto al contenido (a la derecha del menú lateral) ---- */
+    .cartbar{ left:calc(50% + 54px); bottom:28px; max-width:620px; }
+    .toast{ left:calc(50% + 54px); }
+
+    /* ---- Modales: diálogo centrado en vez de hoja inferior ---- */
+    .modal-overlay{ padding-left:108px; align-items:center; }
+    .modal-sheet{
+      border-radius:var(--radius-sheet);
+      max-width:480px;
+      max-height:86vh;
+      animation:modalPopIn .18s ease;
+    }
+    .modal-sheet.modal-card{ margin:0; }
+    .sheet-grip{ display:none; }
+    @keyframes modalPopIn{
+      from{ transform:translateY(10px) scale(.98); opacity:0; }
+      to{ transform:translateY(0) scale(1); opacity:1; }
+    }
+  }
+
+  @media (min-width:1100px){
+    .product-grid{ grid-template-columns:repeat(4,1fr); }
+    .stat-grid{ grid-template-columns:repeat(4,1fr); }
+  }
 </style>
 </head>
 <body>
