@@ -166,6 +166,8 @@
   .navbtn.active[data-view="stats"]{ background:var(--sec-stats-soft); color:var(--sec-stats-ink); }
   .navbtn.active[data-view="products"]{ background:var(--sec-products-soft); color:var(--sec-products-ink); }
   .navbtn:active{ transform:scale(0.95); }
+  .navbtn[data-view="account"]{ display:none; }
+  .navbtn.active[data-view="account"]{ background:var(--accent-soft); color:#8A6A18; }
 
   /* ---------- Cards / generic ---------- */
   .card{
@@ -340,7 +342,7 @@
   .modal-overlay{
     position:fixed; inset:0; background:rgba(16,22,42,0.45);
     display:flex; align-items:flex-end; justify-content:center;
-    z-index:100; animation:fadeIn .15s ease;
+    z-index:400; animation:fadeIn .15s ease;
   }
   @keyframes fadeIn{ from{opacity:0;} to{opacity:1;} }
   .modal-sheet{
@@ -636,6 +638,7 @@
       box-shadow:1px 0 0 var(--border), 8px 0 24px rgba(22,33,62,0.05);
     }
     .navbtn{ flex:0 0 auto; padding:13px 4px; }
+    .navbtn[data-view="account"]{ display:flex; margin-top:auto; }
     .navbtn .navicon{ margin:0 auto; }
     .navbtn span:last-child{ font-size:11.5px; }
 
@@ -669,6 +672,7 @@
 
     /* ---- Modales: diálogo centrado en vez de hoja inferior ---- */
     .modal-overlay{ padding-left:108px; align-items:center; }
+    body.auth-open .modal-overlay{ padding-left:0; }
     .modal-sheet{
       border-radius:var(--radius-sheet);
       max-width:480px;
@@ -698,6 +702,11 @@
     display:none;
   }
   .auth-layer.show{ display:block; }
+  /* Con el acceso abierto la app se oculta por completo: son dos mundos
+     separados, nunca se ven al mismo tiempo. */
+  body.auth-open{ overflow:hidden; }
+  body.auth-open .app{ display:none; }
+  body.auth-open .toast{ z-index:500; }
   .auth-screen{
     position:absolute; inset:0;
     display:flex; flex-direction:column;
@@ -876,15 +885,38 @@
      MI CUENTA
   ========================================================= */
   .topbar-right{ display:flex; align-items:center; gap:12px; }
+  .user-chip{
+    display:flex; align-items:center; gap:9px;
+    background:var(--surface); border:1px solid var(--border);
+    border-radius:999px; padding:5px 13px 5px 5px;
+    box-shadow:var(--shadow-card); color:var(--ink);
+    max-width:190px; transition:border-color .18s ease, transform .15s ease;
+  }
+  .user-chip:active{ transform:scale(.96); }
+  .user-chip.active{ border-color:var(--accent-strong); background:var(--accent-soft); }
+  .user-chip .chip-name{
+    font-size:13.5px; font-weight:800; letter-spacing:-.1px;
+    overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+  }
+  .user-chip .avatar-btn{ pointer-events:none; }
+  @media (max-width:380px){
+    .user-chip .chip-name{ display:none; }
+    .user-chip{ padding:5px; }
+  }
+
+  /* Tarjeta de usuario del menú lateral (PC) */
+  .nav-user{ display:none; }
+
   .avatar-btn{
-    width:42px; height:42px; border-radius:50%; border:2px solid transparent;
+    width:38px; height:38px; border-radius:50%; border:2px solid transparent;
     background:var(--ink); color:#fff; padding:0; overflow:hidden; flex-shrink:0;
     display:flex; align-items:center; justify-content:center;
     font-size:15px; font-weight:800; letter-spacing:.3px;
     transition:border-color .18s ease, transform .15s ease;
   }
   .avatar-btn img{ width:100%; height:100%; object-fit:cover; }
-  .avatar-btn svg{ width:20px; height:20px; }
+  .avatar-btn svg{ width:19px; height:19px; }
+  .avatar-btn .ini{ font-size:14px; font-weight:800; }
   .avatar-btn:active{ transform:scale(.93); }
   .avatar-btn.active{ border-color:var(--accent-strong); }
 
@@ -967,8 +999,55 @@
   .toggle-row .acc-sub{ white-space:normal; }
 
   @media (min-width:700px){
-    .auth-hero{ min-height:420px; }
     .profile-hero{ padding:26px 24px; }
+  }
+
+  /* ---- Acceso en pantallas grandes: panel doble ---- */
+  @media (min-width:900px){
+    .auth-screen{
+      display:grid;
+      grid-template-columns:1.05fr 1fr;
+      grid-template-areas:'side main';
+      overflow:hidden;
+    }
+    .auth-screen::before{
+      content:''; grid-area:side;
+      background:linear-gradient(160deg,#20325C 0%, #16213E 62%, #101A31 100%);
+    }
+    .auth-screen > .auth-hero{
+      grid-area:side; align-self:center; justify-self:center;
+      background:none; min-height:0; width:100%; padding:0 40px;
+    }
+    .auth-screen > .auth-hero svg{ max-width:560px; }
+    .auth-screen > .auth-sheet,
+    .auth-screen > .auth-top,
+    .auth-screen > .auth-body{ grid-area:main; }
+    .auth-screen > .auth-sheet{
+      margin:0; border-radius:0; box-shadow:none;
+      align-self:center; width:100%; padding:0;
+      background:none;
+    }
+    .auth-screen > .auth-top{ align-self:start; background:none; }
+    .auth-screen > .auth-body{
+      align-self:center; overflow-y:auto; max-height:100dvh;
+      padding-top:24px; padding-bottom:24px;
+    }
+    /* La pantalla de bienvenida no necesita la ilustración duplicada */
+    .auth-screen .auth-illu{ display:none; }
+    .auth-side-brand{
+      position:absolute; top:32px; left:36px; z-index:3;
+      display:flex; align-items:center; gap:10px;
+      color:#fff; font-size:20px; font-weight:800;
+    }
+    .auth-side-brand .mark{
+      width:36px; height:36px; border-radius:11px; background:var(--accent-strong);
+      display:flex; align-items:center; justify-content:center;
+    }
+    .auth-side-brand .mark svg{ width:18px; height:18px; }
+    .auth-hero-flag{ top:auto; bottom:28px; left:36px; }
+  }
+  @media (max-width:899px){
+    .auth-side-brand{ display:none; }
   }
   @media (prefers-reduced-motion:reduce){
     .auth-screen{ animation:none; }
@@ -992,7 +1071,10 @@
     </div>
     <div class="topbar-right">
       <div class="topbar-clock" id="clock"></div>
-      <button class="avatar-btn" id="avatarBtn" onclick="goTo('account')" aria-label="Mi cuenta"></button>
+      <button class="user-chip" id="userChip" onclick="goTo('account')" aria-label="Mi cuenta">
+        <span class="avatar-btn" id="avatarBtn"></span>
+        <span class="chip-name" id="chipName"></span>
+      </button>
     </div>
   </header>
 
@@ -1004,6 +1086,7 @@
     <button class="navbtn" data-view="history" data-icon="receipt" onclick="goTo('history')"><span class="navicon"></span><span>Historial</span></button>
     <button class="navbtn" data-view="stats" data-icon="chart" onclick="goTo('stats')"><span class="navicon"></span><span>Ventas</span></button>
     <button class="navbtn" data-view="products" data-icon="box" onclick="goTo('products')"><span class="navicon"></span><span>Productos</span></button>
+    <button class="navbtn" data-view="account" data-icon="person" onclick="goTo('account')"><span class="navicon"></span><span>Mi cuenta</span></button>
   </nav>
 </div>
 
@@ -1300,8 +1383,8 @@ function render(){
   else if(currentView === 'stats') el.innerHTML = renderStats();
   else if(currentView === 'products') el.innerHTML = renderProducts();
   else if(currentView === 'account') el.innerHTML = renderAccount();
-  const av = document.getElementById('avatarBtn');
-  if(av) av.classList.toggle('active', currentView === 'account');
+  const chip = document.getElementById('userChip');
+  if(chip) chip.classList.toggle('active', currentView === 'account');
 }
 
 /* =========================================================
@@ -2435,9 +2518,14 @@ function paintChrome(){
     if(holder) holder.innerHTML = icon(btn.dataset.icon);
   });
   const av = document.getElementById('avatarBtn');
+  const u = (typeof currentUser === 'function') ? currentUser() : null;
   if(av){
-    const u = (typeof currentUser === 'function') ? currentUser() : null;
-    av.innerHTML = (u && u.photo) ? `<img src="${u.photo}" alt="">` : initials();
+    av.innerHTML = (u && u.photo) ? `<img src="${u.photo}" alt="">` : `<span class="ini">${initials()}</span>`;
+  }
+  const chip = document.getElementById('chipName');
+  if(chip){
+    const n = (u && u.name || '').trim();
+    chip.textContent = n ? n.split(/\s+/)[0] : 'Mi cuenta';
   }
 }
 
@@ -2650,17 +2738,26 @@ let authState = {
   resendIn: 0,
   pinBuffer: ''
 };
+/* ¿El envío real de SMS ya está conectado?
+   false = modo actual: se entra sin código (la pantalla de código existe
+   y funciona, solo está en pausa).
+   true  = pide el código de 6 dígitos. */
+const SMS_ACTIVADO = false;
+
 let authResendTimer = null;
 let accountFormPhoto = null;   // foto temporal mientras se edita el perfil
 
 function showAuth(screen){
   authState.screen = screen || authState.screen;
   document.getElementById('authLayer').classList.add('show');
+  document.body.classList.add('auth-open');
+  closeModal();
   renderAuth();
 }
 function hideAuth(){
   document.getElementById('authLayer').classList.remove('show');
   document.getElementById('authLayer').innerHTML = '';
+  document.body.classList.remove('auth-open');
   clearInterval(authResendTimer);
 }
 function authGo(screen){
@@ -2692,6 +2789,7 @@ function renderAuth(){
 function authWelcomeHTML(){
   const c = countryOf(authState.country);
   return `
+    <div class="auth-side-brand"><span class="mark">${ICONS.fork}</span>Mesa</div>
     <div class="auth-hero">
       <button class="country-chip auth-hero-flag" onclick="openCountryPicker()">
         <span class="flag">${c.flag}</span>${icon('chevronDown')}
@@ -2727,8 +2825,10 @@ function authPhoneHTML(){
     <div class="auth-body">
       <h1 class="auth-title">${isLogin ? 'Entra a tu cuenta' : 'Empieza a administrar tu negocio'}</h1>
       <p class="auth-sub">${isLogin
-        ? 'Escribe el número con el que te registraste y te enviamos un código.'
-        : 'Te enviamos un código por mensaje para confirmar tu número.'}</p>
+        ? 'Escribe el número con el que te registraste para volver a entrar.'
+        : (SMS_ACTIVADO
+            ? 'Te enviamos un código por mensaje para confirmar tu número.'
+            : 'Con tu número basta. Por ahora no mandamos mensaje de confirmación.')}</p>
 
       <div class="auth-illu">${ILLUSTRATIONS.phoneHand}</div>
 
@@ -2754,7 +2854,7 @@ function authPhoneHTML(){
 
       <div class="auth-actions">
         <button class="btn dark xl block" id="authPhoneBtn" ${ready ? '' : 'disabled'} onclick="sendCode()">
-          ${icon('phone')} ${isLogin ? 'Enviar código' : 'Crear cuenta con celular'}
+          ${icon('phone')} ${isLogin ? 'Entrar con mi número' : 'Crear cuenta con celular'}
         </button>
         <button class="btn outline xl block" onclick="appleSignIn()">
           ${icon('apple')} ${isLogin ? 'Entrar con Apple' : 'Crear cuenta con Apple'}
@@ -2827,11 +2927,36 @@ function sendCode(){
       return;
     }
   }
+  vibrate(12);
+
+  if(!SMS_ACTIVADO){
+    entrarSinCodigo();
+    return;
+  }
+
   authState.code = String(Math.floor(100000 + Math.random() * 900000));
   authState.resendIn = 45;
   authGo('otp');
   startResendTimer();
-  vibrate(12);
+}
+
+/* Entrada directa mientras el SMS no está conectado.
+   Hace exactamente lo mismo que verifyCode() cuando el código es correcto. */
+function entrarSinCodigo(){
+  if(authState.mode === 'login'){
+    AUTH.openSession();
+    finishAuth('¡Bienvenido de vuelta!');
+    return;
+  }
+  const existing = currentUser();
+  if(existing && existing.phone === authState.phone){
+    AUTH.openSession();
+    finishAuth('¡Bienvenido de vuelta!');
+    return;
+  }
+  AUTH.saveUser(newUser(authState.country, authState.phone));
+  AUTH.openSession();
+  authGo('name');
 }
 
 function startResendTimer(){
