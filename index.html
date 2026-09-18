@@ -510,7 +510,7 @@
   .prod-row .pr-photo svg{ width:19px; height:19px; }
   .prod-row .pr-info{ flex:1; min-width:0; }
   .prod-row .pr-name{ font-size:13.5px; font-weight:700; color:var(--ink); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-  .prod-row .pr-price{ font-size:12px; color:var(--ink-soft); margin-top:2px; font-weight:600; }
+  .prod-row .pr-price{ font-size:12px; color:var(--ink-soft); margin-top:2px; font-weight:600; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
   .prod-row .pr-actions{ display:flex; align-items:center; gap:6px; }
   .icon-btn{ background:var(--surface-alt); border:none; width:32px; height:32px; border-radius:10px; color:var(--ink-soft); display:flex; align-items:center; justify-content:center; }
   .icon-btn svg{ width:14px; height:14px; }
@@ -1059,7 +1059,48 @@
   .sheet-text{ font-size:14px; font-weight:500; color:var(--ink-soft); line-height:1.6; margin:0 0 18px; }
   .sheet-actions{ display:flex; gap:10px; margin-top:20px; }
   .sheet-actions .btn{ flex:1; }
+
+  /* ---------- Ventas: gráficas (barras y líneas) ---------- */
+  .seg{ display:flex; gap:2px; background:var(--surface-alt); border-radius:999px; padding:4px; margin-bottom:14px; max-width:380px; }
+  .seg button{
+    flex:1; border:none; background:none; padding:9px 6px; border-radius:999px;
+    font-size:13.5px; font-weight:700; color:var(--ink-soft);
+    transition:background .15s ease, color .15s ease;
+  }
+  .seg button.active{ background:var(--surface); color:var(--sec-stats-ink); box-shadow:0 1px 3px rgba(22,33,62,0.12); }
+  .chart-grid{ display:grid; gap:12px; margin-bottom:18px; }
+  .chart-head{ display:flex; align-items:flex-start; justify-content:space-between; gap:10px; margin-bottom:16px; }
+  .chart-title{ font-size:13px; font-weight:600; color:var(--ink-soft); }
+  .chart-sub{ font-size:11.5px; font-weight:600; color:var(--ink-soft); margin-top:2px; }
+  .chart-value{ font-size:21px; font-weight:800; color:var(--ink); letter-spacing:-0.3px; text-align:right; }
+  .chart-plot{
+    position:relative; height:150px; display:flex; align-items:stretch; gap:4px;
+    border-bottom:1.5px solid var(--border);
+    background-image:linear-gradient(to bottom, var(--border) 1px, transparent 1px);
+    background-size:100% 50%;
+  }
+  .chart-col{
+    flex:1; min-width:0; position:relative; padding:0; border:none; background:none;
+    display:flex; align-items:flex-end; justify-content:center; -webkit-tap-highlight-color:transparent;
+  }
+  .vbar{ width:68%; max-width:26px; border-radius:6px 6px 3px 3px; background:var(--sec-stats); opacity:.4; }
+  .chart-col.sel .vbar{ opacity:1; }
+  .vbar.zero{ height:3px; background:var(--border); opacity:1; }
+  .line-svg{ position:absolute; inset:0; width:100%; height:100%; pointer-events:none; overflow:visible; }
+  .chart-col .dot{
+    position:absolute; left:50%; transform:translate(-50%,50%);
+    width:8px; height:8px; border-radius:50%; background:var(--surface); border:2px solid var(--ink);
+  }
+  .chart-col.sel .dot{ width:13px; height:13px; background:var(--accent-strong); }
+  .chart-x{ display:flex; gap:4px; margin-top:8px; }
+  .chart-x span{ flex:1; min-width:0; text-align:center; font-size:10.5px; font-weight:700; color:var(--ink-soft); white-space:nowrap; letter-spacing:-0.2px; }
+  .chart-x span.sel{ color:var(--ink); }
+  @media (min-width:900px){
+    .chart-grid{ grid-template-columns:1fr 1fr; }
+    .chart-plot{ height:180px; }
+  }
 </style>
+
 </head>
 <body>
 
@@ -1249,6 +1290,15 @@ const PAYMENT_METHODS = [
   { id:'transferencia', name:'Transferencia', emoji:'📲' },
 ];
 
+/* Precios de producción SIMULADOS para los productos de demostración. */
+const DEMO_COSTS = {
+  p1:38, p2:44, p3:62, p4:52,
+  p5:9,  p6:8,  p7:9,  p8:8,
+  p9:15, p10:20, p11:22, p12:26,
+  p13:12, p14:8, p15:7, p16:6,
+  p17:24, p18:16, p19:15, p20:14
+};
+
 function defaultProducts(){
   return [
     { id:'p1',  name:'Hamburguesa Clásica',    price:89,  category:'hamburguesas', active:true, image:null },
@@ -1271,7 +1321,7 @@ function defaultProducts(){
     { id:'p18', name:'Flan Napolitano',        price:45,  category:'postres', active:true, image:null },
     { id:'p19', name:'Helado 2 bolas',         price:40,  category:'postres', active:true, image:null },
     { id:'p20', name:'Churros con Cajeta',     price:42,  category:'postres', active:true, image:null },
-  ];
+  ].map(p => Object.assign(p, { cost: DEMO_COSTS[p.id] }));
 }
 
 /* ---------- Persistencia ---------- */
@@ -1294,6 +1344,16 @@ function initDB(){
   if(localStorage.getItem('mesa_categories') === null){ DB.saveCategories(defaultCategories()); }
   if(localStorage.getItem('mesa_sales') === null){ DB.saveSales([]); }
   if(localStorage.getItem('mesa_counter') === null){ localStorage.setItem('mesa_counter','0'); }
+
+  // Productos de demostración guardados antes de existir el precio de producción:
+  // se les pone el simulado UNA vez (solo si nunca tuvieron dato: undefined).
+  // Si tú lo dejaste vacío a propósito (null) o lo cambiaste, no se toca.
+  const list = DB.getProducts();
+  let changed = false;
+  list.forEach(p => {
+    if(p.cost === undefined && DEMO_COSTS[p.id] !== undefined){ p.cost = DEMO_COSTS[p.id]; changed = true; }
+  });
+  if(changed) DB.saveProducts(list);
 }
 
 /* ---------- Estado en memoria ---------- */
@@ -1747,7 +1807,7 @@ function confirmarCobro(){
     date: new Date().toISOString(),
     items: cart.map(c => {
       const p = findProduct(c.productId);
-      return { productId: p.id, name: p.name, price: p.price, qty: c.qty };
+      return { productId: p.id, name: p.name, price: p.price, cost: p.cost != null ? p.cost : null, qty: c.qty };
     }),
     subtotal: totals.subtotal,
     iva: totals.iva,
@@ -2078,6 +2138,7 @@ function renderStats(){
 
   const sum = arr => arr.reduce((a,s)=>a+s.total,0);
   const ticketProm = active.length ? sum(active)/active.length : 0;
+  const gan = computeProfit(active);
 
   if(active.length === 0){
     return `
@@ -2137,7 +2198,21 @@ function renderStats(){
         <div class="stat-value">${formatMoney(ticketProm)}</div>
         <div class="stat-label" style="margin-top:4px;">${active.length} pedidos en total</div>
       </div>
+      <div class="stat-card wide">
+        <div class="stat-card-row">
+          <div class="stat-icon">${icon('chart')}</div>
+          <div>
+            <div class="stat-label">Ganancia neta total</div>
+            <div class="stat-value" style="${gan.profit < 0 ? 'color:var(--accent-2);' : ''}">${formatMoney(gan.profit)}</div>
+            <div class="stat-label" style="margin-top:4px;">Precio de venta − precio de producción (sin IVA)</div>
+            ${gan.missing > 0 ? `<div class="stat-label" style="margin-top:2px; color:var(--accent-2);">${gan.missing} artículo${gan.missing === 1 ? '' : 's'} sin precio de producción no ${gan.missing === 1 ? 'se cuenta' : 'se cuentan'}</div>` : ''}
+          </div>
+        </div>
+      </div>
     </div>
+
+    <div class="section-title">Gráficas</div>
+    <div id="statsCharts">${statsChartsHTML()}</div>
 
     <div class="section-title">Ventas por método de pago</div>
     <div class="card">
@@ -2173,6 +2248,126 @@ function renderStats(){
     </div>
   `;
 }
+
+/* ---------- Ganancia neta ----------
+   Ganancia = (precio de venta − precio de producción) × cantidad, sin IVA
+   (el IVA no es ganancia). Usa el coste guardado en cada venta; en ventas
+   anteriores usa el que tiene hoy el producto. Lo que no tenga precio de
+   producción no se cuenta (se avisa en pantalla). */
+function itemCost(it){
+  if(it.cost != null) return it.cost;
+  const p = findProduct(it.productId);
+  return (p && p.cost != null) ? p.cost : null;
+}
+function computeProfit(sales){
+  let profit = 0, missing = 0;
+  sales.forEach(s => s.items.forEach(it => {
+    const c = itemCost(it);
+    if(c == null){ missing += it.qty; return; }
+    profit += (it.price - c) * it.qty;
+  }));
+  return { profit: round2(profit), missing };
+}
+
+/* ---------- Gráficas de Ventas (barras y líneas) ----------
+   Se calculan al vuelo con las ventas guardadas (sin canceladas).
+   Cambian solas al elegir Días / Semanas / Meses. */
+let statsPeriod = 'days';   // days | weeks | months
+let statsSel = null;        // columna seleccionada (null = la actual)
+const STATS_PERIODS = [
+  { id:'days',   label:'Días',    n:14 },
+  { id:'weeks',  label:'Semanas', n:8  },
+  { id:'months', label:'Meses',   n:6  },
+];
+
+function buildStatsBuckets(sales, period){
+  const cfg = STATS_PERIODS.find(p => p.id === period) || STATS_PERIODS[0];
+  const now = new Date();
+  const rows = [];
+  for(let i = cfg.n - 1; i >= 0; i--){
+    let start, end, label, long;
+    if(period === 'days'){
+      start = new Date(now.getFullYear(), now.getMonth(), now.getDate() - i);
+      end = new Date(start.getFullYear(), start.getMonth(), start.getDate() + 1);
+      label = String(start.getDate());
+      long = i === 0 ? 'Hoy' : start.toLocaleDateString('es-MX', { weekday:'short', day:'numeric', month:'short' });
+    } else if(period === 'weeks'){
+      start = startOfWeek(now); start.setDate(start.getDate() - 7 * i);
+      end = new Date(start); end.setDate(end.getDate() + 7);
+      label = start.getDate() + '/' + (start.getMonth() + 1);
+      long = i === 0 ? 'Esta semana' : 'Semana del ' + start.toLocaleDateString('es-MX', { day:'numeric', month:'short' });
+    } else {
+      start = new Date(now.getFullYear(), now.getMonth() - i, 1);
+      end = new Date(start.getFullYear(), start.getMonth() + 1, 1);
+      label = start.toLocaleDateString('es-MX', { month:'short' }).replace('.', '');
+      long = start.toLocaleDateString('es-MX', { month:'long', year:'numeric' });
+    }
+    rows.push({ start:start.getTime(), end:end.getTime(), label, long, total:0, count:0 });
+  }
+  sales.forEach(s => {
+    const t = new Date(s.date).getTime();
+    const r = rows.find(r => t >= r.start && t < r.end);
+    if(r){ r.total += s.total; r.count += 1; }
+  });
+  return rows;
+}
+
+function statsChartsHTML(){
+  const rows = buildStatsBuckets(DB.getSales().filter(s => !s.cancelled), statsPeriod);
+  const n = rows.length;
+  const sel = (statsSel !== null && statsSel < n) ? statsSel : n - 1;
+  const cur = rows[sel];
+  const maxTotal = Math.max(1, ...rows.map(r => r.total));
+  const maxCount = Math.max(1, ...rows.map(r => r.count));
+
+  const cx = i => ((i + 0.5) / n) * 100;
+  const py = v => 8 + (v / maxCount) * 84;            // % desde abajo
+  const pts = rows.map((r, i) => cx(i).toFixed(2) + ',' + (100 - py(r.count)).toFixed(2));
+  const area = cx(0).toFixed(2) + ',100 ' + pts.join(' ') + ' ' + cx(n - 1).toFixed(2) + ',100';
+  const xLabels = `<div class="chart-x">${rows.map((r, i) => `<span class="${i === sel ? 'sel' : ''}">${r.label}</span>`).join('')}</div>`;
+
+  return `
+    <div class="seg" role="tablist" aria-label="Periodo">
+      ${STATS_PERIODS.map(p => `<button role="tab" aria-selected="${p.id === statsPeriod}" class="${p.id === statsPeriod ? 'active' : ''}" onclick="setStatsPeriod('${p.id}')">${p.label}</button>`).join('')}
+    </div>
+    <div class="chart-grid">
+      <div class="card">
+        <div class="chart-head">
+          <div><div class="chart-title">Ventas</div><div class="chart-sub">${cur.long}</div></div>
+          <div class="chart-value">${formatMoney(cur.total)}</div>
+        </div>
+        <div class="chart-plot">
+          ${rows.map((r, i) => `<button class="chart-col ${i === sel ? 'sel' : ''}" onclick="selectStatsBucket(${i})" aria-label="${r.long}: ${formatMoney(r.total)}">
+            <span class="vbar ${r.total ? '' : 'zero'}" style="${r.total ? 'height:' + Math.max(r.total / maxTotal * 100, 4) + '%' : ''}"></span>
+          </button>`).join('')}
+        </div>
+        ${xLabels}
+      </div>
+      <div class="card">
+        <div class="chart-head">
+          <div><div class="chart-title">Pedidos</div><div class="chart-sub">${cur.long}</div></div>
+          <div class="chart-value">${cur.count} pedido${cur.count === 1 ? '' : 's'}</div>
+        </div>
+        <div class="chart-plot">
+          <svg class="line-svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+            <polygon points="${area}" fill="var(--accent-soft)" opacity=".75"/>
+            <polyline points="${pts.join(' ')}" fill="none" stroke="var(--ink)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>
+          </svg>
+          ${rows.map((r, i) => `<button class="chart-col ${i === sel ? 'sel' : ''}" onclick="selectStatsBucket(${i})" aria-label="${r.long}: ${r.count} pedidos">
+            <span class="dot" style="bottom:${py(r.count)}%"></span>
+          </button>`).join('')}
+        </div>
+        ${xLabels}
+      </div>
+    </div>
+  `;
+}
+function refreshStatsCharts(){
+  const el = document.getElementById('statsCharts');
+  if(el) el.innerHTML = statsChartsHTML();
+}
+function setStatsPeriod(p){ statsPeriod = p; statsSel = null; vibrate(8); refreshStatsCharts(); }
+function selectStatsBucket(i){ statsSel = i; vibrate(8); refreshStatsCharts(); }
 
 /* =========================================================
    VISTA: PRODUCTOS
@@ -2233,6 +2428,7 @@ function renderProdRow(p, cat){
       <div class="pr-info">
         <div class="pr-name">${escapeHtml(p.name)}</div>
         <div class="pr-price">${formatMoney(p.price)}</div>
+        ${p.cost != null ? `<div class="pr-price">Producción ${formatMoney(p.cost)}</div>` : ''}
       </div>
       <label class="switch">
         <input type="checkbox" ${p.active?'checked':''} onchange="toggleProductActive('${p.id}', this.checked)">
@@ -2409,8 +2605,12 @@ function openProductForm(productId){
       <input id="pfName" type="text" placeholder="Ej. Hamburguesa Especial" value="${editing ? escapeHtml(editing.name) : ''}">
     </div>
     <div class="field">
-      <label>Precio</label>
+      <label>Precio de venta</label>
       <input id="pfPrice" type="number" min="0" step="0.5" placeholder="0.00" value="${editing ? editing.price : ''}">
+    </div>
+    <div class="field">
+      <label>Precio de producción</label>
+      <input id="pfCost" type="number" min="0" step="0.5" placeholder="0.00" value="${editing && editing.cost != null ? editing.cost : ''}">
     </div>
     <div class="field">
       <label>Categoría</label>
@@ -2483,14 +2683,17 @@ function saveProductForm(productId){
   const category = document.getElementById('pfCategory').value;
 
   if(!name){ toast('Escribe un nombre para el producto'); return; }
-  if(isNaN(price) || price < 0){ toast('Ingresa un precio válido'); return; }
+  if(isNaN(price) || price < 0){ toast('Ingresa un precio de venta válido'); return; }
+  const costRaw = document.getElementById('pfCost').value.trim();
+  const cost = costRaw === '' ? null : parseFloat(costRaw);
+  if(cost !== null && (isNaN(cost) || cost < 0)){ toast('Ingresa un precio de producción válido'); return; }
 
   const products = DB.getProducts();
   if(productId){
     const p = products.find(x => x.id === productId);
-    p.name = name; p.price = round2(price); p.category = category; p.image = productFormImage;
+    p.name = name; p.price = round2(price); p.cost = cost === null ? null : round2(cost); p.category = category; p.image = productFormImage;
   } else {
-    products.push({ id:'p' + Date.now(), name, price: round2(price), category, active:true, image: productFormImage });
+    products.push({ id:'p' + Date.now(), name, price: round2(price), cost: cost === null ? null : round2(cost), category, active:true, image: productFormImage });
   }
   DB.saveProducts(products);
   productFormImage = null;
