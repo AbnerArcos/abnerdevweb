@@ -1672,12 +1672,6 @@ function cartSheetHTML(step){
           </button>
         `).join('')}
       </div>
-      ${checkout.serviceType === 'comer' ? `
-        <div class="field">
-          <label>Número de mesa (opcional)</label>
-          <input type="text" inputmode="numeric" placeholder="Ej. 5" value="${escapeHtml(checkout.table)}" oninput="checkout.table=this.value">
-        </div>
-      ` : ''}
 
       <div class="section-title">Método de pago</div>
       <div class="opt-grid">
