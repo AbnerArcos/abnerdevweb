@@ -1099,117 +1099,7 @@
     .chart-grid{ grid-template-columns:1fr 1fr; }
     .chart-plot{ height:180px; }
   }
-
-  /* =====================================================================
-     BLOQUE NUEVO — acceso con WhatsApp, prueba gratis y membresía
-     Usa los mismos colores y formas que el resto de la app.
-  ===================================================================== */
-  .spinner{
-    display:inline-block; width:15px; height:15px; border-radius:50%;
-    border:2px solid rgba(255,255,255,0.35); border-top-color:#FFFFFF;
-    animation:mesaspin .7s linear infinite; vertical-align:-2px; margin-right:6px;
-  }
-  .btn.primary .spinner, .btn.ghost .spinner, .btn.outline .spinner{
-    border:2px solid rgba(22,33,62,0.25); border-top-color:var(--ink);
-  }
-  @keyframes mesaspin{ to{ transform:rotate(360deg); } }
-  .btn.is-loading{ opacity:.85; }
-
-  .auth-error{
-    display:none; margin:10px 0 0; font-size:13.5px; font-weight:600;
-    color:#B4342A; background:var(--danger-bg); border-radius:10px; padding:10px 12px;
-  }
-  .auth-error.show{ display:block; }
-  .auth-legal{ font-size:12px; color:var(--ink-faint); font-weight:600; text-align:center; margin:10px 0 0; }
-  .wa-word{ color:var(--whatsapp-ink); }
-
-  /* Pantalla de carga inicial */
-  .boot-splash{
-    position:fixed; inset:0; z-index:90; display:none;
-    flex-direction:column; align-items:center; justify-content:center; gap:14px;
-    background:var(--bg);
-  }
-  .boot-splash.show{ display:flex; }
-  .boot-mark{
-    width:46px; height:46px; border-radius:50%;
-    border:3px solid var(--surface-alt); border-top-color:var(--sec-home);
-    animation:mesaspin .8s linear infinite;
-  }
-  .boot-text{ font-size:14px; font-weight:700; color:var(--ink-soft); }
-
-  /* Aviso de guardado */
-  .sync-pill{
-    position:fixed; left:50%; transform:translateX(-50%) translateY(10px);
-    bottom:calc(76px + env(safe-area-inset-bottom)); z-index:60;
-    background:var(--ink); color:#FFFFFF; font-size:12.5px; font-weight:700;
-    padding:8px 14px; border-radius:var(--radius-chip); box-shadow:var(--shadow-pop);
-    opacity:0; pointer-events:none; transition:opacity .2s ease, transform .2s ease;
-  }
-  .sync-pill.show{ opacity:1; transform:translateX(-50%) translateY(0); }
-  .sync-pill.warn{ background:var(--accent-strong); color:var(--ink); }
-
-  /* Franja de prueba gratis */
-  .trial-strip{
-    display:flex; align-items:center; gap:9px; width:calc(100% - 36px);
-    margin:0 18px 6px; padding:9px 13px; border:0; text-align:left;
-    background:var(--success-bg); color:var(--success);
-    border-radius:var(--radius-btn); font-family:inherit;
-  }
-  .trial-strip.urgent{ background:var(--accent-soft); color:#8A6000; }
-  .trial-dot{ width:8px; height:8px; border-radius:50%; background:currentColor; flex-shrink:0; }
-  .trial-text{ flex:1; font-size:13px; font-weight:700; }
-  .trial-cta{ font-size:12.5px; font-weight:800; text-decoration:underline; }
-
-  /* Caja de plan / precio */
-  .plan-box{
-    margin-top:14px; padding:16px; border-radius:var(--radius-card);
-    background:var(--surface-alt); border:1px solid var(--border);
-  }
-  .plan-price{ font-size:23px; font-weight:800; color:var(--ink); margin-bottom:10px; letter-spacing:-0.3px; }
-  .plan-row{
-    display:flex; justify-content:space-between; align-items:center; gap:12px;
-    font-size:14px; font-weight:600; color:var(--ink-soft); padding:6px 0;
-  }
-  .plan-row b{ color:var(--ink); font-weight:800; }
-  .plan-note{ margin-top:10px; font-size:12.5px; font-weight:600; color:var(--ink-soft); line-height:1.5; }
-
-  /* Pantalla de membresía vencida */
-  .pay-layer{
-    position:fixed; inset:0; z-index:85; background:var(--bg);
-    display:flex; align-items:center; justify-content:center; padding:24px 18px;
-    overflow-y:auto;
-  }
-  .pay-card{ width:100%; max-width:420px; }
-  .pay-illu{ width:120px; margin:0 auto 6px; }
-  .pay-illu svg{ width:100%; height:auto; }
-  .pay-foot{ min-height:18px; margin:12px 0 0; font-size:13px; font-weight:600; color:#B4342A; text-align:center; }
-
-  /* Aviso de configuración pendiente */
-  .setup-warning{
-    position:fixed; inset:0; z-index:200; background:rgba(22,33,62,0.75);
-    display:flex; align-items:center; justify-content:center; padding:24px;
-  }
-  .setup-card{
-    background:var(--surface); border-radius:var(--radius-card); padding:22px;
-    max-width:420px; box-shadow:var(--shadow-pop);
-  }
-  .setup-card h2{ margin:0 0 10px; font-size:19px; color:var(--ink); }
-  .setup-card p{ font-size:14px; color:var(--ink-soft); line-height:1.55; margin:0 0 8px; font-weight:600; }
-  .setup-card code{ font-family:var(--mono); background:var(--surface-alt); padding:2px 6px; border-radius:6px; color:var(--ink); }
-  .setup-hint{ color:var(--ink-faint) !important; }
 </style>
-
-<!-- =====================================================================
-     Conexión con Supabase: base de datos, acceso por WhatsApp y archivos.
-     El orden importa: primero la librería, luego tu configuración y al
-     final los módulos de la app.
-===================================================================== -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
-<script src="assets/js/config.js"></script>
-<script src="assets/js/supabase-client.js"></script>
-<script src="assets/js/store.js"></script>
-<script src="assets/js/auth.js"></script>
-<script src="assets/js/billing.js"></script>
 
 </head>
 <body>
@@ -1244,18 +1134,11 @@
 <div id="modal-layer"></div>
 <div class="auth-layer" id="authLayer"></div>
 <div class="toast" id="toast"></div>
-<div class="sync-pill" id="syncPill"></div>
-
-<div class="boot-splash" id="bootSplash">
-  <div class="boot-mark"></div>
-  <span class="boot-text">Cargando tu negocio…</span>
-</div>
 
 <script>
 /* =========================================================
-   MESA — Punto de venta
-   Interfaz en este archivo. Los datos viven en Supabase (base de datos,
-   acceso por WhatsApp y archivos), a través de assets/js/store.js.
+   MESA — Prototipo funcional de POS para restaurante
+   Un solo archivo. Datos persistidos en localStorage.
 ========================================================= */
 
 /* =========================================================
@@ -1384,8 +1267,15 @@ function illustration(name, opts){
 
 const IVA_RATE = 0.16;
 
-/* Cada negocio crea sus propias categorías y productos.
-   Ya no se cargan datos de ejemplo. */
+function defaultCategories(){
+  return [
+    { id:'hamburguesas', name:'Hamburguesas', emoji:'🍔', color:'#C1443B' },
+    { id:'tacos',        name:'Tacos',        emoji:'🌮', color:'#E8A33D' },
+    { id:'complementos', name:'Complementos', emoji:'🍟', color:'#5B8C5A' },
+    { id:'bebidas',      name:'Bebidas',      emoji:'🥤', color:'#3D7EA6' },
+    { id:'postres',      name:'Postres',      emoji:'🍰', color:'#8B5FA3' },
+  ];
+}
 const UNCATEGORIZED = { id:'_none', name:'Sin categoría', emoji:'🍽️', color:'#8A93AC' };
 
 const SERVICE_TYPES = [
@@ -1400,30 +1290,70 @@ const PAYMENT_METHODS = [
   { id:'transferencia', name:'Transferencia', emoji:'📲' },
 ];
 
-
-/* ---------- Persistencia (Supabase) ----------
-   La app sigue leyendo y escribiendo igual que siempre; lo que cambió es
-   que DB ya no habla con localStorage sino con el Store, que mantiene una
-   copia en memoria y guarda todo en Supabase en segundo plano. */
-const DB = {
-  getProducts(){ return Store.state.products; },
-  saveProducts(list){ Store.saveProducts(list); },
-  getCategories(){ return Store.state.categories; },
-  saveCategories(list){ Store.saveCategories(list); },
-  getSales(){ return Store.state.sales; },
-  saveSales(list){ Store.saveSales(list); },
-  nextSaleNumber(){ return Store.nextSaleNumber(); }
+/* Precios de producción SIMULADOS para los productos de demostración. */
+const DEMO_COSTS = {
+  p1:38, p2:44, p3:62, p4:52,
+  p5:9,  p6:8,  p7:9,  p8:8,
+  p9:15, p10:20, p11:22, p12:26,
+  p13:12, p14:8, p15:7, p16:6,
+  p17:24, p18:16, p19:15, p20:14
 };
 
-/* Los catálogos operativos (formas de pago y tipos de servicio) también
-   viven en Supabase: si el usuario los cambió, se reemplazan aquí. */
+function defaultProducts(){
+  return [
+    { id:'p1',  name:'Hamburguesa Clásica',    price:89,  category:'hamburguesas', active:true, image:null },
+    { id:'p2',  name:'Hamburguesa con Queso',  price:99,  category:'hamburguesas', active:true, image:null },
+    { id:'p3',  name:'Hamburguesa Doble',      price:129, category:'hamburguesas', active:true, image:null },
+    { id:'p4',  name:'Hamburguesa BBQ',        price:119, category:'hamburguesas', active:true, image:null },
+    { id:'p5',  name:'Taco de Asada',          price:22,  category:'tacos', active:true, image:null },
+    { id:'p6',  name:'Taco de Pastor',         price:20,  category:'tacos', active:true, image:null },
+    { id:'p7',  name:'Taco de Bistec',         price:22,  category:'tacos', active:true, image:null },
+    { id:'p8',  name:'Taco de Suadero',        price:20,  category:'tacos', active:true, image:null },
+    { id:'p9',  name:'Papas a la Francesa',    price:45,  category:'complementos', active:true, image:null },
+    { id:'p10', name:'Aros de Cebolla',        price:55,  category:'complementos', active:true, image:null },
+    { id:'p11', name:'Ensalada César',         price:55,  category:'complementos', active:true, image:null },
+    { id:'p12', name:'Nachos con Queso',       price:65,  category:'complementos', active:true, image:null },
+    { id:'p13', name:'Refresco',               price:25,  category:'bebidas', active:true, image:null },
+    { id:'p14', name:'Agua de Horchata',       price:30,  category:'bebidas', active:true, image:null },
+    { id:'p15', name:'Limonada Natural',       price:28,  category:'bebidas', active:true, image:null },
+    { id:'p16', name:'Café Americano',         price:25,  category:'bebidas', active:true, image:null },
+    { id:'p17', name:'Pastel de Chocolate',    price:55,  category:'postres', active:true, image:null },
+    { id:'p18', name:'Flan Napolitano',        price:45,  category:'postres', active:true, image:null },
+    { id:'p19', name:'Helado 2 bolas',         price:40,  category:'postres', active:true, image:null },
+    { id:'p20', name:'Churros con Cajeta',     price:42,  category:'postres', active:true, image:null },
+  ].map(p => Object.assign(p, { cost: DEMO_COSTS[p.id] }));
+}
+
+/* ---------- Persistencia ---------- */
+const DB = {
+  getProducts(){ return JSON.parse(localStorage.getItem('mesa_products') || '[]'); },
+  saveProducts(list){ localStorage.setItem('mesa_products', JSON.stringify(list)); },
+  getCategories(){ return JSON.parse(localStorage.getItem('mesa_categories') || '[]'); },
+  saveCategories(list){ localStorage.setItem('mesa_categories', JSON.stringify(list)); },
+  getSales(){ return JSON.parse(localStorage.getItem('mesa_sales') || '[]'); },
+  saveSales(list){ localStorage.setItem('mesa_sales', JSON.stringify(list)); },
+  nextSaleNumber(){
+    let n = parseInt(localStorage.getItem('mesa_counter') || '0', 10) + 1;
+    localStorage.setItem('mesa_counter', String(n));
+    return n;
+  }
+};
+
 function initDB(){
-  if(Store.state.paymentMethods && Store.state.paymentMethods.length){
-    PAYMENT_METHODS.splice(0, PAYMENT_METHODS.length, ...Store.state.paymentMethods);
-  }
-  if(Store.state.serviceTypes && Store.state.serviceTypes.length){
-    SERVICE_TYPES.splice(0, SERVICE_TYPES.length, ...Store.state.serviceTypes);
-  }
+  if(localStorage.getItem('mesa_products') === null){ DB.saveProducts(defaultProducts()); }
+  if(localStorage.getItem('mesa_categories') === null){ DB.saveCategories(defaultCategories()); }
+  if(localStorage.getItem('mesa_sales') === null){ DB.saveSales([]); }
+  if(localStorage.getItem('mesa_counter') === null){ localStorage.setItem('mesa_counter','0'); }
+
+  // Productos de demostración guardados antes de existir el precio de producción:
+  // se les pone el simulado UNA vez (solo si nunca tuvieron dato: undefined).
+  // Si tú lo dejaste vacío a propósito (null) o lo cambiaste, no se toca.
+  const list = DB.getProducts();
+  let changed = false;
+  list.forEach(p => {
+    if(p.cost === undefined && DEMO_COSTS[p.id] !== undefined){ p.cost = DEMO_COSTS[p.id]; changed = true; }
+  });
+  if(changed) DB.saveProducts(list);
 }
 
 /* ---------- Estado en memoria ---------- */
@@ -1858,7 +1788,6 @@ function onCashInput(val){
 
 function confirmarCobro(){
   if(cart.length === 0){ toast('El carrito está vacío'); return; }
-  if(!Billing.guard()) return;
   const totals = computeTotals();
   if(checkout.paymentMethod === 'efectivo'){
     const cashNum = parseFloat(checkout.cash) || 0;
@@ -2183,7 +2112,6 @@ function cancelSale(saleId){
   const sale = sales.find(s => s.id === saleId);
   if(!sale) return;
   sale.cancelled = true;
-  sale.cancelledAt = new Date().toISOString();
   DB.saveSales(sales);
   toast('Venta cancelada');
   closeModal();
@@ -2592,7 +2520,6 @@ function openCategoryForm(categoryId){
 }
 
 function saveCategoryForm(categoryId){
-  if(!Billing.guard()) return;
   const name = document.getElementById('cfName').value.trim();
   const emoji = document.getElementById('cfEmoji').value.trim() || '🍽️';
   const color = document.getElementById('cfColor').value || '#F5BF3C';
@@ -2745,7 +2672,6 @@ function removeProductPhoto(){
 }
 
 function saveProductForm(productId){
-  if(!Billing.guard()) return;
   const name = document.getElementById('pfName').value.trim();
   const price = parseFloat(document.getElementById('pfPrice').value);
   const category = document.getElementById('pfCategory').value;
@@ -2804,12 +2730,11 @@ function paintChrome(){
 /* =========================================================
    BLOQUE NUEVO — ACCESO Y MI CUENTA
    Mismo estilo del resto del archivo: sin librerías, datos en
-   Supabase, íconos SVG en línea y render por plantillas.
+   localStorage, íconos SVG en línea y render por plantillas.
 ========================================================= */
 
 /* ---------- Íconos adicionales ---------- */
 Object.assign(ICONS, {
-  whatsapp: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3.5 20.5l1.3-4.4A8.2 8.2 0 1 1 8 19.3l-4.5 1.2Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 8.2c.3-.6.5-.6.8-.6h.6c.2 0 .5 0 .7.6l.7 1.7c.1.3 0 .5-.1.7l-.5.6c-.1.2-.2.4 0 .7a6 6 0 0 0 2.6 2.3c.3.1.5.1.7-.1l.6-.7c.2-.2.4-.2.6-.1l1.6.8c.4.2.5.4.5.6v.6c0 .5-.4 1.1-.8 1.3-.6.3-1.4.4-2.3.1a9.6 9.6 0 0 1-5.7-5.2c-.4-1-.4-1.9 0-2.7l.1-.6Z" fill="currentColor"/></svg>`,
   chevronLeft: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
   chevronDown: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 9l7 7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
   phone: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.5 3h3l1.5 4-2 1.4a12 12 0 0 0 5.6 5.6L16 12l4 1.5v3a2 2 0 0 1-2.2 2A16.5 16.5 0 0 1 3.5 5.2 2 2 0 0 1 5.5 3h1Z" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></svg>`,
@@ -2931,65 +2856,45 @@ const COUNTRIES = [
 ];
 function countryOf(code){ return COUNTRIES.find(c => c.code === code) || COUNTRIES[0]; }
 
-/* ---------- Cuenta del usuario (Supabase) ----------
-   El perfil ya no vive en este teléfono: vive en la tabla "profiles" de
-   Supabase y solo su dueño puede leerlo o cambiarlo (políticas RLS). */
-const DEFAULT_PREFS = { notifSales:true, notifStock:true, notifDaily:false, haptics:true, bizOnTicket:true };
-
-/* Supabase guarda el número completo (525512345678). La app muestra solo
-   los dígitos locales (5512345678). */
-function localDigits(full, countryCode){
-  const dial = countryOf(countryCode).dial.replace('+','');
-  let d = String(full || '').replace(/\D/g,'');
-  if(d.indexOf(dial) === 0) d = d.slice(dial.length);
-  return d;
-}
-
+/* ---------- Persistencia de la cuenta ---------- */
 const AUTH = {
   getUser(){
-    const p = Store.state.profile;
-    if(!p) return null;
-    return {
-      id: p.id,
-      name: p.name || '',
-      country: p.country || 'MX',
-      phone: localDigits(p.phone, p.country || 'MX'),
-      phoneFull: p.phone || '',
-      photo: p.photo || null,
-      provider: 'whatsapp',
-      business: Object.assign({ name:'', type:'', address:'', phone:'', logo:null }, Store.state.business || {}),
-      prefs: Object.assign({}, DEFAULT_PREFS, p.prefs || {}),
-      pin: p.pin || null,
-      createdAt: p.createdAt
-    };
+    try{ return JSON.parse(localStorage.getItem('mesa_user') || 'null'); }
+    catch(e){ return null; }
   },
-  isLogged(){ return !!(Store.ready && Store.state.profile); }
+  saveUser(u){ localStorage.setItem('mesa_user', JSON.stringify(u)); },
+  isLogged(){ return localStorage.getItem('mesa_session') === '1' && !!AUTH.getUser(); },
+  openSession(){ localStorage.setItem('mesa_session','1'); },
+  closeSession(){ localStorage.removeItem('mesa_session'); },
+  eraseAccount(){
+    localStorage.removeItem('mesa_user');
+    localStorage.removeItem('mesa_session');
+  }
 };
 
-/* Solo se usa como plantilla vacía para pintar pantallas antes de cargar. */
 function newUser(country, phone){
   return {
-    name:'', country: country || 'MX', phone: phone || '', photo:null,
-    provider:'whatsapp',
-    business:{ name:'', type:'', address:'', phone:'', logo:null },
-    prefs: Object.assign({}, DEFAULT_PREFS),
-    pin:null, createdAt: new Date().toISOString()
+    name:'',
+    country: country,
+    phone: phone,
+    photo: null,
+    provider: 'phone',
+    business: { name:'', type:'', address:'', phone:'' },
+    prefs: { notifSales:true, notifStock:true, notifDaily:false, haptics:true, bizOnTicket:true },
+    pin: null,
+    createdAt: new Date().toISOString()
   };
 }
 
 function currentUser(){ return AUTH.getUser(); }
 function userPrefs(){
   const u = currentUser();
-  return Object.assign({}, DEFAULT_PREFS, (u && u.prefs) || {});
+  const base = { notifSales:true, notifStock:true, notifDaily:false, haptics:true, bizOnTicket:true };
+  return Object.assign(base, (u && u.prefs) || {});
 }
 function updateUser(patch){
-  if(!Store.ready) return;
-  if(patch.business){ Store.saveBusiness(patch.business); }
-  const perfil = {};
-  ['name','photo','pin','prefs','country'].forEach(k => {
-    if(patch[k] !== undefined) perfil[k] = patch[k];
-  });
-  if(Object.keys(perfil).length) Store.saveProfile(perfil);
+  const u = currentUser() || newUser('MX','');
+  AUTH.saveUser(Object.assign({}, u, patch));
 }
 function displayName(){
   const u = currentUser();
@@ -3028,6 +2933,11 @@ let authState = {
   resendIn: 0,
   pinBuffer: ''
 };
+/* ¿El envío real de SMS ya está conectado?
+   false = modo actual: se entra sin código (la pantalla de código existe
+   y funciona, solo está en pausa).
+   true  = pide el código de 6 dígitos. */
+const SMS_ACTIVADO = false;
 
 let authResendTimer = null;
 let accountFormPhoto = null;   // foto temporal mientras se edita el perfil
@@ -3109,12 +3019,16 @@ function authPhoneHTML(){
     </div>
     <div class="auth-body">
       <h1 class="auth-title">${isLogin ? 'Entra a tu cuenta' : 'Empieza a administrar tu negocio'}</h1>
-      <p class="auth-sub">Te mandamos un código de 6 dígitos por <b class="wa-word">WhatsApp</b> para confirmar que el número es tuyo. Si es tu primera vez, tu cuenta se crea sola.</p>
+      <p class="auth-sub">${isLogin
+        ? 'Escribe el número con el que te registraste para volver a entrar.'
+        : (SMS_ACTIVADO
+            ? 'Te enviamos un código por mensaje para confirmar tu número.'
+            : 'Con tu número basta. Por ahora no mandamos mensaje de confirmación.')}</p>
 
       <div class="auth-illu">${ILLUSTRATIONS.phoneHand}</div>
 
       <div class="field" style="margin-bottom:10px;">
-        <label for="authPhone">Número de WhatsApp</label>
+        <label for="authPhone">Número de celular</label>
         <div class="phone-row">
           <button type="button" class="phone-code" onclick="openCountryPicker()">
             <span class="flag">${c.flag}</span>${c.dial}${icon('chevronDown')}
@@ -3133,18 +3047,18 @@ function authPhoneHTML(){
         </div>
       `}
 
-      <p class="auth-error" id="authError"></p>
-
       <div class="auth-actions">
-        <button class="btn dark xl block" id="authPhoneBtn" ${ready ? '' : 'disabled'} onclick="sendCode(this)">
-          ${icon('whatsapp')} Continuar con WhatsApp
+        <button class="btn dark xl block" id="authPhoneBtn" ${ready ? '' : 'disabled'} onclick="sendCode()">
+          ${icon('phone')} ${isLogin ? 'Entrar con mi número' : 'Crear cuenta con celular'}
+        </button>
+        <button class="btn outline xl block" onclick="appleSignIn()">
+          ${icon('apple')} ${isLogin ? 'Entrar con Apple' : 'Crear cuenta con Apple'}
         </button>
         <p class="auth-foot">
           ${isLogin
             ? `¿Aún no tienes cuenta? <button onclick="authStart('signup')">Créala aquí</button>`
             : `¿Ya tienes una cuenta? <button onclick="authStart('login')">Inicia sesión</button>`}
         </p>
-        <p class="auth-legal">Usamos tu número solo para que entres a la app. No lo compartimos con nadie.</p>
       </div>
     </div>
   `;
@@ -3194,99 +3108,50 @@ function pickCountry(code){
   renderAuth();
 }
 
-/* ---------- Envío y verificación del código por WhatsApp ----------
-   Supabase Auth genera y valida el código; la Edge Function
-   "send-whatsapp-otp" solo lo entrega por WhatsApp. */
-
-function authErrorMsg(msg){
-  const el = document.getElementById('authError');
-  if(el){ el.textContent = msg || ''; el.classList.toggle('show', !!msg); }
-}
-function otpErrorMsg(msg){
-  const el = document.getElementById('otpError');
-  if(el){ el.textContent = msg || ''; el.classList.toggle('show', !!msg); }
-}
-function btnLoading(btn, on, texto){
-  if(!btn) return;
-  if(on){
-    btn.dataset.label = btn.innerHTML;
-    btn.disabled = true;
-    btn.classList.add('is-loading');
-    btn.innerHTML = '<span class="spinner"></span> ' + (texto || 'Un momento…');
-  }else{
-    btn.disabled = false;
-    btn.classList.remove('is-loading');
-    if(btn.dataset.label) btn.innerHTML = btn.dataset.label;
-  }
-}
-function showBoot(on, texto){
-  const el = document.getElementById('bootSplash');
-  if(!el) return;
-  el.classList.toggle('show', !!on);
-  const t = el.querySelector('.boot-text');
-  if(t && texto) t.textContent = texto;
-}
-
-async function sendCode(btn){
+/* ---------- Envío y validación del código ---------- */
+function sendCode(){
   if(!authPhoneReady()) return;
-  if(!window.MESA_READY){ authErrorMsg('Falta conectar Supabase en assets/js/config.js'); return; }
-
-  authErrorMsg('');
+  const existing = currentUser();
+  if(authState.mode === 'login'){
+    const same = existing && existing.phone === authState.phone && existing.country === authState.country;
+    if(!same){
+      toast('No encontramos esa cuenta en este dispositivo', {
+        subtitle:'Revisa el número o crea una cuenta nueva',
+        variant:'toast-danger', icon:icon('close'), duration:2600
+      });
+      return;
+    }
+  }
   vibrate(12);
-  btnLoading(btn, true, 'Enviando código…');
 
-  const phone = Auth.e164(authState.country, authState.phone);
-  const res = await Auth.sendOtp(phone);
-  btnLoading(btn, false);
+  if(!SMS_ACTIVADO){
+    entrarSinCodigo();
+    return;
+  }
 
-  if(!res.ok){ authErrorMsg(res.message); return; }
-
-  authState.resendIn = (window.MESA_CONFIG.RESEND_SECONDS || 45);
+  authState.code = String(Math.floor(100000 + Math.random() * 900000));
+  authState.resendIn = 45;
   authGo('otp');
   startResendTimer();
 }
 
-/* Reenviar desde la pantalla del código */
-async function resendCode(btn){
-  otpErrorMsg('');
-  const phone = Auth.e164(authState.country, authState.phone);
-  btnLoading(btn, true, 'Enviando…');
-  const res = await Auth.sendOtp(phone);
-  btnLoading(btn, false);
-  if(!res.ok){ otpErrorMsg(res.message); return; }
-  authState.resendIn = (window.MESA_CONFIG.RESEND_SECONDS || 45);
-  const area = document.getElementById('resendArea');
-  if(area) area.innerHTML = resendHTML();
-  startResendTimer();
-  toast('Te enviamos un código nuevo por WhatsApp');
-}
-
-/* Pasos que siguen a una verificación correcta: cargar los datos del
-   usuario y decidir si ya puede entrar o le falta poner su nombre. */
-async function afterLogin(){
-  showBoot(true, 'Cargando tu negocio…');
-  try{
-    await Store.hydrate();
-  }catch(e){
-    showBoot(false);
-    toast('No pudimos cargar tus datos', { subtitle:'Revisa tu conexión e inténtalo otra vez', variant:'toast-danger', icon:icon('close') });
+/* Entrada directa mientras el SMS no está conectado.
+   Hace exactamente lo mismo que verifyCode() cuando el código es correcto. */
+function entrarSinCodigo(){
+  if(authState.mode === 'login'){
+    AUTH.openSession();
+    finishAuth('¡Bienvenido de vuelta!');
     return;
   }
-  initDB();
-
-  if(Store.state.profile && Store.state.profile.country !== authState.country){
-    Store.saveProfile({ country: authState.country });
-  }
-
-  showBoot(false);
-  const nuevo = !Store.state.profile || !(Store.state.profile.name || '').trim();
-  Billing.start();
-
-  if(nuevo){
-    authGo('name');
-  }else{
+  const existing = currentUser();
+  if(existing && existing.phone === authState.phone){
+    AUTH.openSession();
     finishAuth('¡Bienvenido de vuelta!');
+    return;
   }
+  AUTH.saveUser(newUser(authState.country, authState.phone));
+  AUTH.openSession();
+  authGo('name');
 }
 
 function startResendTimer(){
@@ -3303,7 +3168,7 @@ function resendHTML(){
   if(authState.resendIn > 0){
     return `Puedes pedir otro código en <b>${authState.resendIn}s</b>`;
   }
-  return `¿No te llegó? <button onclick="resendCode(this)">Enviar de nuevo</button>`;
+  return `¿No te llegó? <button onclick="sendCode()">Enviar de nuevo</button>`;
 }
 
 function authOtpHTML(){
@@ -3314,9 +3179,14 @@ function authOtpHTML(){
     </div>
     <div class="auth-body">
       <h1 class="auth-title">Escribe tu código</h1>
-      <p class="auth-sub">Te llegó por WhatsApp al <b style="color:var(--ink)">${c.dial} ${formatPhone(authState.phone, authState.country)}</b>.</p>
+      <p class="auth-sub">Enviamos 6 dígitos al <b style="color:var(--ink)">${c.dial} ${formatPhone(authState.phone, authState.country)}</b>.</p>
 
       <div class="auth-illu">${ILLUSTRATIONS.lockShield}</div>
+
+      <div class="demo-code">
+        Versión de prueba: aquí todavía no se manda un SMS real, así que tu código es
+        <span>${authState.code}</span>
+      </div>
 
       <div class="otp-row" id="otpRow">
         ${[0,1,2,3,4,5].map(i => `
@@ -3325,11 +3195,10 @@ function authOtpHTML(){
                  oninput="onOtpInput(${i}, this)" onkeydown="onOtpKey(${i}, event)" onpaste="onOtpPaste(event)">
         `).join('')}
       </div>
-      <p class="auth-error" id="otpError"></p>
       <p class="otp-help" id="resendArea">${resendHTML()}</p>
 
       <div class="auth-actions">
-        <button class="btn dark xl block" id="otpBtn" disabled onclick="verifyCode(this)">Verificar</button>
+        <button class="btn dark xl block" id="otpBtn" disabled onclick="verifyCode()">Verificar</button>
       </div>
     </div>
   `;
@@ -3374,39 +3243,41 @@ function onOtpPaste(e){
   if(txt.length === 6) setTimeout(verifyCode, 140);
 }
 
-async function verifyCode(btn){
+function verifyCode(){
   const value = otpValue();
   if(value.length !== 6) return;
-
-  const boton = btn || document.getElementById('otpBtn');
-  otpErrorMsg('');
-  btnLoading(boton, true, 'Verificando…');
-
-  const phone = Auth.e164(authState.country, authState.phone);
-  const res = await Auth.verifyOtp(phone, value);
-
-  if(!res.ok){
-    btnLoading(boton, false);
+  if(value !== authState.code){
     const row = document.getElementById('otpRow');
-    if(row){
-      row.classList.add('error');
-      setTimeout(() => row.classList.remove('error'), 400);
-    }
+    row.classList.add('error');
+    setTimeout(() => row.classList.remove('error'), 400);
     [0,1,2,3,4,5].forEach(i => {
       const c = document.getElementById('otp'+i);
-      if(c){ c.value = ''; c.classList.remove('filled'); }
+      c.value = ''; c.classList.remove('filled');
     });
-    const first = document.getElementById('otp0');
-    if(first) first.focus();
+    document.getElementById('otp0').focus();
     refreshOtpBtn();
     vibrate([18,60,18]);
-    otpErrorMsg(res.message);
+    toast('Ese código no coincide', { subtitle:'Revísalo e inténtalo otra vez', variant:'toast-danger', icon:icon('close') });
     return;
   }
 
   clearInterval(authResendTimer);
   vibrate(20);
-  await afterLogin();
+
+  if(authState.mode === 'login'){
+    AUTH.openSession();
+    finishAuth('¡Bienvenido de vuelta!');
+    return;
+  }
+  const existing = currentUser();
+  if(existing && existing.phone === authState.phone){
+    AUTH.openSession();
+    finishAuth('¡Bienvenido de vuelta!');
+    return;
+  }
+  AUTH.saveUser(newUser(authState.country, authState.phone));
+  AUTH.openSession();
+  authGo('name');
 }
 
 /* ---------- Nombre y negocio (primer ingreso) ---------- */
@@ -3436,31 +3307,51 @@ function refreshNameBtn(){
   const v = (document.getElementById('regName').value || '').trim();
   document.getElementById('regBtn').disabled = v.length < 2;
 }
-async function saveRegistrationName(){
+function saveRegistrationName(){
   const name = document.getElementById('regName').value.trim();
   const biz = document.getElementById('regBiz').value.trim();
   if(name.length < 2) return;
-
-  const btn = document.getElementById('regBtn');
-  btnLoading(btn, true, 'Preparando tu cuenta…');
-
-  Store.saveProfile({ name: name, country: authState.country });
-  if(biz) Store.saveBusiness({ name: biz });
-  await Store.flush();
-
-  btnLoading(btn, false);
+  const u = currentUser();
+  u.name = name;
+  u.business = Object.assign({ name:'', type:'', address:'', phone:'' }, u.business, { name:biz });
+  AUTH.saveUser(u);
   finishAuth('¡Tu cuenta está lista, ' + name.split(' ')[0] + '!');
-  Billing.welcomeNotice();
 }
 
 function finishAuth(msg){
   hideAuth();
   paintChrome();
   goTo('home');
-  Billing.paintBanner();
   toast(msg, { subtitle:'Ya puedes registrar tus ventas', variant:'toast-success', icon:icon('check') });
 }
 
+/* ---------- Apple (aún sin conectar) ---------- */
+function appleSignIn(){
+  openModal(`
+    <h3 class="sheet-title">Entrar con Apple</h3>
+    <p class="sheet-text">
+      El botón ya está listo, pero para que funcione de verdad necesitas una cuenta de
+      Apple Developer y publicar la app. Mientras tanto puedes entrar en modo de prueba
+      y usar todo con normalidad.
+    </p>
+    <div class="sheet-actions">
+      <button class="btn ghost block" onclick="closeModal()">Cancelar</button>
+      <button class="btn dark block" onclick="appleDemoLogin()">Entrar en modo prueba</button>
+    </div>
+  `, { dismissible:true });
+}
+function appleDemoLogin(){
+  closeModal();
+  let u = currentUser();
+  if(!u){
+    u = newUser(authState.country, '');
+    u.provider = 'apple';
+    u.name = 'Usuario de Apple';
+    AUTH.saveUser(u);
+  }
+  AUTH.openSession();
+  finishAuth('Sesión iniciada con Apple');
+}
 
 /* ---------- Bloqueo con PIN ---------- */
 function authLockHTML(){
@@ -3506,7 +3397,7 @@ function forgotPin(){
     <p class="sheet-text">Puedes cerrar la sesión y volver a entrar con tu número de celular. Tus ventas y productos no se borran.</p>
     <div class="sheet-actions">
       <button class="btn ghost block" onclick="closeModal()">Cancelar</button>
-      <button class="btn dark block" onclick="closeModal(); doLogout();">Entrar con mi número</button>
+      <button class="btn dark block" onclick="closeModal(); doLogout(true);">Entrar con mi número</button>
     </div>
   `, { dismissible:true });
 }
@@ -3514,13 +3405,6 @@ function forgotPin(){
 /* =========================================================
    VISTA: MI CUENTA
 ========================================================= */
-function membershipSubtitle(){
-  const info = Billing.info();
-  if(info.trialing) return 'Prueba gratis · ' + info.daysLeft + ' días restantes';
-  if(info.paid) return 'Membresía activa · ' + (window.MESA_CONFIG.MEMBERSHIP_LABEL || '$129 MXN al mes');
-  return 'Sin membresía · actívala aquí';
-}
-
 function renderAccount(){
   const u = currentUser() || newUser('MX','');
   const prefs = userPrefs();
@@ -3592,25 +3476,13 @@ function renderAccount(){
       </button>
     </div>
 
-    <div class="section-title">Membresía</div>
-    <div class="acc-list">
-      <button class="acc-row" onclick="Billing.openMembership()">
-        <span class="acc-ico gold">${icon('card')}</span>
-        <span class="acc-txt">
-          <span class="acc-label">Mi plan</span>
-          <span class="acc-sub">${membershipSubtitle()}</span>
-        </span>
-        <span class="acc-chev">${icon('chevronRight')}</span>
-      </button>
-    </div>
-
     <div class="section-title">Sesión</div>
     <div class="acc-list">
       <button class="acc-row" onclick="confirmLogout()">
         <span class="acc-ico">${icon('logout')}</span>
         <span class="acc-txt">
           <span class="acc-label">Cerrar sesión</span>
-          <span class="acc-sub">Tus ventas y productos se quedan en tu cuenta</span>
+          <span class="acc-sub">Tus ventas y productos se quedan guardados</span>
         </span>
         <span class="acc-chev">${icon('chevronRight')}</span>
       </button>
@@ -3618,14 +3490,14 @@ function renderAccount(){
         <span class="acc-ico red">${icon('trash')}</span>
         <span class="acc-txt">
           <span class="acc-label">Eliminar cuenta</span>
-          <span class="acc-sub">Borra tu cuenta y toda tu información</span>
+          <span class="acc-sub">Borra tu perfil de este dispositivo</span>
         </span>
         <span class="acc-chev">${icon('chevronRight')}</span>
       </button>
     </div>
 
     <p style="font-size:12px; color:var(--ink-faint); font-weight:600; text-align:center; margin:22px 0 4px;">
-      Mesa · Tus datos se guardan en la nube
+      Mesa · Versión de prueba
     </p>
   `;
 }
@@ -3714,21 +3586,8 @@ function saveProfile(){
 const BUSINESS_TYPES = ['Restaurante','Cafetería','Fonda','Taquería','Bar','Tienda','Otro'];
 function openBusinessForm(){
   const b = (currentUser() || {}).business || {};
-  businessFormLogo = b.logo || null;
   openModal(`
     <h3 class="sheet-title">Información de mi negocio</h3>
-
-    <div class="photo-picker">
-      <div class="photo-picker-circle ${businessFormLogo ? 'has-image':''}" id="logoBox" onclick="document.getElementById('logoInput').click()">
-        ${businessFormLogo ? `<img src="${businessFormLogo}" alt="">` : icon('camera')}
-      </div>
-      <div class="photo-picker-actions">
-        <button class="btn ghost" onclick="document.getElementById('logoInput').click()">${icon('camera')} Logo del negocio</button>
-        ${businessFormLogo ? `<button class="btn danger" onclick="removeBusinessLogo()">${icon('trash')} Quitar</button>` : ''}
-      </div>
-      <input id="logoInput" type="file" accept="image/*" style="display:none" onchange="onBusinessLogoSelected(this)">
-    </div>
-
     <div class="field">
       <label for="bizName">Nombre del negocio</label>
       <input id="bizName" type="text" value="${escapeHtml(b.name || '')}" placeholder="Fonda La Esquina">
@@ -3754,52 +3613,12 @@ function openBusinessForm(){
     </div>
   `, { dismissible:true });
 }
-
-/* El logo se recorta igual que las demás fotos y se sube a Supabase
-   Storage (bucket "business-logos"), nunca en base64. */
-const LOGO_SIZE = 320;
-let businessFormLogo = null;
-function onBusinessLogoSelected(input){
-  const file = input.files && input.files[0];
-  if(!file) return;
-  if(!file.type.startsWith('image/')){ toast('Selecciona un archivo de imagen'); return; }
-  const reader = new FileReader();
-  reader.onload = function(e){
-    const img = new Image();
-    img.onload = function(){
-      const size = LOGO_SIZE;
-      const canvas = document.createElement('canvas');
-      canvas.width = size; canvas.height = size;
-      const ctx = canvas.getContext('2d');
-      const scale = Math.max(size / img.width, size / img.height);
-      const w = img.width * scale, h = img.height * scale;
-      ctx.fillStyle = '#FFFFFF';
-      ctx.fillRect(0,0,size,size);
-      ctx.drawImage(img, (size-w)/2, (size-h)/2, w, h);
-      businessFormLogo = canvas.toDataURL('image/jpeg', 0.85);
-      const box = document.getElementById('logoBox');
-      if(box){ box.classList.add('has-image'); box.innerHTML = `<img src="${businessFormLogo}" alt="">`; }
-    };
-    img.src = e.target.result;
-  };
-  reader.readAsDataURL(file);
-}
-function removeBusinessLogo(){
-  businessFormLogo = null;
-  const box = document.getElementById('logoBox');
-  if(box){ box.classList.remove('has-image'); box.innerHTML = icon('camera'); }
-  const del = document.querySelector('.photo-picker-actions .btn.danger');
-  if(del) del.remove();
-}
-
 function saveBusinessForm(){
-  if(!Billing.guard()) return;
   updateUser({ business: {
     name: document.getElementById('bizName').value.trim(),
     type: document.getElementById('bizType').value,
     address: document.getElementById('bizAddress').value.trim(),
-    phone: document.getElementById('bizPhone').value.trim(),
-    logo: businessFormLogo
+    phone: document.getElementById('bizPhone').value.trim()
   }});
   closeModal();
   render();
@@ -3933,82 +3752,26 @@ function openChangePhone(){
   const c = countryOf(u.country);
   openModal(`
     <h3 class="sheet-title">Cambiar número</h3>
-    <p class="sheet-text">Te enviaremos un código por WhatsApp al número nuevo para confirmar que es tuyo. A partir de ahí entrarás con ese número.</p>
+    <p class="sheet-text">Este será tu nuevo número para iniciar sesión.</p>
     <div class="field">
-      <label for="npPhone">Nuevo número de WhatsApp</label>
+      <label for="npPhone">Nuevo número</label>
       <div class="phone-row">
         <span class="phone-code"><span class="flag">${c.flag}</span>${c.dial}</span>
         <input id="npPhone" class="phone-input" type="tel" inputmode="numeric" placeholder="${'0'.repeat(c.digits)}">
       </div>
     </div>
-    <p class="auth-error" id="npError"></p>
     <div class="sheet-actions">
       <button class="btn ghost block" onclick="openSecurity()">Cancelar</button>
-      <button class="btn primary block" id="npBtn" onclick="saveNewPhone(this)">Enviarme el código</button>
+      <button class="btn primary block" onclick="saveNewPhone()">Guardar</button>
     </div>
   `, { dismissible:true });
 }
-
-async function saveNewPhone(btn){
+function saveNewPhone(){
   const u = currentUser() || {};
   const c = countryOf(u.country);
   const digits = document.getElementById('npPhone').value.replace(/\D/g,'');
-  const err = document.getElementById('npError');
-  if(err) err.textContent = '';
-
-  if(digits.length !== c.digits){
-    if(err){ err.textContent = `El número debe tener ${c.digits} dígitos`; err.classList.add('show'); }
-    return;
-  }
-
-  const nuevo = Auth.e164(u.country, digits);
-  btnLoading(btn, true, 'Enviando código…');
-  const { error } = await SB.auth.updateUser({ phone: nuevo });
-  btnLoading(btn, false);
-
-  if(error){
-    if(err){ err.textContent = Auth.friendlyError(error); err.classList.add('show'); }
-    return;
-  }
-  openConfirmNewPhone(nuevo, digits);
-}
-
-function openConfirmNewPhone(nuevo, digits){
-  openModal(`
-    <h3 class="sheet-title">Confirma tu número nuevo</h3>
-    <p class="sheet-text">Escribe el código de 6 dígitos que te llegó por WhatsApp.</p>
-    <div class="field">
-      <input id="npCode" class="phone-input" type="tel" inputmode="numeric" maxlength="6"
-             style="text-align:center; letter-spacing:10px; font-size:22px;" placeholder="000000">
-    </div>
-    <p class="auth-error" id="npError2"></p>
-    <div class="sheet-actions">
-      <button class="btn ghost block" onclick="openSecurity()">Cancelar</button>
-      <button class="btn primary block" id="npBtn2" onclick="confirmNewPhone('${nuevo}','${digits}', this)">Confirmar</button>
-    </div>
-  `, { dismissible:true });
-}
-
-async function confirmNewPhone(nuevo, digits, btn){
-  const code = (document.getElementById('npCode').value || '').replace(/\D/g,'');
-  const err = document.getElementById('npError2');
-  if(err) err.textContent = '';
-  if(code.length !== 6){
-    if(err){ err.textContent = 'El código tiene 6 dígitos'; err.classList.add('show'); }
-    return;
-  }
-
-  btnLoading(btn, true, 'Confirmando…');
-  const { error } = await SB.auth.verifyOtp({ phone: nuevo, token: code, type: 'phone_change' });
-  btnLoading(btn, false);
-
-  if(error){
-    if(err){ err.textContent = Auth.friendlyError(error); err.classList.add('show'); }
-    return;
-  }
-
-  Store.state.profile.phone = nuevo.replace('+','');
-  await SB.from('profiles').update({ phone: nuevo.replace('+','') }).eq('id', Store.userId);
+  if(digits.length !== c.digits){ toast(`El número debe tener ${c.digits} dígitos`); return; }
+  updateUser({ phone:digits });
   closeModal();
   render();
   toast('Número actualizado', { variant:'toast-success', icon:icon('check') });
@@ -4018,23 +3781,17 @@ async function confirmNewPhone(nuevo, digits, btn){
 function confirmLogout(){
   openModal(`
     <h3 class="sheet-title">¿Cerrar sesión?</h3>
-    <p class="sheet-text">Tus productos, ventas e historial se quedan guardados en tu cuenta. Vuelves a entrar con tu número de WhatsApp.</p>
+    <p class="sheet-text">Tus productos, ventas e historial se quedan guardados en este dispositivo. Vuelves a entrar con tu número.</p>
     <div class="sheet-actions">
       <button class="btn ghost block" onclick="closeModal()">Cancelar</button>
       <button class="btn dark block" onclick="closeModal(); doLogout();">Cerrar sesión</button>
     </div>
   `, { dismissible:true });
 }
-async function doLogout(){
-  await Auth.signOut();
+function doLogout(){
+  AUTH.closeSession();
   currentView = 'home';
-  cart = [];
-  Billing.hidePaywall();
-  const strip = document.getElementById('trialStrip');
-  if(strip) strip.remove();
   authState = Object.assign(authState, { screen:'welcome', mode:'login', phone:'', terms:false, code:'' });
-  paintChrome();
-  render();
   showAuth('welcome');
   toast('Sesión cerrada');
 }
@@ -4043,133 +3800,53 @@ function confirmDeleteAccount(){
   openModal(`
     <h3 class="sheet-title">Eliminar cuenta</h3>
     <p class="sheet-text">
-      Se borra tu cuenta completa: tu perfil, tu negocio, tus productos, tus
-      categorías, tus fotos y todo tu historial de ventas. Esto no se puede
-      deshacer y no queda copia.
+      Se borra tu perfil de este dispositivo. Si también marcas la casilla, se borran
+      tus productos, categorías y el historial de ventas. Esto no se puede deshacer.
     </p>
+    <div class="terms-row" id="wipeRow" onclick="this.classList.toggle('checked')">
+      <span class="terms-box">${icon('check')}</span>
+      <span class="terms-text">Borrar también <b>mis productos y mis ventas</b></span>
+    </div>
     <div class="field" style="margin-top:18px;">
       <label for="delWord">Escribe ELIMINAR para confirmar</label>
       <input id="delWord" type="text" placeholder="ELIMINAR" autocapitalize="characters">
     </div>
-    <p class="auth-error" id="delError"></p>
     <div class="sheet-actions">
       <button class="btn ghost block" onclick="closeModal()">Cancelar</button>
-      <button class="btn danger block" id="delBtn" onclick="doDeleteAccount(this)">Eliminar cuenta</button>
+      <button class="btn danger block" onclick="doDeleteAccount()">Eliminar cuenta</button>
     </div>
   `, { dismissible:true });
 }
-
-async function doDeleteAccount(btn){
+function doDeleteAccount(){
   const word = (document.getElementById('delWord').value || '').trim().toUpperCase();
-  const err = document.getElementById('delError');
-  if(err) err.textContent = '';
-
-  if(word !== 'ELIMINAR'){
-    if(err){ err.textContent = 'Escribe ELIMINAR para confirmar'; err.classList.add('show'); }
-    return;
+  if(word !== 'ELIMINAR'){ toast('Escribe ELIMINAR para confirmar', { variant:'toast-danger', icon:icon('close') }); return; }
+  const wipeAll = document.getElementById('wipeRow').classList.contains('checked');
+  AUTH.eraseAccount();
+  if(wipeAll){
+    ['mesa_products','mesa_categories','mesa_sales','mesa_counter'].forEach(k => localStorage.removeItem(k));
+    initDB();
   }
-
-  btnLoading(btn, true, 'Eliminando…');
-  const res = await Auth.deleteAccount();
-  btnLoading(btn, false);
-
-  if(!res.ok){
-    if(err){ err.textContent = res.message; err.classList.add('show'); }
-    return;
-  }
-
   closeModal();
-  Billing.hidePaywall();
-  const strip = document.getElementById('trialStrip');
-  if(strip) strip.remove();
   currentView = 'home';
   cart = [];
   authState = Object.assign(authState, { screen:'welcome', mode:'signup', phone:'', terms:false, code:'' });
-  paintChrome();
-  render();
   showAuth('welcome');
   toast('Cuenta eliminada');
 }
 
-/* ---------- Arranque de la app con sesión ----------
-   1. Se pinta la interfaz vacía para que no haya pantalla en blanco.
-   2. Si hay sesión guardada, se descargan los datos del usuario.
-   3. Si no, se muestra la pantalla de acceso con WhatsApp. */
-
-/* Permite que los módulos (Store, Billing) vuelvan a pintar la pantalla
-   cuando terminan de subir una imagen o cambia la membresía. */
-window.ILLUSTRATIONS = ILLUSTRATIONS;
-window.mesaRepaint = function(){
-  try{
-    paintChrome();
-    render();
-    if(window.Billing) Billing.paintBanner();
-  }catch(e){ /* la pantalla aún no está lista */ }
-};
-
-/* Aviso discreto de "guardando" / "sin conexión" */
-function paintSyncPill(estado){
-  const pill = document.getElementById('syncPill');
-  if(!pill) return;
-  if(!estado.online){
-    pill.textContent = 'Sin conexión · se guardará solo';
-    pill.className = 'sync-pill show warn';
-  }else if(estado.error){
-    pill.textContent = 'Reintentando guardar…';
-    pill.className = 'sync-pill show warn';
-  }else if(estado.pending > 0){
-    pill.textContent = 'Guardando…';
-    pill.className = 'sync-pill show';
-  }else{
-    pill.className = 'sync-pill';
-  }
-}
-
-async function bootApp(){
+/* ---------- Arranque de la app con sesión ---------- */
+function bootApp(){
+  initDB();
   paintChrome();
   render();
   tickClock();
-
-  if(!window.MESA_READY){ showBoot(false); return; }
-
-  Store.onSync(paintSyncPill);
-  SB.auth.onAuthStateChange((event) => {
-    if(event === 'SIGNED_OUT'){ Store.reset(); }
-  });
-
-  showBoot(true, 'Abriendo tu negocio…');
-
-  let session = null;
-  try{ session = await Auth.session(); }catch(e){ session = null; }
-
-  if(!session){
-    showBoot(false);
-    showAuth('welcome');
-    return;
-  }
-
-  try{
-    await Store.hydrate();
-  }catch(e){
-    showBoot(false);
-    toast('No pudimos cargar tus datos', { subtitle:'Revisa tu conexión y vuelve a abrir la app', variant:'toast-danger', icon:icon('close') });
-    return;
-  }
-
-  initDB();
-  showBoot(false);
-  paintChrome();
-  render();
-  Billing.start();
-
   const u = currentUser();
-  if(!u || !(u.name || '').trim()){
-    authState.mode = 'signup';
-    authState.country = (u && u.country) || 'MX';
-    showAuth('name');
-    return;
+  if(!AUTH.isLogged()){
+    showAuth(u ? 'login' : 'welcome');
+    if(u) authState.mode = 'login';
+  }else if(u && u.pin){
+    showAuth('lock');
   }
-  if(u.pin){ showAuth('lock'); }
 }
 
 /* ---------- Encabezado del ticket con los datos del negocio ---------- */
