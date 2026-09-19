@@ -2,285 +2,84 @@
    MESA · Acceso con WhatsApp
    ---------------------------------------------------------------------
    Único método de entrada: número de celular + código de 6 dígitos que
-   llega por WhatsApp.
+   llega por WhatsApp. No hay correo, ni Google, ni Apple.
 
-   Supabase Auth genera, guarda y verifica el código.
-   La Edge Function "send-whatsapp-otp" se encarga de entregarlo por
-   WhatsApp.
-
-   Si el número nunca había entrado, Supabase crea la cuenta y el
-   disparador handle_new_user() arma el perfil, negocio y prueba.
+   Supabase Auth genera, guarda y verifica el código; la Edge Function
+   "send-whatsapp-otp" solo lo entrega por WhatsApp. Si el número nunca
+   había entrado, Supabase crea la cuenta sola y el disparador
+   handle_new_user() arma el perfil, el negocio y la prueba de 2 meses.
 ===================================================================== */
-
 (function () {
   const cfg = window.MESA_CONFIG || {};
 
   const Auth = {};
 
-  /* ================================================================
-     TELÉFONO
-  ================================================================ */
-
-  /**
-   * Convierte el número introducido por el usuario a formato E.164.
-   *
-   * Ejemplo:
-   * país: MX
-   * número: 55 1234 5678
-   * resultado: +525512345678
-   */
+  /** Convierte "55 1234 5678" + país en el formato internacional +525512345678 */
   Auth.e164 = function (countryCode, digits) {
     const c = (typeof window.countryOf === 'function')
       ? window.countryOf(countryCode)
       : { dial: '+52' };
-
     return c.dial + String(digits).replace(/\D/g, '');
   };
 
-
-  /* ================================================================
-     ENVIAR OTP
-  ================================================================ */
-
-  /**
-   * Pide a Supabase Auth que genere y envíe el código.
-   *
-   * Supabase genera el OTP.
-   * El Send SMS Hook de Supabase llama a nuestra Edge Function.
-   * La Edge Function entrega el OTP mediante WhatsApp Cloud API.
-   */
+  /** Envía el código por WhatsApp. Devuelve {ok:true} o {ok:false, message}. */
   Auth.sendOtp = async function (phoneE164) {
-
-    console.log('🔥 AUTH NUEVO');
-    console.log('📱 Teléfono enviado a Supabase:', phoneE164);
-
-    if (!window.SB) {
-      console.error('❌ Supabase client no está disponible.');
-
-      return {
-        ok: false,
-        message: 'La app todavía no está conectada a Supabase.'
-      };
-    }
-
-    try {
-
-      const { error } = await SB.auth.signInWithOtp({
-        phone: phoneE164,
-
-        /*
-         * IMPORTANTE:
-         * Supabase trabaja esto como SMS.
-         * Nuestro Send SMS Hook se encarga de mandarlo realmente
-         * por WhatsApp.
-         */
-        options: {
-          channel: 'sms'
-        }
-      });
-
-      if (error) {
-
-        console.error('❌ ERROR SUPABASE signInWithOtp:', error);
-        console.error('❌ Mensaje:', error.message);
-        console.error('❌ Error completo:', error);
-
-        return {
-          ok: false,
-          message: Auth.friendlyError(error)
-        };
-      }
-
-      console.log('✅ Supabase aceptó la solicitud de OTP.');
-
-      return {
-        ok: true
-      };
-
-    } catch (error) {
-
-      console.error('❌ EXCEPCIÓN en Auth.sendOtp:', error);
-
-      return {
-        ok: false,
-        message: Auth.friendlyError(error)
-      };
-    }
+    if (!window.SB) return { ok: false, message: 'La app todavía no está conectada a Supabase.' };
+    const { error } = await SB.auth.signInWithOtp({
+      phone: phoneE164,
+      options: { channel: cfg.OTP_CHANNEL || 'whatsapp' }
+    });
+    if (error) return { ok: false, message: Auth.friendlyError(error) };
+    return { ok: true };
   };
 
-
-  /* ================================================================
-     VERIFICAR OTP
-  ================================================================ */
-
-  /**
-   * Verifica el código de 6 dígitos introducido por el usuario.
-   */
+  /** Verifica el código. Si es correcto deja la sesión abierta. */
   Auth.verifyOtp = async function (phoneE164, token) {
-
-    console.log('🔐 Verificando OTP:', token);
-
-    if (!window.SB) {
-
-      return {
-        ok: false,
-        message: 'La app todavía no está conectada a Supabase.'
-      };
-    }
-
-    try {
-
-      const { data, error } = await SB.auth.verifyOtp({
-        phone: phoneE164,
-        token: String(token),
-        type: 'sms'
-      });
-
-      if (error) {
-
-        console.error('❌ ERROR verificando OTP:', error);
-
-        return {
-          ok: false,
-          message: Auth.friendlyError(error)
-        };
-      }
-
-      console.log('✅ OTP verificado correctamente.');
-
-      return {
-        ok: true,
-        session: data.session,
-        user: data.user
-      };
-
-    } catch (error) {
-
-      console.error('❌ EXCEPCIÓN en Auth.verifyOtp:', error);
-
-      return {
-        ok: false,
-        message: Auth.friendlyError(error)
-      };
-    }
+    if (!window.SB) return { ok: false, message: 'La app todavía no está conectada a Supabase.' };
+    const { data, error } = await SB.auth.verifyOtp({
+      phone: phoneE164,
+      token: String(token),
+      type: 'sms'
+    });
+    if (error) return { ok: false, message: Auth.friendlyError(error) };
+    return { ok: true, session: data.session, user: data.user };
   };
-
-
-  /* ================================================================
-     SESIÓN
-  ================================================================ */
 
   Auth.session = async function () {
-
     if (!window.SB) return null;
-
     const { data } = await SB.auth.getSession();
-
     return data ? data.session : null;
   };
 
-
-  /* ================================================================
-     CERRAR SESIÓN
-  ================================================================ */
-
   Auth.signOut = async function () {
-
-    if (window.SB) {
-      await SB.auth.signOut();
-    }
-
-    if (window.Store) {
-      window.Store.reset();
-    }
+    if (window.SB) await SB.auth.signOut();
+    if (window.Store) window.Store.reset();
   };
 
-
-  /* ================================================================
-     ELIMINAR CUENTA
-  ================================================================ */
-
-  /**
-   * Borra la cuenta completa mediante la Edge Function
-   * "delete-account".
-   */
+  /** Borra la cuenta completa (imágenes, datos y usuario) vía Edge Function. */
   Auth.deleteAccount = async function () {
-
-    if (!window.SB) {
-
-      return {
-        ok: false,
-        message: 'Sin conexión con Supabase.'
-      };
-    }
-
-    try {
-
-      const { error } = await SB.functions.invoke(
-        'delete-account',
-        {
-          body: {}
-        }
-      );
-
-      if (error) {
-
-        console.error('❌ Error eliminando cuenta:', error);
-
-        return {
-          ok: false,
-          message: 'No se pudo eliminar la cuenta: ' + error.message
-        };
-      }
-
-      await Auth.signOut();
-
-      return {
-        ok: true
-      };
-
-    } catch (error) {
-
-      console.error('❌ Excepción eliminando cuenta:', error);
-
-      return {
-        ok: false,
-        message: 'No se pudo eliminar la cuenta: ' + (
-          error?.message || String(error)
-        )
-      };
-    }
+    if (!window.SB) return { ok: false, message: 'Sin conexión con Supabase.' };
+    const { error } = await SB.functions.invoke('delete-account', { body: {} });
+    if (error) return { ok: false, message: 'No se pudo eliminar la cuenta: ' + error.message };
+    await Auth.signOut();
+    return { ok: true };
   };
 
-
-  /* ================================================================
-     MENSAJES DE ERROR
-  ================================================================ */
-
-  /**
-   * DIAGNÓSTICO TEMPORAL.
-   *
-   * Por ahora NO ocultamos el error real de Supabase.
-   * Esto nos permite saber exactamente qué está rechazando el envío.
-   */
+  /** Traduce los errores de Supabase a algo que un usuario entienda. */
   Auth.friendlyError = function (error) {
+    const msg = (error && error.message ? error.message : String(error)).toLowerCase();
 
-    const message =
-      error?.message ||
-      String(error);
-
-    console.error('🚨 ERROR REAL:', message);
-
-    return 'ERROR REAL: ' + message;
+    if (msg.includes('invalid') && msg.includes('otp')) return 'Ese código no coincide o ya venció. Pide uno nuevo.';
+    if (msg.includes('token has expired') || msg.includes('expired')) return 'El código ya venció. Pide uno nuevo.';
+    if (msg.includes('rate limit') || msg.includes('too many') || msg.includes('60 seconds')) {
+      return 'Pediste muchos códigos seguidos. Espera un minuto e inténtalo otra vez.';
+    }
+    if (msg.includes('invalid phone') || msg.includes('phone')) return 'Revisa el número: parece que está incompleto.';
+    if (msg.includes('signups not allowed')) return 'Los registros nuevos están cerrados en este momento.';
+    if (msg.includes('failed to fetch') || msg.includes('network')) return 'Sin internet. Revisa tu conexión e inténtalo otra vez.';
+    if (msg.includes('sms provider') || msg.includes('hook')) return 'No pudimos enviar el mensaje de WhatsApp. Inténtalo en un minuto.';
+    return 'No pudimos continuar. Inténtalo otra vez en un momento.';
   };
-
-
-  /* ================================================================
-     EXPONER AUTH
-  ================================================================ */
 
   window.Auth = Auth;
-
-  console.log('✅ MESA auth.js cargado correctamente');
-
 })();
