@@ -24,30 +24,62 @@
 
   /** Envía el código por WhatsApp. Devuelve {ok:true} o {ok:false, message}. */
   Auth.sendOtp = async function (phoneE164) {
-    if (!window.SB) return { ok: false, message: 'La app todavía no está conectada a Supabase.' };
+    if (!window.SB) {
+      return {
+        ok: false,
+        message: 'La app todavía no está conectada a Supabase.'
+      };
+    }
+
     const { error } = await SB.auth.signInWithOtp({
       phone: phoneE164,
       options: { channel: 'sms' }
     });
-    if (error) return { ok: false, message: Auth.friendlyError(error) };
+
+    if (error) {
+      return {
+        ok: false,
+        message: Auth.friendlyError(error)
+      };
+    }
+
     return { ok: true };
   };
 
   /** Verifica el código. Si es correcto deja la sesión abierta. */
   Auth.verifyOtp = async function (phoneE164, token) {
-    if (!window.SB) return { ok: false, message: 'La app todavía no está conectada a Supabase.' };
+    if (!window.SB) {
+      return {
+        ok: false,
+        message: 'La app todavía no está conectada a Supabase.'
+      };
+    }
+
     const { data, error } = await SB.auth.verifyOtp({
       phone: phoneE164,
       token: String(token),
       type: 'sms'
     });
-    if (error) return { ok: false, message: Auth.friendlyError(error) };
-    return { ok: true, session: data.session, user: data.user };
+
+    if (error) {
+      return {
+        ok: false,
+        message: Auth.friendlyError(error)
+      };
+    }
+
+    return {
+      ok: true,
+      session: data.session,
+      user: data.user
+    };
   };
 
   Auth.session = async function () {
     if (!window.SB) return null;
+
     const { data } = await SB.auth.getSession();
+
     return data ? data.session : null;
   };
 
@@ -58,31 +90,32 @@
 
   /** Borra la cuenta completa (imágenes, datos y usuario) vía Edge Function. */
   Auth.deleteAccount = async function () {
-    if (!window.SB) return { ok: false, message: 'Sin conexión con Supabase.' };
-    const { error } = await SB.functions.invoke('delete-account', { body: {} });
-    if (error) return { ok: false, message: 'No se pudo eliminar la cuenta: ' + error.message };
+    if (!window.SB) {
+      return {
+        ok: false,
+        message: 'Sin conexión con Supabase.'
+      };
+    }
+
+    const { error } = await SB.functions.invoke('delete-account', {
+      body: {}
+    });
+
+    if (error) {
+      return {
+        ok: false,
+        message: 'No se pudo eliminar la cuenta: ' + error.message
+      };
+    }
+
     await Auth.signOut();
+
     return { ok: true };
   };
 
-  /** Traduce los errores de Supabase a algo que un usuario entienda. */
+  /** DIAGNÓSTICO TEMPORAL: muestra el error real de Supabase. */
   Auth.friendlyError = function (error) {
-    const msg = (error && error.message ? error.message : String(error)).toLowerCase();
-
-    if (msg.includes('invalid') && msg.includes('otp')) return 'Ese código no coincide o ya venció. Pide uno nuevo.';
-    if (msg.includes('token has expired') || msg.includes('expired')) return 'El código ya venció. Pide uno nuevo.';
-    if (msg.includes('rate limit') || msg.includes('too many') || msg.includes('60 seconds')) {
-      return 'Pediste muchos códigos seguidos. Espera un minuto e inténtalo otra vez.';
-    }
-    if (msg.includes('invalid phone') || msg.includes('phone')) {
     return 'ERROR REAL: ' + (error?.message || String(error));
-    }
-    if (msg.includes('signups not allowed')) return 'Los registros nuevos están cerrados en este momento.';
-    if (msg.includes('failed to fetch') || msg.includes('network')) return 'Sin internet. Revisa tu conexión e inténtalo otra vez.';
-    if (msg.includes('sms provider') || msg.includes('hook')) {
-    return 'ERROR REAL: ' + (error?.message || String(error));
-    }
-    return 'No pudimos continuar. Inténtalo otra vez en un momento.';
   };
 
   window.Auth = Auth;
