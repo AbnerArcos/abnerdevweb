@@ -74,7 +74,9 @@
     if (msg.includes('rate limit') || msg.includes('too many') || msg.includes('60 seconds')) {
       return 'Pediste muchos códigos seguidos. Espera un minuto e inténtalo otra vez.';
     }
-    if (msg.includes('invalid phone') || msg.includes('phone')) return 'Revisa el número: parece que está incompleto.';
+    if (msg.includes('invalid phone') || msg.includes('phone')) {
+    return 'ERROR REAL: ' + (error?.message || String(error));
+    }
     if (msg.includes('signups not allowed')) return 'Los registros nuevos están cerrados en este momento.';
     if (msg.includes('failed to fetch') || msg.includes('network')) return 'Sin internet. Revisa tu conexión e inténtalo otra vez.';
     if (msg.includes('sms provider') || msg.includes('hook')) return 'No pudimos enviar el mensaje de WhatsApp. Inténtalo en un minuto.';
