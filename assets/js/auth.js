@@ -27,7 +27,7 @@
     if (!window.SB) return { ok: false, message: 'La app todavía no está conectada a Supabase.' };
     const { error } = await SB.auth.signInWithOtp({
       phone: phoneE164,
-      options: { channel: cfg.OTP_CHANNEL || 'whatsapp' }
+      options: { channel: 'sms' }
     });
     if (error) return { ok: false, message: Auth.friendlyError(error) };
     return { ok: true };
